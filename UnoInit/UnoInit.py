@@ -15,7 +15,8 @@ class Uno:
         self.yellowCards = []
         self.blueCards = []
         self.redCards = []
-        self.NewDeck = []
+        self.blackCards = []
+
         self.playerCards = []
         self.AICards = []
         self.discardPile = []
@@ -25,16 +26,20 @@ class Uno:
     #Create a new shuffled deck.
     def createNewDeck(self):
         #Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i) for i in range(0,10)] * 2 + [UnoCard("Green", "Special", None ,"Skip") for _ in range(0,2)] + [UnoCard("Green", "Special", None ,"Reverse") for _ in range(0,2)] + [UnoCard("Green", "Special", None ,"DrawTwo") for _ in range(0,2)]
+        
+        self.greenCards = [UnoCard("Green", "Normal", i, i) for i in range(0,10)] + [UnoCard("Green", "Normal", i, i) for i in range(1,10)] + [UnoCard("Green", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Green", "Reverse", "None", 20) for _ in range(0,2)] + [UnoCard("Green", "DrawTwo", "None", 20) for _ in range(0,2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i) for i in range(0,10)] * 2 + [UnoCard("Blue", "Special", None ,"Skip") for _ in range(0,2)] + [UnoCard("Blue", "Special", None ,"Reverse") for _ in range(0,2)] + [UnoCard("Blue", "Special", None ,"DrawTwo") for _ in range(0,2)]
+        self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0,10)] + [UnoCard("Blue", "Normal", i, i) for i in range(1,10)] + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Blue", "Reverse", "None", 20) for _ in range(0,2)] + [UnoCard("Blue", "DrawTwo", "None", 20) for _ in range(0,2)]
 
-        self.yellowCards = [UnoCard("Yellow", "Normal", i) for i in range(0,10)] * 2 + [UnoCard("Yellow", "Special", None ,"Skip") for _ in range(0,2)] + [UnoCard("Yellow", "Special", None ,"Reverse") for _ in range(0,2)] + [UnoCard("Yellow", "Special", None ,"DrawTwo") for _ in range(0,2)]
+        self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0,10)] + [UnoCard("Yellow", "Normal", i, i) for i in range(1,10)] + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0,2)] + [UnoCard("Yellow", "DrawTwo", "None", 20) for _ in range(0,2)]
 
-        self.redCards = [UnoCard("Red", "Normal", i) for i in range(0,10)] * 2 + [UnoCard("Red", "Special", None ,"Skip") for _ in range(0,2)] + [UnoCard("Red", "Special", None ,"Reverse") for _ in range(0,2)] + [UnoCard("Red", "Special", None ,"DrawTwo") for _ in range(0,2)]
+        self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0,10)] + [UnoCard("Red", "Normal", i, i) for i in range(1,10)] + [UnoCard("Red", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Red", "Reverse", "None", 20) for _ in range(0,2)] + [UnoCard("Red", "DrawTwo", "None", 20) for _ in range(0,2)]
+
+        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0,4)] + [UnoCard("Black", "Draw4", "None", 50) for _ in range(0,4)]
         
         #Combine, shuffle and return the deck as a list of UnoCard objects.
-        shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards
+        shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
+        
         random.shuffle(shuffledDeck)
         return shuffledDeck
 
@@ -115,17 +120,15 @@ class Uno:
 
 #Card class.
 class UnoCard:
-    def __init__(self, cardColour, cardType, cardNumber = "None", specialCardType = "None"):
+    def __init__(self, cardColour, cardType, cardNumber = "None", cardValue = "None"):
         self.cardNumber = cardNumber
         self.cardColour = cardColour
         self.cardType = cardType
-        self.specialCardType = specialCardType
-        self.cardTypeDic = {}
-        self.cardTypeDic[self.cardType] = self.specialCardType
+        self.cardValue = cardValue
         
 
     def __repr__(self):
-        return repr(f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {list(self.cardTypeDic.keys())[0]} | Special Card Type: {self.cardTypeDic[self.cardType]}")
+        return repr(f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue}")
 
 #MAIN
 #Create a new Uno object. 
