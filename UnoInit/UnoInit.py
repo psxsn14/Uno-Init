@@ -15,11 +15,17 @@ from pickle import NONE
 import random
 import copy
 
+# A global variable to represent the current player index
+# current = None
+# ascending = True
+
 
 # Class handling the game.
 class Uno:
     drawPile = []
     discardPile = []
+    # global current
+    # global ascending
 
     def __init__(self):
         # Instance variables for card groups.
@@ -38,6 +44,12 @@ class Uno:
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
 
+        # Which player is current playing
+        self.currentPlayerIndex = 0
+
+        # ascending or not
+        self.ascending = True
+
     # Create a new shuffled deck.
     def createNewDeck(self):
         # Create and save all new UnoCard objects to their respective lists.
@@ -47,26 +59,26 @@ class Uno:
                               UnoCard("Green", "Reverse", "None", 20) for _ in range(0, 2)] \
                           + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0, 2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
-                                                                                    i in range(1, 10)] \
-                         + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
-                             UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
-                         + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
-            UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
-                           + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
-                               UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
-                           + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
-                                                                                  in range(1, 10)] \
-                        + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
-                            UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
-                        + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
-            UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
+        # self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
+        #                                                                             i in range(1, 10)] \
+        #                  + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                      UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                  + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
+        #     UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
+        #                    + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                        UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                    + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
+        #                                                                           in range(1, 10)] \
+        #                 + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                     UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                 + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
+        #     UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
 
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
@@ -124,12 +136,33 @@ class Uno:
         self.currentGameColour = self.topDiscardPileCard.cardColour
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
-        self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
-                                                                      self.discardPile)
+        ##########
+        for i in self.playerList:
+            print(i.playerNo)
+            print(i.plDeck)
+            # print(f"\nPlayer List: {len(self.playerList)}")
+
+        ################################################
+        current = self.currentPlayerIndex
+        while len(self.drawPile) != 0:
+            self.drawPile, self.discardPile = self.playerList[current].playTurn(self.drawPile, self.currentGameColour,
+                                                                                self.discardPile)
+            if current == len(self.playerList):
+                current = 0
+            if current == -1:
+                current = len(self.playerList)-1
+            if self.ascending:
+                current += 1
+            else:
+                current -= 1
+
+        # current
+        # self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
+        #                                                               self.discardPile)
 
 
 # Class for handling Player activities.
-class Player():
+class Player:
     def __init__(self, playerNo, plDeck=[]):
         super().__init__()
         self.playerNo = playerNo
@@ -149,11 +182,12 @@ class Player():
         # Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
-        self.plDeck.pop(0)
+        self.plDeck.pop(cardChoice - 1)
 
         # Take top card from draw pile.
-        print("\nPlayer 1 takes the top card from the draw pile to their hand...")
+        print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
         self.plDeck.insert(0, drawPile[0])
+        drawPile.pop(0)
 
         # Play a card or pick another card to pass.
         print("\nCards on hand pre execute:\n")
@@ -166,7 +200,7 @@ class Player():
         playerChoice = int(input(
             "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
         # If 0, draw a card and pass.
-        if (playerChoice == 0):
+        if playerChoice == 0:
             self.plDeck.insert(0, drawPile[0])
             drawPile.pop(0)
             print("\nPlayer Deck after selecting card.....")
@@ -179,31 +213,41 @@ class Player():
             print(f"\nPlayer {self.playerNo} turn complete.\n")
             return drawPile, discardPile
 
-        #If 1-n, validate the card and proceed.
-        if(playerChoice in range(1, (len(self.plDeck) + 1))):
+        # If 1-n, validate the card and proceed.
+        if playerChoice in range(1, (len(self.plDeck) + 1)):
 
-        #If colour is same but number is different or a special card, can play.
-            if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
-                #If normal, play.
-                if(self.plDeck[playerChoice - 1].cardType == "Normal"):
-                    #Make the selection as the top card of the discard pile and add it to discard pile.
+            # If colour is same but number is different or a special card, can play.
+            if self.plDeck[playerChoice - 1].cardColour == currentGameColour:
+                # If normal, play.
+                if self.plDeck[playerChoice - 1].cardType == "Normal":
+                    # Make the selection as the top card of the discard pile and add it to discard pile.
                     discardPile.insert(0, self.plDeck[playerChoice - 1])
-                    #Remove card from player deck.
+                    # Remove card from player deck.
                     self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
                     print("Player Deck after selecting card.....")
                     for i in self.plDeck:
                         print(i)
                     return drawPile, discardPile
-            #If card is special, execute special card logic.
+            # If card is special, execute special card logic.
+                # If Reverse card
+                if self.plDeck[playerChoice - 1].cardType == "Reverse":
+                    newGame.ascending = not newGame.ascending
+                    discardPile.insert(0, self.plDeck[playerChoice - 1])
+                    # Remove card from player deck.
+                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                    print("Player Deck after selecting card.....")
+                    for i in self.plDeck:
+                        print(i)
+                    return drawPile, discardPile
 
-            #If number is same, but colour is different, can play. (More or less the same as above.)
+            # If number is same, but colour is different, can play. (More or less the same as above.)
 
-            #If colour change, can play.
+            # If colour change, can play.
 
-            #If draw4, can only play if no matching colour card on hand.
+            # If draw4, can only play if no matching colour card on hand.
 
-        #Return a tuple consisting of the current drawPile and discardPile.
-        return drawPile,self.discardPile
+        # Return a tuple consisting of the current drawPile and discardPile.
+        return drawPile, discardPile
 
     def __repr__(self):
         playerTemp = []
