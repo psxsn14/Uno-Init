@@ -203,12 +203,6 @@ class Player():
         #Return a tuple consisting of the current drawPile and discardPile.
         return drawPile,self.discardPile
 
-        # If colour change, can play.
-
-        # If draw4, can only play if no matching colour card on hand.
-
-        return drawPile, self.discardPile
-
     def __repr__(self):
         playerTemp = []
         for i in self.plDeck:
