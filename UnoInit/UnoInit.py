@@ -7,11 +7,13 @@
 # Feel free to suggest any ideas in general without hesitation.
 # Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
 
+from ctypes.wintypes import VARIANT_BOOL
 import random
 import copy
 
 #Class handling the game.
 class Uno:
+    drawPile = []
     def __init__(self):
         #Instance variables for the card groups.
         self.greenCards = []
@@ -23,9 +25,9 @@ class Uno:
         #Instance variables for game entities.
         self.AICards = []
         self.discardPile = []
-        self.drawPile = []
         self.playerList = []
         self.isGameOver = False
+        self.currentGameColour = ""
     
     #Create a new shuffled deck.
     def createNewDeck(self):
@@ -53,13 +55,13 @@ class Uno:
         random.shuffle(shuffledDeck)
         return shuffledDeck
 
-    #Deal cards to a player and update the drawPile.
+    #Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         #Hand out top 7 cards from the draw pile to the current player's deck.
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)   
         
-        #Drop those cards from the "drawPile".
+        #Drop those cards from the "self.drawPile".
             self.drawPile.pop(self.drawPile.index(UnoCard))
         return self.drawPile
         
@@ -100,11 +102,12 @@ class Uno:
 
     def startGame(self):
         topCard = self.drawPile[0]
-        print(f"\nTop card of the draw pile: {topCard}")
+        print(f"\nTop card of the draw pile forms the discard pile: {topCard}")
+        self.currentGameColour = topCard.cardColour
         self.discardPile.append(topCard)
         self.drawPile.pop(0)
         
-        self.playerList[0].playTurn()
+        self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour)
 
 
 #Class for handling Player activities.
@@ -114,7 +117,7 @@ class Player(Uno):
         self.playerNo = playerNo
         self.plDeck = plDeck
 
-    def playTurn(self):
+    def playTurn(self, drawPile, currentGameColour):
         #Select a card from your hand, and place it below the discard pile.
         self.numCards = len(self.plDeck)
         
@@ -129,23 +132,37 @@ class Player(Uno):
         #Remove card from player's deck.
         self.plDeck.pop(0)
 
-        print("\nCards on hand post discard rule:\n")
+        #Take top card from draw pile.
+        print("\nPlayer 1 takes the top card from the draw pile to their hand...")
+        self.plDeck.insert(0, drawPile[0])
+
+        #Play a card or pick another card to pass.
+        print("\nCards on hand pre execute:\n")
         for i in self.plDeck:
             print(i)
 
-        #Player picks top card from the draw pile to their hand.
-        self.plDeck.insert(0, self.drawPile[0])
+        print("Current game colour: ",currentGameColour)
 
-        #View your cards or play a card or pick another card to pass.
+        #Ask player to for their choice.
+        playerChoice = int(input("Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
+        #If 0, draw a card and pass.
+        if(playerChoice == 0):
+            self.plDeck.insert(0, drawPile[0])
+            drawPile.pop(0)
+            return drawPile,self.discardPile
+        
+        #If 1-n, validate the card and proceed.
+        if(playerChoice in range(1, (len(self.plDeck) + 1))):
+            print("Correct card")
+
+            return drawPile,self.discardPile
 
 
-
-        #DEBUG
-        print(f"\nNum of cards: {len(self.plDeck)}")
-
-
-
-
+        #If colour is same but number is different or a special card, can play.
+        #If number is same, but colour is different, can play.
+        #If colour change, can play.
+        #If draw4, can only play if no matching colour card on hand.
+         
     def __repr__(self):
         playerTemp = []
         for i in self.plDeck:
@@ -170,7 +187,6 @@ class UnoCard:
 
     def __repr__(self):
         return repr(f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue}")
-
 
 newGame = Uno()
 
