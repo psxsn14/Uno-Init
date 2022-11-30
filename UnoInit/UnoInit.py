@@ -170,23 +170,22 @@ class Player():
                 #If normal, play.
                 if(self.plDeck[playerChoice - 1].cardType == "Normal"):
                     #Make the selection as the top card of the discard pile and add it to discard pile.
-                    discardPile.append(self.plDeck[playerChoice - 1])
+                    discardPile.insert(0, self.plDeck[playerChoice - 1])
+                    #Remove card from player deck.
                     self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
                     print("Player Deck after selecting card.....")                   
                     for i in self.plDeck:
                         print(i)
-                    return drawPile, discardPile
-        
-                    #Remove card from player deck.
-
-                #If special, execute stuff.
+                    return drawPile, discardPile 
+            #If card is special, execute special card logic.
                  
-        #If number is same, but colour is different, can play.
+            #If number is same, but colour is different, can play. (More or less the same as above.)
         
-        #If colour change, can play.
+            #If colour change, can play.
         
-        #If draw4, can only play if no matching colour card on hand.
+            #If draw4, can only play if no matching colour card on hand.
         
+        #Return a tuple consisting of the current drawPile and discardPile.
         return drawPile,self.discardPile
 
 
