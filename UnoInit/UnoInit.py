@@ -8,6 +8,8 @@
 # Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
 
 # testesttetststseteststststesetsetstsetetestsees
+
+# hihi
 from ctypes.wintypes import VARIANT_BOOL
 from pickle import NONE
 import random
@@ -176,10 +178,10 @@ class Player():
                 print(i)
             print(f"\nPlayer {self.playerNo} turn complete.\n")
             return drawPile, discardPile
-        
+
         #If 1-n, validate the card and proceed.
         if(playerChoice in range(1, (len(self.plDeck) + 1))):
-        
+
         #If colour is same but number is different or a special card, can play.
             if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
                 #If normal, play.
@@ -191,15 +193,15 @@ class Player():
                     print("Player Deck after selecting card.....")
                     for i in self.plDeck:
                         print(i)
-                    return drawPile, discardPile 
+                    return drawPile, discardPile
             #If card is special, execute special card logic.
-                 
+
             #If number is same, but colour is different, can play. (More or less the same as above.)
-        
+
             #If colour change, can play.
-        
+
             #If draw4, can only play if no matching colour card on hand.
-        
+
         #Return a tuple consisting of the current drawPile and discardPile.
         return drawPile,self.discardPile
 
