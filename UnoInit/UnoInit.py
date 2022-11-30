@@ -8,6 +8,7 @@
 # Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
 
 import random
+import copy
 
 class Uno:
     def __init__(self):
@@ -30,21 +31,21 @@ class Uno:
         
         self.greenCards = [UnoCard("Green", "Normal", i, i) for i in range(0,10)] + [UnoCard("Green", "Normal", i, i) for i in range(1,10)] \
                         + [UnoCard("Green", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Green", "Reverse", "None", 20) for _ in range(0,2)] \
-                        + [UnoCard("Green", "DrawTwo", "None", 20) for _ in range(0,2)]
+                        + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0,2)]
 
         self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0,10)] + [UnoCard("Blue", "Normal", i, i) for i in range(1,10)] \
                        + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Blue", "Reverse", "None", 20) for _ in range(0,2)] \
-                       + [UnoCard("Blue", "DrawTwo", "None", 20) for _ in range(0,2)] 
+                       + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0,2)] 
 
         self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0,10)] + [UnoCard("Yellow", "Normal", i, i) for i in range(1,10)] \
                          + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0,2)] \
-                         + [UnoCard("Yellow", "DrawTwo", "None", 20) for _ in range(0,2)]
+                         + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0,2)]
 
         self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0,10)] + [UnoCard("Red", "Normal", i, i) for i in range(1,10)] \
                       + [UnoCard("Red", "Skip", "None", 20) for _ in range(0,2)] + [UnoCard("Red", "Reverse", "None", 20) for _ in range(0,2)] \
-                      + [UnoCard("Red", "DrawTwo", "None", 20) for _ in range(0,2)]
+                      + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0,2)]
 
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0,4)] + [UnoCard("Black", "Draw4", "None", 50) for _ in range(0,4)]
+        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0,4)] + [UnoCard("Black", "Draw Four", "None", 50) for _ in range(0,4)]
         
         #Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
@@ -53,13 +54,13 @@ class Uno:
         return shuffledDeck
 
     #Deal cards to a player and update the drawPile.
-    def dealCards(self, playerHand, drawPile):
-        for UnoCard in drawPile[0:7]:
-            playerHand.append(UnoCard)   
+    def dealCards(self, playerDeck):
+        for UnoCard in self.drawPile[0:7]:
+            playerDeck.append(UnoCard)   
         
         #3)Drop those cards from the "drawPile".
-            self.drawPile.pop(drawPile.index(UnoCard))
-        return drawPile
+            self.drawPile.pop(self.drawPile.index(UnoCard))
+        return self.drawPile
         
 
     def startPreGame(self, shuffledNewDeck):
@@ -67,56 +68,53 @@ class Uno:
         self.drawPile = shuffledNewDeck
 
         # Add human player to the list of player.
-        self.humanPlayer = Player()
+        self.humanPlayer = Player(1)
         self.playerList.append(self.humanPlayer)
 
         # Ask for number of players.
         AICount = int(input("Enter number of AI opponents to play against: "))
         for i in range(0, AICount):
-            self.playerList.append(AIPlayer())
+            self.playerList.append(copy.deepcopy(AIPlayer(i+2)))
            
         for i in self.playerList:
-            print("\n", repr(i))
+            print("\n",id(i))
 
     #2) Deal 7 cards to player and AIs.
-    #DEBUG to check updated piles.
         
         print("\nPile before Player draw: ---- ----- --- \n")
         for i in self.drawPile:
            print(repr(i))
         
         for eachPlayer in self.playerList:
-            self.drawPile = self.dealCards(eachPlayer.playerDeck, self.drawPile)
-            
+            self.drawPile = self.dealCards(eachPlayer.plDeck)
+        
+        #DEBUG Check all player decks.
         for i in self.playerList:
             print("\n")
             print(repr(i))
 
 
-        #self.drawPile = self.dealCards(self.playerCards, self.drawPile)
-        
-        #print("\nPlayer's first seven cards: ---- ----- --- \n")
-        #for i in self.playerCards:
-        #    print(repr(i))
 
-class Player(Uno):
-    def __init__(self, playerDeck = []):
-        self.playerDeck = playerDeck
-        self.playerTemp = []
+class Player():
+    def __init__(self, playerNo, plDeck = []):
+        self.playerNo = playerNo
+        self.plDeck = plDeck
 
     def playTurn(self):
         #Select a card from your hand, and place it below the discard pile.
         pass
 
     def __repr__(self):
-        for i in self.playerDeck:
-            self.playerTemp.append(repr(i))
-        return repr(f"Name: {type(self)} | Deck: {self.playerTemp}")
+        playerTemp = []
+        for i in self.plDeck:
+            playerTemp.append(i)
+
+        return repr(f"Name: {type(self)} | Deck: {playerTemp}")
 
 class AIPlayer(Player):
-    def __init__(self, playerDeck = [], AIDifficulty = None):
-        self.AIDifficulty = AIDifficulty
-        super().__init__(playerDeck)
+    pass
+    #Insert AI Code.
+        
         
 
 #Card class.
@@ -134,7 +132,9 @@ class UnoCard:
 
 newGame = Uno()
 
-#newGame.startPreGame(newGame.createNewDeck())
+newGame.startPreGame(newGame.createNewDeck())
+
+
 
 
 
