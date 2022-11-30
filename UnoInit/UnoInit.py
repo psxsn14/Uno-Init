@@ -128,7 +128,7 @@ class Player():
             print(i)
 
         #Initiate special rule.
-        
+        #Random....
         cardChoice = int(input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
         #Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
@@ -176,8 +176,7 @@ class Player():
                     for i in self.plDeck:
                         print(i)
                     return drawPile, discardPile
-        
-                    #Remove card from player deck.
+            #Remove card from player deck.
 
                 #If special, execute stuff.
                  
