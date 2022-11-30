@@ -17,7 +17,6 @@ class Uno:
         self.blueCards = []
         self.redCards = []
         self.blackCards = []
-        self.purpleCards = []
 
         self.AICards = []
         self.discardPile = []
