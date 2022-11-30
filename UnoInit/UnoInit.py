@@ -1,15 +1,8 @@
 # UNO RULES: https://www.unorules.org/how-many-cards-in-uno/
-
-# Suggestions:
-# Please go through this architecture, sparingly get familiarised with my coding style, and let us know if there's something off, or if you have a much better structure.
-# I have written some code to check certain things as you see below. I will flesh it out more by tomorrow.
-# I will reference "to-be-written" code snippets in a numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2" as in the startGame function.
-# Feel free to suggest any ideas in general without hesitation.
-# Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
+# Programming coursework: Pre-pygame UNO Implementation - Group 20. Abigail, Huahui, Junrui, Siddharth, Qingfei.
 
 import random
 import copy
-
 
 # Class handling the game.
 class Uno:
