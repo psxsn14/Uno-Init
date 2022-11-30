@@ -74,3 +74,6 @@ def show_all_cards(Obname):
     [print(i) for i in h]
     return len(h)
 
+# test
+def test():
+    print('test')
