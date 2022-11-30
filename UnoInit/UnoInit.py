@@ -107,7 +107,7 @@ class Uno:
         self.playerList[0].playTurn()
 
 
-
+#Class for handling Player activities.
 class Player(Uno):
     def __init__(self, playerNo, plDeck = []):
         super().__init__()
@@ -132,6 +132,13 @@ class Player(Uno):
         print("\nCards on hand post discard rule:\n")
         for i in self.plDeck:
             print(i)
+
+        #Player picks top card from the draw pile to their hand.
+        self.plDeck.insert(0, self.drawPile[0])
+
+        #View your cards or play a card or pick another card to pass.
+
+
 
         #DEBUG
         print(f"\nNum of cards: {len(self.plDeck)}")
