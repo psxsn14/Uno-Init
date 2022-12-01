@@ -1,11 +1,12 @@
 # UNO RULES: https://www.unorules.org/how-many-cards-in-uno/
 
-# Suggestions:
-# Please go through this architecture, sparingly get familiarised with my coding style, and let us know if there's something off, or if you have a much better structure.
-# I have written some code to check certain things as you see below. I will flesh it out more by tomorrow.
-# I will reference "to-be-written" code snippets in a numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2" as in the startGame function.
-# Feel free to suggest any ideas in general without hesitation.
-# Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
+# Suggestions: Please go through this architecture, sparingly get familiarised with my coding style, and let us know
+# if there's something off, or if you have a much better structure. I have written some code to check certain things
+# as you see below. I will flesh it out more by tomorrow. I will reference "to-be-written" code snippets in a
+# numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2"
+# as in the startGame function. Feel free to suggest any ideas in general without hesitation. Please familiarize
+# yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of
+# a shuffled deck.
 
 # testesttetststseteststststesetsetstsetetestsees
 
@@ -14,6 +15,7 @@ from ctypes.wintypes import VARIANT_BOOL
 from pickle import NONE
 import random
 import copy
+
 
 # A global variable to represent the current player index
 # current = None
@@ -24,6 +26,7 @@ import copy
 class Uno:
     drawPile = []
     discardPile = []
+
     # global current
     # global ascending
 
@@ -41,6 +44,8 @@ class Uno:
         self.playerList = []
         self.isGameOver = False
         self.currentGameColour = ""
+        self.currentGameNumber = 0
+        self.currentGameType = ""
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
 
@@ -112,6 +117,7 @@ class Uno:
         # Deal 7 cards to player and AIs.
         # DEBUG
         print("\nPile before Player draw: ---- ----- --- \n")
+        print(len(self.drawPile))
         for i in self.drawPile:
             print(repr(i))
         ###
@@ -134,6 +140,7 @@ class Uno:
         self.topDiscardPileCard = self.drawPile[0]
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
         self.currentGameColour = self.topDiscardPileCard.cardColour
+        self.currentGameNumber = self.topDiscardPileCard.cardNumber
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
         ##########
@@ -146,11 +153,13 @@ class Uno:
         current = self.currentPlayerIndex
         while len(self.drawPile) != 0:
             self.drawPile, self.discardPile = self.playerList[current].playTurn(self.drawPile, self.currentGameColour,
-                                                                                self.discardPile)
+                                                                                self.discardPile,
+                                                                                self.currentGameNumber,
+                                                                                self.currentGameType)
             if current == len(self.playerList):
                 current = 0
             if current == -1:
-                current = len(self.playerList)-1
+                current = len(self.playerList) - 1
             if self.ascending:
                 current += 1
             else:
@@ -168,7 +177,7 @@ class Player:
         self.playerNo = playerNo
         self.plDeck = plDeck
 
-    def playTurn(self, drawPile, currentGameColour, discardPile):
+    def playTurn(self, drawPile, currentGameColour, discardPile, currentGameNumber, currentGameType):
         # Select a card from your hand, and place it below the discard pile.
 
         print(f"Player {self.playerNo} -- Cards on hand:\n")
@@ -196,55 +205,82 @@ class Player:
 
         print("Current game colour: ", currentGameColour)
 
-        # Ask player to for their choice.
-        playerChoice = int(input(
-            "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
-        # If 0, draw a card and pass.
-        if playerChoice == 0:
-            self.plDeck.insert(0, drawPile[0])
-            drawPile.pop(0)
-            print("\nPlayer Deck after selecting card.....")
-            for i in self.plDeck:
-                print(i)
+        # inturn = True
+        # Check the card is valid or not
+        while True:
+            # Ask player to for their choice.
+            playerChoice = int(input(
+                "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
+            # If 0, draw a card and pass.
+            if playerChoice == 0:
+                self.plDeck.insert(0, drawPile[0])
+                drawPile.pop(0)
+                print("\nPlayer Deck after selecting card.....")
+                for i in self.plDeck:
+                    print(i)
 
-            print("\nDiscard pile after selecting card.....")
-            for i in discardPile:
-                print(i)
-            print(f"\nPlayer {self.playerNo} turn complete.\n")
-            return drawPile, discardPile
+                print("\nDiscard pile after selecting card.....")
+                for i in discardPile:
+                    print(i)
+                print(f"\nPlayer {self.playerNo} turn complete.\n")
+                return drawPile, discardPile
 
-        # If 1-n, validate the card and proceed.
-        if playerChoice in range(1, (len(self.plDeck) + 1)):
-
-            # If colour is same but number is different or a special card, can play.
-            if self.plDeck[playerChoice - 1].cardColour == currentGameColour:
-                # If normal, play.
+            # If 1-n, validate the card and proceed.
+            elif playerChoice in range(1, (len(self.plDeck) + 1)):
+                # If normal card
                 if self.plDeck[playerChoice - 1].cardType == "Normal":
-                    # Make the selection as the top card of the discard pile and add it to discard pile.
-                    discardPile.insert(0, self.plDeck[playerChoice - 1])
-                    # Remove card from player deck.
-                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                    print("Player Deck after selecting card.....")
-                    for i in self.plDeck:
-                        print(i)
-                    return drawPile, discardPile
-            # If card is special, execute special card logic.
-                # If Reverse card
-                if self.plDeck[playerChoice - 1].cardType == "Reverse":
-                    newGame.ascending = not newGame.ascending
-                    discardPile.insert(0, self.plDeck[playerChoice - 1])
-                    # Remove card from player deck.
-                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                    print("Player Deck after selecting card.....")
-                    for i in self.plDeck:
-                        print(i)
-                    return drawPile, discardPile
+                    # Check color is the same or number is the same
+                    if self.plDeck[playerChoice - 1].cardColour == currentGameColour or \
+                            self.plDeck[playerChoice - 1].cardNumber == currentGameNumber:
+                        # Make the selection as the top card of the discard pile and add it to discard pile.
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        # Remove card from player deck.
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        print("Player Deck after selecting card.....")
+                        for i in self.plDeck:
+                            print(i)
+                        return drawPile, discardPile
+                    else:
+                        print("It is not a valid card, please choose again")
 
-            # If number is same, but colour is different, can play. (More or less the same as above.)
+                # If not a normal card (functional card)
+                elif self.plDeck[playerChoice - 1].cardType != "Normal":
+                    if self.plDeck[playerChoice - 1].cardColour == currentGameColour or \
+                            self.plDeck[playerChoice - 1].cardType == currentGameType:
+                        ######### Draw 2 ########
+                        if self.plDeck[playerChoice - 1].cardType == "Draw Two":
+                            pass
 
-            # If colour change, can play.
+                        ######## Reverse ########
+                        if self.plDeck[playerChoice - 1].cardType == "Reverse":
+                            newGame.ascending = not newGame.ascending
+                            discardPile.insert(0, self.plDeck[playerChoice - 1])
+                            # Remove card from player deck.
+                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                            print("Player Deck after selecting card.....")
+                            for i in self.plDeck:
+                                print(i)
+                            return drawPile, discardPile
 
-            # If draw4, can only play if no matching colour card on hand.
+                        ######## Skip ########
+                        if self.plDeck[playerChoice - 1].cardType == "Skip":
+                            pass
+
+                        ######## Wild ########
+
+                        ######## Wild Draw ########
+
+                    else:
+                        print("It is not a valid card, please choose again")
+
+
+                # If number is same, but colour is different, can play. (More or less the same as above.)
+
+                # If colour change, can play.
+
+                # If draw4, can only play if no matching colour card on hand.
+            else:
+                print("Choice out of range, please enter the correct number")
 
         # Return a tuple consisting of the current drawPile and discardPile.
         return drawPile, discardPile
