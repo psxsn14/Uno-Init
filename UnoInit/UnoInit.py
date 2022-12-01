@@ -51,7 +51,7 @@ class Uno:
         self.topDiscardPileCard = None
 
         # Which player is current playing
-        self.currentPlayerIndex = 0
+        # self.currentPlayerIndex = 0
 
         # ascending or not
         self.ascending = True
@@ -137,6 +137,20 @@ class Uno:
             print(repr(i))
         ###
 
+    def moveToNextPlayer(self, current):
+        if self.ascending:
+            if current == len(self.playerList)-1:
+                current = 0
+            else:
+                current += 1
+        else:
+            if current == 0:
+                current = len(self.playerList)-1
+            else:
+                current -= 1
+        # globals.current = current
+        return current
+
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
@@ -144,31 +158,19 @@ class Uno:
         self.currentGameNumber = self.topDiscardPileCard.cardNumber
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
-        ##########
+        ########## test ##########
         for i in self.playerList:
             print(i.playerNo)
             print(i.plDeck)
-            # print(f"\nPlayer List: {len(self.playerList)}")
 
-        ################################################
-        current = self.currentPlayerIndex
         while len(self.drawPile) != 0:
-            self.drawPile, self.discardPile = self.playerList[current].playTurn(self.drawPile, self.currentGameColour,
-                                                                                self.discardPile,
-                                                                                self.currentGameNumber,
-                                                                                self.currentGameType)
-            if current == len(self.playerList):
-                current = 0
-            if current == -1:
-                current = len(self.playerList) - 1
-            if self.ascending:
-                current += 1
-            else:
-                current -= 1
+            self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
+                                                                                        self.currentGameColour,
+                                                                                        self.discardPile,
+                                                                                        self.currentGameNumber,
+                                                                                        self.currentGameType)
 
-        # current
-        # self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
-        #                                                               self.discardPile)
+            globals.current = self.moveToNextPlayer(globals.current)
 
 
 # Class for handling Player activities.
@@ -253,9 +255,18 @@ class Player:
                             discardPile.insert(0, self.plDeck[playerChoice - 1])
                             self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
                             # You draw two cards
+                            nextPlayer = newGame.moveToNextPlayer(globals.current)
                             for UnoCard in drawPile[0:2]:
-                                self.plDeck.append(UnoCard)
+                                # print(nextPlayer)
+                                newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                                 drawPile.pop(drawPile.index(UnoCard))
+
+                            globals.current = newGame.moveToNextPlayer(globals.current)
+                            # Test
+                            # print("Next player deck after the privious player use draw two card.....")
+                            # for i in newGame.playerList[nextPlayer].plDeck:
+                            #     print(i)
+
                             print("Player Deck after selecting card.....")
                             for i in self.plDeck:
                                 print(i)
@@ -282,7 +293,6 @@ class Player:
 
                     else:
                         print("It is not a valid card, please choose again")
-
 
                 # If number is same, but colour is different, can play. (More or less the same as above.)
 
