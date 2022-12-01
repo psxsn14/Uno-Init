@@ -260,7 +260,7 @@ class Player:
                                 # print(nextPlayer)
                                 newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                                 drawPile.pop(drawPile.index(UnoCard))
-
+                            # Skip the next person's round
                             globals.current = newGame.moveToNextPlayer(globals.current)
                             # Test
                             # print("Next player deck after the privious player use draw two card.....")
@@ -285,7 +285,10 @@ class Player:
 
                         ######## Skip ########
                         if self.plDeck[playerChoice - 1].cardType == "Skip":
-                            pass
+                            discardPile.insert(0, self.plDeck[playerChoice - 1])
+                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                            globals.current = newGame.moveToNextPlayer(globals.current)
+                            return drawPile, discardPile
 
                         ######## Wild ########
 
