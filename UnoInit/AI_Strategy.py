@@ -1,5 +1,5 @@
-from hh_test import *
 
+from UnoInit import *
 #  AI的基本功能：根据规则，1-换牌 2-执行action
 #  进阶AI：整理牌，
 
@@ -21,7 +21,7 @@ def deal_cards(hand_cards, draw_pile):  # 发牌，玩家手牌+7 牌堆-7
 
 def draw_a_card(hand_cards, draw_pile):  # 起牌
     hand_cards.append(draw_pile[0])
-    draw_pile.pop(draw_pile.index(UnoCard))
+    draw_pile.pop(draw_pile.index(draw_pile[0]))
     return hand_cards, draw_pile
 
 
@@ -85,14 +85,21 @@ class AI:
 
         print('The card on the top of discard pile:',self.top_card)
         print("#####################")
-        print("Your cards:")
+        print("AI cards:")
         show_card_list(self.hand_list)
         print("#####################")
         print("The cards AI can play:")
         for i in self.hand_list:
-            if i.cardColour == self.top_card.cardColour or i.cardFace == self.top_card.cardFace or i.cardColour == 'Black':
-                self.can_play_cards.append(i)
-                print(i)
+            if i.cardNumber is not None : #数字牌情况:颜色相同或者数字相同
+                if i.cardColour == self.top_card.cardColour or i.cardNumber == self.top_card.cardNumber :
+                    self.can_play_cards.append(i)
+                    print(i)
+            else:  # 功能牌情况：黑色牌或者功能相同
+                if i.cardColour == 'Black' or i.cardcardType == self.top_card.cardType:
+                    self.can_play_cards.append(i)
+                    print(i)
+                pass
+
         return self.can_play_cards
 
 # What AI should do
@@ -120,31 +127,31 @@ class AI:
 ##############################################   The code below just creates something to run ai, you can delete it after understanding
 ## create discard_pile and draw_pile (avoid wild card be the first card)
 #
-cards = hh_test()
-card = cards.createNewDeck()
-
-draw_pile = []
-discard_pile = []
-AI_card = []
-
-for i in card:
-    if i.cardColour == 'Black':
-        pass
-    else:
-        discard_pile.append(i)
-        if len(discard_pile) == 1:
-            break
-
-draw_pile = [i for i in card if i not in discard_pile]
-AI_card, _ = deal_cards(AI_card, draw_pile)
-
-##############################################
+# cards = hh_test()
+# card = cards.createNewDeck()
 #
-
-ai = AI(AI_card, discard_pile[0],draw_pile,human_hand=[])
-ai.change_card()   # return: 1. a card to discard  2: action 'draw', means it should get a new card
-ai.can_play()      #
-ai.play_action()
+# draw_pile = []
+# discard_pile = []
+# AI_card = []
+#
+# for i in card:
+#     if i.cardColour == 'Black':
+#         pass
+#     else:
+#         discard_pile.append(i)
+#         if len(discard_pile) == 1:
+#             break
+#
+# draw_pile = [i for i in card if i not in discard_pile]
+# AI_card, _ = deal_cards(AI_card, draw_pile)
+#
+# ##############################################
+# #
+#
+# ai = AI(AI_card, discard_pile[0],draw_pile,human_hand=[])
+# ai.change_card()   # return: 1. a card to discard  2: action 'draw', means it should get a new card
+# ai.can_play()      #
+# ai.play_action()
 
 # n = 5
 #
@@ -172,7 +179,38 @@ ai.play_action()
 ##################################################
 
 
+# from UnoInit make a handlist of cards
+
+
+# newGame = Uno()
+# newGame.startPreGame(newGame.createNewDeck())
+# newGame.startGame()
+
+##############################
+#
+
+aicard = []
+newGame.drawPile = newGame.dealCards(aicard)
+ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+ai.change_card()
+ai.can_play()
+ai.play_action()
+##############################
+
+
+
+
+
+
+
+
+
+
+
+
+
 class EasyAI(AI):
+
     pass
 
 
