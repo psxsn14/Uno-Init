@@ -249,7 +249,16 @@ class Player:
                             self.plDeck[playerChoice - 1].cardType == currentGameType:
                         ######### Draw 2 ########
                         if self.plDeck[playerChoice - 1].cardType == "Draw Two":
-                            pass
+                            discardPile.insert(0, self.plDeck[playerChoice - 1])
+                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                            # You draw two cards
+                            for UnoCard in drawPile[0:2]:
+                                self.plDeck.append(UnoCard)
+                                drawPile.pop(drawPile.index(UnoCard))
+                            print("Player Deck after selecting card.....")
+                            for i in self.plDeck:
+                                print(i)
+                            return drawPile, discardPile
 
                         ######## Reverse ########
                         if self.plDeck[playerChoice - 1].cardType == "Reverse":
