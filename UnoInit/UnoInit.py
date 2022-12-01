@@ -15,6 +15,7 @@ from ctypes.wintypes import VARIANT_BOOL
 from pickle import NONE
 import random
 import copy
+import globals
 
 
 # A global variable to represent the current player index
