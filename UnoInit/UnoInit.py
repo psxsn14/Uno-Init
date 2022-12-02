@@ -306,7 +306,7 @@ class Player:
                 print("Choice out of range, please enter the correct number")
 
         # Return a tuple consisting of the current drawPile and discardPile.
-        return drawPile, discardPile
+        # return drawPile, discardPile
 
     def __repr__(self):
         playerTemp = []
