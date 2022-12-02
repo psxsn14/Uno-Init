@@ -187,6 +187,11 @@ class AI:
 
 ##############################
 #
+newGame = Uno()
+
+newGame.startPreGame(newGame.createNewDeck())
+
+newGame.startGame()
 
 aicard = []
 newGame.drawPile = newGame.dealCards(aicard)
