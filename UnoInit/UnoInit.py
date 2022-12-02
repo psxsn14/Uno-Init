@@ -44,6 +44,16 @@ class Uno:
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
 
+        #Card variables
+        self.image = pygame.image.load('card_back.png')
+        self.image_small = pygame.transform.smoothscale(self.image,(100,150))
+        self.image_small = pygame.transform.rotate(self.image_small,90)
+        self.image_right = pygame.transform.rotate(self.image_small,180)
+        self.image_top = pygame.transform.rotate(self.image_small,270)
+        self.player_cards = pygame.image.load('blank.png').convert()
+        self.player_cards = pygame.transform.smoothscale(self.player_cards,(100,150)).convert()
+        self.card_played = pygame.image.load('blank.png').convert()
+
     # Create a new shuffled deck.
     def createNewDeck(self):
         # Create and save all new UnoCard objects to their respective lists.
