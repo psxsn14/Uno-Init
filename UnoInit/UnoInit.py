@@ -11,7 +11,7 @@
 # testesttetststseteststststesetsetstsetetestsees
 
 # hihi
-from ctypes.wintypes import VARIANT_BOOL
+# from ctypes.wintypes import VARIANT_BOOL
 from pickle import NONE
 import random
 import copy
