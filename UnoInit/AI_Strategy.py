@@ -10,33 +10,33 @@ from UnoInit import *
 
 def show_card_list(listofcard):
     [print(i) for i in listofcard]
+#
+#
+# # Deal cards to a player and update the inUsePile.
+# def deal_cards(hand_cards, draw_pile):  # 发牌，玩家手牌+7 牌堆-7
+#     for UnoCard in draw_pile[0:7]:
+#         hand_cards.append(UnoCard)
+#         draw_pile.pop(draw_pile.index(UnoCard))
+#     return hand_cards, draw_pile
 
 
-# Deal cards to a player and update the inUsePile.
-def deal_cards(hand_cards, draw_pile):  # 发牌，玩家手牌+7 牌堆-7
-    for UnoCard in draw_pile[0:7]:
-        hand_cards.append(UnoCard)
-        draw_pile.pop(draw_pile.index(UnoCard))
-    return hand_cards, draw_pile
+# def draw_a_card(hand_cards, draw_pile):  # 起牌
+#     hand_cards.append(draw_pile[0])
+#     draw_pile.pop(draw_pile.index(draw_pile[0]))
+#     return hand_cards, draw_pile
+#
+#
+# def play_a_card(the_card, hand_cards, discard_pile):
+#     if the_card is None:
+#         return hand_cards
+#     else:
+#         hand_cards.remove(the_card)
+#         discard_pile.append(the_card)
+#     return hand_cards
 
 
-def draw_a_card(hand_cards, draw_pile):  # 起牌
-    hand_cards.append(draw_pile[0])
-    draw_pile.pop(draw_pile.index(draw_pile[0]))
-    return hand_cards, draw_pile
-
-
-def play_a_card(the_card, hand_cards, discard_pile):
-    if the_card is None:
-        return hand_cards
-    else:
-        hand_cards.remove(the_card)
-        discard_pile.append(the_card)
-    return hand_cards
-
-
-def shownum(AI_card, draw_pile, discard_pile):
-    print("手牌：", len(AI_card), "牌堆长度", len(draw_pile), "弃牌长度", len(discard_pile))
+# def shownum(AI_card, draw_pile, discard_pile):
+#     print("手牌：", len(AI_card), "牌堆长度", len(draw_pile), "弃牌长度", len(discard_pile))
 
 
 ####################################################################################
@@ -62,15 +62,15 @@ class AI:
         # show_card_list(self.hand_list)
 
     # sort hand_list by card Value
-    def sort_card(self):
-        # print(self.hand_list)
-        # show_card_list(self.hand_list)
-        # print('------------------')
-        # for i in self.hand_list:
-        #     print(i.cardValue)
-        self.hand_list.sort(key=lambda x: x.cardValue)
-        show_card_list(self.hand_list)
-        return self.hand_list
+    # def sort_card(self):
+    #     # print(self.hand_list)
+    #     # show_card_list(self.hand_list)
+    #     # print('------------------')
+    #     # for i in self.hand_list:
+    #     #     print(i.cardValue)
+    #     self.hand_list.sort(key=lambda x: x.cardValue)
+    #     show_card_list(self.hand_list)
+    #     return self.hand_list
 
     #  Before your turn starts, discard a card from your hand and get a new card
     def change_card(self):
@@ -189,11 +189,11 @@ class AI:
 
 ##############################
 #
-newGame = Uno()
-
-newGame.startPreGame(newGame.createNewDeck())
-
-newGame.startGame()
+# newGame = Uno()
+#
+# newGame.startPreGame(newGame.createNewDeck())
+#
+# newGame.startGame()
 
 aicard = []
 newGame.drawPile = newGame.dealCards(aicard)

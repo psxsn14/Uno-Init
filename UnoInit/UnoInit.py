@@ -163,14 +163,14 @@ class Uno:
             print(i.playerNo)
             print(i.plDeck)
 
-        while len(self.drawPile) != 0:
-            self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
-                                                                                        self.currentGameColour,
-                                                                                        self.discardPile,
-                                                                                        self.currentGameNumber,
-                                                                                        self.currentGameType)
+        # while len(self.drawPile) != 0:
+        self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
+                                                                                    self.currentGameColour,
+                                                                                    self.discardPile,
+                                                                                    self.currentGameNumber,
+                                                                                    self.currentGameType)
 
-            globals.current = self.moveToNextPlayer(globals.current)
+        globals.current = self.moveToNextPlayer(globals.current)
 
 
 # Class for handling Player activities.
