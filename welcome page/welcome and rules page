@@ -98,17 +98,17 @@ pygame.init()
 #creat game window
 SCREEN = pygame.display.set_mode((1366, 768))#size of screen
 pygame.display.set_caption("Main Menu")
-BG= pygame.image.load("main menu-3.png")
+BG= pygame.image.load("welcome page/main menu-3.png")
 Cardimage=pygame.transform.scale(BG,(700,450))
 # buttonBG=pygame.image.load('button background.png')
 # Buttonbg=pygame.transform.scale(buttonBG,(100,150))
-Rule_BG= pygame.image.load("rule.png")
+Rule_BG= pygame.image.load("welcome page/rule.png")
 Ruleimage=pygame.transform.scale(Rule_BG,(1366,680))
 color = (255,255,255)
-music=pygame.mixer.music.load('BGmusic.mp3')
+music=pygame.mixer.music.load('welcome page/BGmusic.mp3')
 pygame.mixer.music.play(-1)
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font1.ttf", size)  
+    return pygame.font.Font("welcome page/font1.ttf", size)  
 
 def main_menu():
     pygame.display.set_caption("Menu")
