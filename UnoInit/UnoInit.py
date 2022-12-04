@@ -19,7 +19,9 @@ pygame.init()
 from pygame.locals import *
 import time
 
+
 screen = pygame.display.set_mode((1366,768))
+
 
 
 # Class handling the game.
@@ -57,46 +59,58 @@ class Uno:
     # Create a new shuffled deck.
     def createNewDeck(self):
         # Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i)
+        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load('green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load('green'+ str(i)+'.png'))
                                                                                       for i in range(1, 10)] \
-                          + [UnoCard("Green", "Skip", "None", 20) for _ in range(0, 2)] + [
-                              UnoCard("Green", "Reverse", "None", 20) for _ in range(0, 2)] \
-                          + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0, 2)]
+                          + [UnoCard("Green", "Skip", "None", 20, pygame.image.load('greenskip'+ '.png')) for _ in range(0, 2)] + [
+                              UnoCard("Green", "Reverse", "None", 20, pygame.image.load('greenreverse'+ '.png')) for _ in range(0, 2)] \
+                          + [UnoCard("Green", "Draw Two", "None", 20, pygame.image.load('greenDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
+        self.blueCards = [UnoCard("Blue", "Normal", i, i, pygame.image.load('blue'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i, pygame.image.load('blue'+ str(i)+'.png')) for
                                                                                     i in range(1, 10)] \
-                         + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
-                             UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
-                         + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
+                         + [UnoCard("Blue", "Skip", "None", 20, pygame.image.load('blueskip'+ '.png')) for _ in range(0, 2)] + [
+                             UnoCard("Blue", "Reverse", "None", 20, pygame.image.load('bluereverse'+ '.png')) for _ in range(0, 2)] \
+                         + [UnoCard("Blue", "Draw Two", "None", 20, pygame.image.load('blueDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
-            UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
-                           + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
-                               UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
-                           + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
+        self.yellowCards = [UnoCard("Yellow", "Normal", i, i, pygame.image.load('yellow'+ str(i)+'.png')) for i in range(0, 10)] + [
+            UnoCard("Yellow", "Normal", i, i, pygame.image.load('yellow'+ str(i)+'.png')) for i in range(1, 10)] \
+                           + [UnoCard("Yellow", "Skip", "None", 20, pygame.image.load('yellowskip'+ '.png')) for _ in range(0, 2)] + [
+                               UnoCard("Yellow", "Reverse", "None", 20, pygame.image.load('yellowreverse'+ '.png')) for _ in range(0, 2)] \
+                           + [UnoCard("Yellow", "Draw Two", "None", 20, pygame.image.load('yellowDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
+        self.redCards = [UnoCard("Red", "Normal", i, i, pygame.image.load('red'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i, pygame.image.load('red'+ str(i)+'.png')) for i
                                                                                   in range(1, 10)] \
-                        + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
-                            UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
-                        + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
+                        + [UnoCard("Red", "Skip", "None", 20, pygame.image.load('redskip'+ '.png')) for _ in range(0, 2)] + [
+                            UnoCard("Red", "Reverse", "None", 20, pygame.image.load('redreverse'+ '.png')) for _ in range(0, 2)] \
+                        + [UnoCard("Red", "Draw Two", "None", 20, pygame.image.load('redDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
-            UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
+        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50, pygame.image.load('blackcolorchange.png')) for _ in range(0, 4)] + [
+            UnoCard("Black", "Draw Four", "None", 50, pygame.image.load('blackDrawFour.png')) for _ in range(0, 4)]
 
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
+        print(self.blackCards)
         random.shuffle(shuffledDeck)
+        
+        
         return shuffledDeck
+        
 
     # Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         # Hand out top 7 cards from the draw pile to the current player's deck.
+        CardList = []
+        i = 0
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
-
             # Drop those cards from the "self.drawPile".
             self.drawPile.pop(self.drawPile.index(UnoCard))
+            CardList.append(UnoCard.cardimage)
+            x = pygame.transform.smoothscale(CardList[i],(100,150))
+            i = i +1
+            screen.blit(x,(200 + i*100, 500))
+            pygame.display.update()
+         
+
         return self.drawPile
 
     # Execute all the pre-game / pre - player activity routines.
@@ -109,46 +123,39 @@ class Uno:
         fpsClock = pygame.time.Clock()
         pygame.display.set_caption('Uno') 
         start = True
-        count = 28
+        count = 21
 
-        while start:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    start = False
             
-            if count > 0:
-                for l in range(7):
-                    #Left side comp cards
-                    x = 100 + l*60
-                    count -= 1
-                    screen.blit(self.image_small,(100,(x)))
-                    pygame.display.update()
-                    time.sleep(0.1)
+        if count > 0:
+            for l in range(7):
+                #Left side comp cards
+                x = 100 + l*60
+                count -= 1
+                screen.blit(self.image_small,(100,(x)))
+                pygame.display.update()
+                time.sleep(0.1)
                     
-                for f in range(7):
-                    #Right side comp cards
-                    x = 100 + f*60
-                    count -= 1
-                    screen.blit(self.image_right,(1066,(x)))
-                    pygame.display.update()
-                    time.sleep(0.1)
+            for f in range(7):
+                #Right side comp cards
+                x = 100 + f*60
+                count -= 1
+                screen.blit(self.image_right,(1066,(x)))
+                pygame.display.update()
+                time.sleep(0.1)
 
-                for k in range(7):
-                    #Right side comp cards
-                    x = 423 + k*50
-                    count -= 1
-                    screen.blit(self.image_top,(x,60))
-                    pygame.display.update()
-                    time.sleep(0.1)
+            for k in range(7):
+                #Right side comp cards
+                x = 423 + k*50
+                count -= 1
+                screen.blit(self.image_top,(x,60))
+                pygame.display.update()
+                time.sleep(0.1)
 
-                for g in range(7):
-                    x = 300 + g*100
-                    count -= 1
-                    screen.blit(UnoCard.image(self),(x,550))
-                    pygame.display.update()
-                    time.sleep(0.1)
+            screen.blit(self.image_top,(650,280))
 
-        pygame.quit()  
+        else:
+            start = False
+        print('test')
 
         # Create draw pile out of our shuffled deck.
         self.drawPile = shuffledNewDeck
@@ -185,6 +192,12 @@ class Uno:
 
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
+        x_top = self.drawPile[0].cardimage
+        Top_card = pygame.transform.smoothscale(x_top,(100,150))
+        screen.blit(Top_card,(500,280))
+        #screen.blit(self.image,(100,100))
+        pygame.display.update()
+
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
         self.currentGameColour = self.topDiscardPileCard.cardColour
         self.discardPile.append(self.topDiscardPileCard)
@@ -192,6 +205,8 @@ class Uno:
         self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
                                                                       self.discardPile)
 
+        #Interface for the discard pile
+        
 
 # Class for handling Player activities.
 class Player():
@@ -208,7 +223,6 @@ class Player():
             print(i)
 
         # Initiate special rule.
-
         cardChoice = int(
             input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
         # Add player card to the discard pile.
@@ -290,19 +304,33 @@ class AIPlayer(Player):
 
 # Card class.
 class UnoCard:
-    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
+    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None", cardimage = 'None',x = 'None', y ='None'):
         self.cardNumber = cardNumber
         self.cardColour = cardColour
         self.cardType = cardType
         self.cardValue = cardValue
+        self.cardimage = cardimage
+        self.x = x
+        self.y = y
 
     def __repr__(self):
         return repr(
-            f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue}")
+            f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue} | Image: {self.cardimage}")
 
+    def Image(self,x,y):
+        z = self.cardimage
+        screen.blit(z,(x,y))
 
-newGame = Uno()
+start = True
+while start:
+    for event in pygame.event.get():
+            if event.type == QUIT:
+                    start = False
+                    pygame.quit()
+            newGame = Uno()
 
-newGame.startPreGame(newGame.createNewDeck())
+            newGame.startPreGame(newGame.createNewDeck())
 
-newGame.startGame()
+            newGame.startGame()
+
+pygame.quit()
