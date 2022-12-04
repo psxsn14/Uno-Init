@@ -66,24 +66,24 @@ class Uno:
                               UnoCard("Green", "Reverse", "None", 20) for _ in range(0, 2)] \
                           + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0, 2)]
 
-        # self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
-        #                                                                             i in range(1, 10)] \
-        #                  + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                      UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                  + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
-        # self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
-        #     UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
-        #                    + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                        UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                    + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
-        # self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
-        #                                                                           in range(1, 10)] \
-        #                 + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                     UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                 + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
+        self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
+                                                                                    i in range(1, 10)] \
+                         + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
+                             UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
+                         + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
+
+        self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
+            UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
+                           + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
+                               UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
+                           + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
+
+        self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
+                                                                                  in range(1, 10)] \
+                        + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
+                            UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
+                        + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
+
         self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
             UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
 
@@ -172,8 +172,10 @@ class Uno:
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
+        globals.currentGameCard = self.drawPile[0]
         globals.currentGameColour = self.topDiscardPileCard.cardColour
         globals.currentGameNumber = self.topDiscardPileCard.cardNumber
+        globals.currentGameType = self.topDiscardPileCard.cardType
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
         ########## test ##########
@@ -181,6 +183,10 @@ class Uno:
             print(i.playerNo)
             print(len(i.plDeck))
             print(i.plDeck)
+
+        # For the first card
+        # if globals.currentGameType == 'Draw Two':
+
 
         exit_flag = False
         while not globals.GameOver:
@@ -196,6 +202,13 @@ class Uno:
                                                                                         self.discardPile)
 
             globals.current = self.moveToNextPlayer(globals.current)
+            globals.currentGameCard = self.discardPile[0]
+            globals.currentGameNumber = self.discardPile[0].cardNumber
+            globals.currentGameColour = self.discardPile[0].cardColour
+            globals.currentGameType = self.discardPile[0].cardType
+
+            globals.gameRound += 1
+            print('Round ' + str(globals.gameRound))
 
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))
@@ -210,6 +223,64 @@ class Player:
         self.plDeck = plDeck
 
     def playTurn(self, drawPile, discardPile):
+        # Rules for the revealed card
+        if globals.gameRound == 0:
+            if globals.currentGameType == 'Draw Two':
+                for UnoCard in drawPile[0:2]:
+                    newGame.playerList[globals.current].plDeck.append(UnoCard)
+                    drawPile.pop(drawPile.index(UnoCard))
+                return drawPile, discardPile
+
+            elif globals.currentGameType == 'Skip':
+                # globals.current = newGame.moveToNextPlayer(globals.current)
+                # print(globals.current)
+                return drawPile, discardPile
+
+            elif globals.currentGameType == 'Reverse':
+                newGame.ascending = not newGame.ascending
+
+            elif globals.currentGameType == 'ColorChange':
+                while True:
+                    newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+                    if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+                        break
+                    else:
+                        print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+                globals.currentGameColour = newColour
+
+            elif globals.currentGameType == 'Draw Four':
+                # official rules: put the card back into the deck and draw a new card
+                while globals.currentGameType == "Draw Four":
+                    # Put the card back
+                    drawPile.append(globals.currentGameCard)
+                    discardPile.pop(0)
+                    # draw a new card
+                    globals.currentGameCard = drawPile[0]
+                    globals.currentGameColour = globals.currentGameCard.cardColour
+                    globals.currentGameNumber = globals.currentGameCard.cardNumber
+                    globals.currentGameType = globals.currentGameCard.cardType
+                    drawPile.pop(0)
+                    discardPile.append(globals.currentGameCard)
+                    # return drawPile, discardPile
+
+                # popular rules: first player choose the color, next player draw 4 and skip
+                while True:
+                    newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+                    if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+                        break
+                    else:
+                        print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+                globals.currentGameColour = newColour
+                # Next player draw four and skip
+                nextPlayer = newGame.moveToNextPlayer(globals.current)
+                for UnoCard in drawPile[0:4]:
+                    # print(nextPlayer)
+                    newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                    drawPile.pop(drawPile.index(UnoCard))
+                # Skip the next person's round
+                globals.current = newGame.moveToNextPlayer(globals.current)
+                return drawPile, discardPile
+
         # Select a card from your hand, and place it below the discard pile.
 
         print(f"Player {self.playerNo} -- Cards on hand:\n")
@@ -235,7 +306,8 @@ class Player:
         for i in self.plDeck:
             print(i)
 
-        print("Current game colour: ", globals.currentGameColour)
+        # print("Current game colour: ", globals.currentGameColour)
+        print(f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
 
         # inturn = True
         # Check the card is valid or not
@@ -264,6 +336,7 @@ class Player:
 
             # If 1-n, validate the card and proceed.
             elif playerChoice in range(1, (len(self.plDeck) + 1)):
+                # If black card
                 if self.plDeck[playerChoice - 1].cardColour == "Black":
                     # Wild
                     if self.plDeck[playerChoice - 1].cardType == "ColorChange":
