@@ -29,7 +29,7 @@ class Button():
         else:
             self.text=self.font.render(self.text_input, True, self.base_color)
 
-def play():#rule screen
+def play():
     pygame.display.set_caption("PLAY")
     
     while True:
