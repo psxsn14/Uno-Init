@@ -157,6 +157,18 @@ class Uno:
         # globals.current = current
         return current
 
+    def winnerPlayer(self):
+        for i in self.playerList:
+            if len(i.plDeck) == 0:
+                return i.playerNo
+
+    def winnerScore(self):
+        for i in self.playerList:
+            for j in i.plDeck:
+                globals.winnerScore += j.cardValue
+        return globals.winnerScore
+
+
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
@@ -167,13 +179,27 @@ class Uno:
         ########## test ##########
         for i in self.playerList:
             print(i.playerNo)
+            print(len(i.plDeck))
             print(i.plDeck)
 
-        while len(self.drawPile) != 0:
+        exit_flag = False
+        while not globals.GameOver:
+            for i in self.playerList:
+                if len(i.plDeck) == 0:
+                    exit_flag = True
+                    globals.GameOver = not globals.GameOver
+                    break
+            if exit_flag:
+                break
+        # while len(self.drawPile) != 0:
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
                                                                                         self.discardPile)
 
             globals.current = self.moveToNextPlayer(globals.current)
+
+        print("Game Over!")
+        print("The Winner is Player" + str(self.winnerPlayer()))
+        print("Score is " + str(self.winnerScore()))
 
 
 # Class for handling Player activities.
