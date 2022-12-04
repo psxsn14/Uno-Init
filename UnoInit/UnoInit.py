@@ -150,6 +150,9 @@ class Uno:
                 screen.blit(self.image_top,(x,60))
                 pygame.display.update()
                 time.sleep(0.1)
+
+            screen.blit(self.image_top,(650,280))
+
         else:
             start = False
         print('test')
@@ -189,6 +192,12 @@ class Uno:
 
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
+        x_top = self.drawPile[0].cardimage
+        Top_card = pygame.transform.smoothscale(x_top,(100,150))
+        screen.blit(Top_card,(500,280))
+        #screen.blit(self.image,(100,100))
+        pygame.display.update()
+
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
         self.currentGameColour = self.topDiscardPileCard.cardColour
         self.discardPile.append(self.topDiscardPileCard)
@@ -196,6 +205,8 @@ class Uno:
         self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
                                                                       self.discardPile)
 
+        #Interface for the discard pile
+        
 
 # Class for handling Player activities.
 class Player():
@@ -316,8 +327,10 @@ while start:
             if event.type == QUIT:
                     start = False
                     pygame.quit()
-    newGame = Uno()
+            newGame = Uno()
 
-    newGame.startPreGame(newGame.createNewDeck())
+            newGame.startPreGame(newGame.createNewDeck())
 
-    newGame.startGame()
+            newGame.startGame()
+
+pygame.quit()
