@@ -1,7 +1,6 @@
 
-from UnoInit import *
-#  AI的基本功能：根据规则，1-换牌 2-执行action
-#  进阶AI：整理牌，
+import random
+from fun import *
 
 ###################################################################################
 # Since there is not yet a UNO logic,
@@ -34,9 +33,20 @@ def play_a_card(the_card, hand_cards, discard_pile):
     return hand_cards
 
 
-def shownum(AI_card, draw_pile, discard_pile):
+def show_num(AI_card, draw_pile, discard_pile):
     print("手牌：", len(AI_card), "牌堆长度", len(draw_pile), "弃牌长度", len(discard_pile))
 
+def show_simple(listofcard):
+    simple_list = []
+    for i in listofcard:
+        if i.cardNumber != 'None':
+            simple_list.append(str(i.cardColour) +' '+ str(i.cardNumber))
+        else:
+            simple_list.append(str(i.cardColour) + ' '+ str(i.cardType))
+
+    for i in range(0,len(simple_list)):
+        print(str(i+1) + ' ' + simple_list[i])
+    return simple_list
 
 ####################################################################################
 
@@ -44,7 +54,7 @@ def shownum(AI_card, draw_pile, discard_pile):
 # print(len(draw_pile))         # 100
 # show_card_list(AI_card)       # random 7 cards
 # show_card_list(discard_pile)  # top card without wildcard
-
+####################################################################################
 class AI:
     def __init__(self, handlist, topcard,
                  pile_card, human_hand=[],
@@ -54,52 +64,61 @@ class AI:
         self.top_card = topcard  # the card on the top of discard pile
         self.pile_card = pile_card  # the rest cards in draw pile
         self.human_hand = human_hand  # the cards in Human-player's hand
+
         self.action = 'play'  # play, draw, pick(a colour)
         self.can_play_cards = []
         self.the_card = None
 
         # show_card_list(self.hand_list)
+    def get_class_name(self):
+        return self.__class__.__name__  # get the class name
 
     # sort hand_list by card Value
-    def sort_card(self):
+    def sort_card(self,listofcard):
         # print(self.hand_list)
+
         # show_card_list(self.hand_list)
         # print('------------------')
         # for i in self.hand_list:
         #     print(i.cardValue)
-        self.hand_list.sort(key=lambda x: x.cardValue)
-        show_card_list(self.hand_list)
-        return self.hand_list
+        listofcard.sort(key=lambda x: x.cardValue)
+        # show_card_list(self.hand_list)
+        return listofcard
 
     #  Before your turn starts, discard a card from your hand and get a new card
     def change_card(self):
-        discard_card = self.hand_list[0]  # Card is thrown randomly, no strategy
-        print("before playing , the discarded card:", discard_card)
+
+        # Card is thrown randomly, no strategy
+        # choose a random card to discard from hand_list
+        discard_card = random.choice(self.hand_list)
+
+        print("before playing , the discarded card:", show_simple([discard_card]))
         self.action = 'draw'  # get a new card
-        print("AI needs to", self.action)
-        # return str(discard_card),self.action
+        print( self.get_class_name(), " needs to", self.action)
+
         return discard_card, self.action
 
     # match cards in hand and card on top of discard pile, return a list of available card
     def can_play(self):
-
-        print('The card on the top of discard pile:',self.top_card)
-        print("#####################")
+        self.can_play_cards = []
+        print("_________________________")
+        print('The card on the top of discard pile:',show_simple([self.top_card]))
+        print("_________________________")
         print("AI cards:")
-        show_card_list(self.hand_list)
-        print("#####################")
+        # show_card_list(self.hand_list)
+        show_simple(self.hand_list)
+        print("_________________________")
         print("The cards AI can play:")
         for i in self.hand_list:
             if i.cardNumber is not None : #数字牌情况:颜色相同或者数字相同
                 if i.cardColour == self.top_card.cardColour or i.cardNumber == self.top_card.cardNumber :
                     self.can_play_cards.append(i)
-                    print(i)
+
             else:  # 功能牌情况：黑色牌或者功能相同
                 if i.cardColour == 'Black' or i.cardcardType == self.top_card.cardType:
                     self.can_play_cards.append(i)
-                    print(i)
-                pass
 
+        show_simple(self.can_play_cards)
         return self.can_play_cards
 
 # What AI should do
@@ -107,124 +126,116 @@ class AI:
 
         if len(self.can_play_cards) == 0:
             print("No card can play, draw a card")
+
             self.action = 'draw'
         else:
             self.the_card = random.choice(self.can_play_cards)
             self.action = 'play'
-            print("AI plays :",self.the_card)
+            # print("AI plays :",self.the_card)
 
             if self.the_card.cardColour == "Black":
-                self.action = "red" # When AI use Wild card, it picks red
-        print("AI decides: ",self.the_card,'  ',self.action)
+                self.action = "Red" # When AI use Wild card, it picks red
+        print("_________________________")
+        print( self.__class__.__name__," decides: ", show_simple([self.the_card]),'  ',self.action)
         return self.the_card, self.action  #
 
 
-# ai.sort_card()
-# print(ai.change_card())
-# print(ai.action)
 
 
-##############################################   The code below just creates something to run ai, you can delete it after understanding
-## create discard_pile and draw_pile (avoid wild card be the first card)
-#
-# cards = hh_test()
-# card = cards.createNewDeck()
-#
-# draw_pile = []
-# discard_pile = []
-# AI_card = []
-#
-# for i in card:
-#     if i.cardColour == 'Black':
-#         pass
-#     else:
-#         discard_pile.append(i)
-#         if len(discard_pile) == 1:
-#             break
-#
-# draw_pile = [i for i in card if i not in discard_pile]
-# AI_card, _ = deal_cards(AI_card, draw_pile)
-#
-# ##############################################
-# #
-#
-# ai = AI(AI_card, discard_pile[0],draw_pile,human_hand=[])
-# ai.change_card()   # return: 1. a card to discard  2: action 'draw', means it should get a new card
-# ai.can_play()      #
-# ai.play_action()
-
-# n = 5
-#
-# while n :
-#
-#
-#     print('牌堆顶部',discard_pile[0])
-#     ai.can_play_cards()
-#     print("你的手牌：")
-#     show_card_list(AI_card)
-#     nowcard,action = (ai.play_action())
-#     print("出的牌是：",nowcard)
-#
-#
-#     if action =='play':
-#         print("出牌")
-#         play_a_card(nowcard,AI_card,discard_pile)
-#     elif action =='draw':
-#         print("起牌")
-#         draw_a_card(AI_card,draw_pile)
-#
-#     shownum(AI_card,draw_pile,discard_pile)
-#
-#     n = n-1
-##################################################
 
 
-# from UnoInit make a handlist of cards
 
-
-# newGame = Uno()
-# newGame.startPreGame(newGame.createNewDeck())
-# newGame.startGame()
-
-##############################
-#
-
+x = createNewDeck()
+################################
+ # show card with number
+# for i in range(0,len(x)):
+#     print(str(i)+':',x[i])
+#     print(i)
+#################################
 aicard = []
-newGame.drawPile = newGame.dealCards(aicard)
-ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+for i in range(len(x)):
+    if i in [38,  12, 3, 19,47,52,53]:
+        aicard.append(x[i])
+        x[i] = None
+
+# print(aicard)
+# show_simple(aicard)
+
+top_card = x[0]
+ai = AI(aicard,top_card,[])
 ai.change_card()
 ai.can_play()
 ai.play_action()
-##############################
 
 
-
-
-
-
-
-
-
-
-
+print("###################################################")
 
 
 class EasyAI(AI):
+    def change_card(self):  # easy AI, always discard the biggest card
+        x = self.sort_card(self.hand_list)
+        show_simple(x)
+        discard_card = self.hand_list[-1]
+        print("before playing , the discarded card:", discard_card)
+        self.action = 'draw'
+        print(self.get_class_name(), " needs to", self.action)
+        return discard_card, self.action
 
-    pass
+
+
+
+
+
+easyai = EasyAI(aicard,top_card,[])
+easyai.change_card()
+# easyai.can_play()
+# easyai.play_action()
+
 
 
 class MediumAI(AI):
-    pass
+    def change_card(self):  # medium AI, always discard the smallest card
+        x = self.sort_card(self.hand_list)
+
+        discard_card = self.hand_list[0]
+        print("before playing , the discarded card:", discard_card)
+        self.action = 'draw'
+        print(self.get_class_name(), " needs to", self.action)
+        return discard_card, self.action
+
 
 
 class HardAI(AI):
-    pass
+    def change_card(self):  # hard AI, selects the most frequent colour, discard the smallest card
+        x = self.sort_card(self.hand_list)
+        colour_list = []
+        for i in x:
+            colour_list.append(i.cardColour)
+        colour_list.remove('Black')             # remove black card
+        # find the most frequent colour
+        most_colour = max(set(colour_list), key=colour_list.count)
+        # match x.cardColour with most_colour to a new list
+        colour_match = [i for i in x if i.cardColour == most_colour]
+        discard_card = colour_match[0]
+        print("before playing , the discarded card:", discard_card)
+        self.action = 'draw'
+        print(self.get_class_name(), " needs to", self.action)
+        return discard_card, self.action
 
+print("###################################################")
 
-class human_likeAI(MediumAI):
-    pass
+hardai = HardAI(aicard,top_card,[])
+hardai.change_card()
 
 
 class InvincibleAI(HardAI):
     pass
+
+
+# input a num to choose the level of AI
+# 1: EasyAI
+# 2: MediumAI
+# 3: HardAI
+# 4: InvincibleAI
+
+# def choose_AI_level():
