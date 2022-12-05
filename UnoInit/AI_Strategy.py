@@ -1,4 +1,4 @@
-from UnoInit import *
+# from UnoInit import *
 
 
 #  AI的基本功能：根据规则，1-换牌 2-执行action
@@ -195,13 +195,14 @@ class AI:
 #
 # newGame.startGame()
 
-aicard = []
-newGame.drawPile = newGame.dealCards(aicard)
+def execute():
+    aicard = []
+    # newGame.drawPile = newGame.dealCards(aicard)
 
-ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-ai.change_card()
-ai.can_play()
-ai.play_action()
+    ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+    ai.change_card()
+    ai.can_play()
+    ai.play_action()
 
 
 ##############################

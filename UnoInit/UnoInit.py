@@ -16,11 +16,7 @@ from pickle import NONE
 import random
 import copy
 import globals
-
-
-# A global variable to represent the current player index
-# current = None
-# ascending = True
+import AI_Strategy
 
 
 # Class handling the game.
@@ -191,7 +187,7 @@ class Uno:
         exit_flag = False
         while not globals.GameOver:
             for i in self.playerList:
-                if len(i.plDeck) == 0:
+                if len(i.plDeck) != 0:
                     exit_flag = True
                     globals.GameOver = not globals.GameOver
                     break
@@ -437,18 +433,8 @@ class Player:
                             print(globals.current)
                             return drawPile, discardPile
 
-                        ######## Wild ########
-
-                        ######## Wild Draw ########
-
                     else:
                         print("It is not a valid card, please choose again")
-
-                # If number is same, but colour is different, can play. (More or less the same as above.)
-
-                # If colour change, can play.
-
-                # If draw4, can only play if no matching colour card on hand.
             else:
                 print("Choice out of range, please enter the correct number")
 
@@ -464,7 +450,21 @@ class Player:
 
 
 class AIPlayer(Player):
-    pass
+    # def __init__(self, playerNo, plDeck=[]):
+    #     super().__init__()
+    #     self.playerNo = playerNo
+    #     self.plDeck = plDeck
+    #
+    # def playTurn(self, drawPile, discardPile):
+    #     # AI action
+    #     # 无牌可出，摸牌
+    #     if command == "draw":
+    #         pass
+    #     # 出一张牌
+    #     if command == "play":
+    #         pass
+        #
+        pass
     # Insert AI Code.
 
 
@@ -482,6 +482,11 @@ class UnoCard:
 
 
 newGame = Uno()
+aicard = []
+
+# ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+ai = AI_Strategy.AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+
 
 newGame.startPreGame(newGame.createNewDeck())
 
