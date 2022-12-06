@@ -18,10 +18,11 @@ import pygame
 pygame.init()
 from pygame.locals import *
 import time
+import pygame.freetype
 
 
 screen = pygame.display.set_mode((1366,768))
-
+BLUE = 70,130,180
 
 
 # Class handling the game.
@@ -91,26 +92,19 @@ class Uno:
         print(self.blackCards)
         random.shuffle(shuffledDeck)
         
-        
         return shuffledDeck
         
 
     # Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         # Hand out top 7 cards from the draw pile to the current player's deck.
+        global CardList
         CardList = []
         i = 0
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
-            # Drop those cards from the "self.drawPile".
             self.drawPile.pop(self.drawPile.index(UnoCard))
-            CardList.append(UnoCard.cardimage)
-            x = pygame.transform.smoothscale(CardList[i],(100,150))
-            i = i +1
-            screen.blit(x,(200 + i*100, 500))
-            pygame.display.update()
-         
-
+    
         return self.drawPile
 
     # Execute all the pre-game / pre - player activity routines.
@@ -222,9 +216,95 @@ class Player():
         for i in self.plDeck:
             print(i)
 
+            #Set up the cards
+            card_interface = [pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),
+            pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)), 
+            pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
+            pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
+            pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),
+            pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),
+            pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)), 
+            ]
+        
+            #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(300, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),(700, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),(800, 500))
+            screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)),(900, 500))
+
+            pygame.display.update()
+
         # Initiate special rule.
-        cardChoice = int(
-            input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
+        #cardChoice = int(
+        #input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
+        #Card choice select interface
+
+        start = True
+        while start:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+            for i in range(1):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    x,y = event.pos
+
+                    first_card_rect = pygame.transform.smoothscale(card_interface[0],(100,150)).get_rect(topleft = (300,500))
+                    second_card_rect = pygame.transform.smoothscale(card_interface[1],(100,150)).get_rect(topleft = (400,500))
+                    third_card_rect = pygame.transform.smoothscale(card_interface[2],(100,150)).get_rect(topleft = (500,500))
+                    fourth_card_rect = pygame.transform.smoothscale(card_interface[3],(100,150)).get_rect(topleft = (600,500))
+                    fifth_card_rect = pygame.transform.smoothscale(card_interface[4],(100,150)).get_rect(topleft = (700,500))
+                    sixth_card_rect = pygame.transform.smoothscale(card_interface[5],(100,150)).get_rect(topleft = (800,500))
+                    seventh_card_rect = pygame.transform.smoothscale(card_interface[6],(100,150)).get_rect(topleft = (900,500))
+
+                    #Check if the card is clicked 
+                    if  first_card_rect.collidepoint(x,y):       
+                        pygame.draw.rect(screen, BLUE, (300,500,100,150))
+                        pygame.display.update()
+                        position = 1
+
+                    if  second_card_rect.collidepoint(x,y):     
+                        pygame.draw.rect(screen, BLUE, (400,500,100,150))
+                        pygame.display.update()
+                        position = 2
+
+                    if third_card_rect.collidepoint(x,y):
+                            
+                        pygame.draw.rect(screen, BLUE, (500,500,100,150))
+                        pygame.display.update()
+                        position = 3
+
+                    if fourth_card_rect.collidepoint(x,y):
+                        
+                        pygame.draw.rect(screen, BLUE, (600,500,100,150))
+                        pygame.display.update()
+                        position = 4
+
+                    if fifth_card_rect.collidepoint(x,y):
+                        
+                        pygame.draw.rect(screen, BLUE, (700,500,100,150))
+                        pygame.display.update()
+                        position = 5
+
+                    if  sixth_card_rect.collidepoint(x,y):
+                            
+                        pygame.draw.rect(screen, BLUE, (800,500,100,150))
+                        pygame.display.update()
+                        position = 6
+
+                    if seventh_card_rect.collidepoint(x,y):
+                        
+                        pygame.draw.rect(screen, BLUE, (900,500,100,150))
+                        pygame.display.update()
+                        position = 7
+
+                    cardChoice = position
+                    print(cardChoice)
+
+        pygame.quit()
+
         # Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
@@ -282,11 +362,6 @@ class Player():
             #If draw4, can only play if no matching colour card on hand.
 
         #Return a tuple consisting of the current drawPile and discardPile.
-        
-        
-        
-        
-        
         return drawPile,discardPile
 
     def __repr__(self):
