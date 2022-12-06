@@ -44,8 +44,8 @@ def show_simple(listofcard):
         else:
             simple_list.append(str(i.cardColour) + ' '+ str(i.cardType))
 
-    for i in range(0,len(simple_list)):
-        print(str(i+1) + ' ' + simple_list[i])
+    # for i in range(0,len(simple_list)):
+    #     print(str(i+1) + ' ' + simple_list[i])
     return simple_list
 
 ####################################################################################
@@ -99,37 +99,37 @@ class AI:
         return discard_card, self.action
 
     # match cards in hand and card on top of discard pile, return a list of available card
-    def can_play(self):
-        self.can_play_cards = []
-        print("_________________________")
-        print('The card on the top of discard pile:',show_simple([self.top_card]))
-        print("_________________________")
-        print("AI cards:")
+    def can_play(self, hand_list, top_card):
+        can_play_cards = []
+        # print("_________________________")
+        # print('The card on the top of discard pile:',show_simple([self.top_card]))
+        # print("_________________________")
+        # print("AI cards:")
         # show_card_list(self.hand_list)
-        show_simple(self.hand_list)
-        print("_________________________")
-        print("The cards AI can play:")
-        for i in self.hand_list:
+        # show_simple(self.hand_list)
+        # print("_________________________")
+        # print("The cards AI can play:")
+        for i in hand_list:
             if i.cardNumber is not None : #数字牌情况:颜色相同或者数字相同
-                if i.cardColour == self.top_card.cardColour or i.cardNumber == self.top_card.cardNumber :
-                    self.can_play_cards.append(i)
+                if i.cardColour == top_card.cardColour or i.cardNumber == top_card.cardNumber :
+                    can_play_cards.append(i)
 
             else:  # 功能牌情况：黑色牌或者功能相同
-                if i.cardColour == 'Black' or i.cardcardType == self.top_card.cardType:
-                    self.can_play_cards.append(i)
+                if i.cardColour == 'Black' or i.cardcardType == top_card.cardType:
+                    can_play_cards.append(i)
 
-        show_simple(self.can_play_cards)
-        return self.can_play_cards
+        # show_simple(self.can_play_cards)
+        return can_play_cards
 
 # What AI should do
     def play_action(self):
 
-        if len(self.can_play_cards) == 0:
+        if len(self.can_play(self.hand_list,self.top_card)) == 0:
             print("No card can play, draw a card")
 
             self.action = 'draw'
         else:
-            self.the_card = random.choice(self.can_play_cards)
+            self.the_card = random.choice(self.can_play(self.hand_list,self.top_card))
             self.action = 'play'
             # print("AI plays :",self.the_card)
 
@@ -139,36 +139,24 @@ class AI:
         print( self.__class__.__name__," decides: ", show_simple([self.the_card]),'  ',self.action)
         return self.the_card, self.action  #
 
+# print(card)
+# print(act)
+
+# print('##########################')
+# ai.can_play()
+#
+# print('##########################')
+# # ai.play_action()
+#
+# card,act = ai.play_action()
+
+# print(card.cardColour,card.cardNumber,card.cardType)
+# print(act)
+
+# print('##########################')
 
 
-
-
-
-
-x = createNewDeck()
-################################
- # show card with number
-# for i in range(0,len(x)):
-#     print(str(i)+':',x[i])
-#     print(i)
-#################################
-aicard = []
-for i in range(len(x)):
-    if i in [38,  12, 3, 19,47,52,53]:
-        aicard.append(x[i])
-        x[i] = None
-
-# print(aicard)
-# show_simple(aicard)
-
-top_card = x[0]
-ai = AI(aicard,top_card,[])
-ai.change_card()
-ai.can_play()
-ai.play_action()
-
-
-print("###################################################")
+# print("###################################################")
 
 
 class EasyAI(AI):
@@ -182,15 +170,10 @@ class EasyAI(AI):
         return discard_card, self.action
 
 
-
-
-
-
-easyai = EasyAI(aicard,top_card,[])
-easyai.change_card()
+# easyai = EasyAI(aicard,top_card,[])
+# easyai.change_card()
 # easyai.can_play()
 # easyai.play_action()
-
 
 
 class MediumAI(AI):
@@ -222,20 +205,43 @@ class HardAI(AI):
         print(self.get_class_name(), " needs to", self.action)
         return discard_card, self.action
 
-print("###################################################")
-
-hardai = HardAI(aicard,top_card,[])
-hardai.change_card()
-
-
 class InvincibleAI(HardAI):
     pass
 
 
-# input a num to choose the level of AI
-# 1: EasyAI
-# 2: MediumAI
-# 3: HardAI
-# 4: InvincibleAI
 
-# def choose_AI_level():
+x = createNewDeck()
+################################
+ # show card with number
+# for i in range(0,len(x)):
+#     print(str(i)+':',x[i])
+#     print(i)
+#################################
+aicard = []
+for i in range(len(x)):
+    if i in [38,  12, 3, 19,47,52,53]:
+        aicard.append(x[i])
+        x[i] = None
+
+# print(aicard)
+
+show_simple(aicard)
+
+print('------------------')
+top_card = x[0]
+ai = AI(aicard,top_card,[])
+ai.play_action()
+
+print('------------------')
+
+easyai = EasyAI(aicard,top_card,[])
+easyai.play_action()
+
+print('----------------- ')######')
+hardai = HardAI(aicard,top_card,[])
+hardai.play_action()
+
+################################################
+#case 1:
+#
+
