@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a7024692-9602-4d2e-92b4-476b380d9d60</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>AI_Strategy.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,8 +22,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AI_Strategy.py" />
+    <Compile Include="Base Classes\PlayerClass.py" />
+    <Compile Include="Base Classes\UnoClass.py" />
     <Compile Include="UnoInit.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base Classes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Base Classes\.gitkeep" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
