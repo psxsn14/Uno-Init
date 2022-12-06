@@ -98,10 +98,12 @@ def main_menu():
         PLAYagain_BUTTON=Button(image=None, pos=(283,660),text_input="Play Again",font=get_font(45), base_color="#d7fcd4", hovering_color="white")
         Mainmenu_BUTTON=Button(image=None, pos=(723,660),text_input="Main Menu",font=get_font(45), base_color="#d7fcd4", hovering_color="white")
         QUIT_BUTTON=Button(image=None, pos=(1083,660),text_input="Qiut",font=get_font(45), base_color="#d7fcd4", hovering_color="white")
+
+        Red_BUTTON=Button(image=None, pos=(300,300),text_input="Red",font=get_font(15),base_color="#ffffff",hovering_color="black")
                 
         
   
-        for button in [PLAYagain_BUTTON,Mainmenu_BUTTON,QUIT_BUTTON]:
+        for button in [PLAYagain_BUTTON,Mainmenu_BUTTON,QUIT_BUTTON,Red_BUTTON]:
              button.changeColor(MENU_MOUSE_POS)
              button.update(SCREEN)
                 
