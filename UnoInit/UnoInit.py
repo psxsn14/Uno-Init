@@ -99,17 +99,17 @@ class Uno:
         self.playerList.append(self.humanPlayer)
 
         # Ask for number of players.
-        # while True:
-        #     try:
-        #         AICount = int(input("Enter number of AI opponents to play against: "))
-        #         for i in range(0, AICount):
-        #             self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-        #         break
-        #     except:
-        #         print("Invalid input, please enter a number")
-        AICount = int(input("Enter number of AI opponents to play against: "))
-        for i in range(0, AICount):
-            self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
+        while True:
+            try:
+                AICount = int(input("Enter number of AI opponents to play against: "))
+                for i in range(0, AICount):
+                    self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
+                break
+            except:
+                print("Invalid input, please enter a number")
+        # AICount = int(input("Enter number of AI opponents to play against: "))
+        # for i in range(0, AICount):
+        #     self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
 
         # Deal 7 cards to player and AIs.
         # DEBUG
