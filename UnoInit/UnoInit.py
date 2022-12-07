@@ -1,39 +1,22 @@
 # UNO RULES: https://www.unorules.org/how-many-cards-in-uno/
 
-<<<<<<< HEAD
-# Suggestions: Please go through this architecture, sparingly get familiarised with my coding style, and let us know
-# if there's something off, or if you have a much better structure. I have written some code to check certain things
-# as you see below. I will flesh it out more by tomorrow. I will reference "to-be-written" code snippets in a
-# numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2"
-# as in the startGame function. Feel free to suggest any ideas in general without hesitation. Please familiarize
-# yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of
-# a shuffled deck.
-=======
 # Suggestions:
 # Please go through this architecture, sparingly get familiarised with my coding style, and let us know if there's something off, or if you have a much better structure.
 # I have written some code to check certain things as you see below. I will flesh it out more by tomorrow.
 # I will reference "to-be-written" code snippets in a numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2" as in the startGame function.
 # Feel free to suggest any ideas in general without hesitation.
 # Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
->>>>>>> wip-pygame-interface
 
 # testesttetststseteststststesetsetstsetetestsees
 
 # hihi
-<<<<<<< HEAD
 # from ctypes.wintypes import VARIANT_BOOL
 from pickle import NONE
 import random
 import copy
 import globals
 import AI_Strategy
-
-
-=======
 from ctypes.wintypes import VARIANT_BOOL
-from pickle import NONE
-import random
-import copy
 import pygame
 pygame.init()
 from pygame.locals import *
@@ -41,12 +24,11 @@ import time
 import pygame.freetype
 
 
-
+#Setting the screen
 screen = pygame.display.set_mode((1366,768))
 BLUE = 70,130,180
 
 
->>>>>>> wip-pygame-interface
 # Class handling the game.
 class Uno:
     drawPile = []
@@ -65,45 +47,6 @@ class Uno:
         self.discardPile = []
         self.playerList = []
         self.isGameOver = False
-<<<<<<< HEAD
-        # self.currentGameColour = ""
-        # self.currentGameNumber = 0
-        # self.currentGameType = ""
-
-        # Top card from the discard pile that sets the current game colour.
-        self.topDiscardPileCard = None
-
-    # Create a new shuffled deck.
-    def createNewDeck(self):
-        # Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i)
-                                                                                      for i in range(1, 10)] \
-                          + [UnoCard("Green", "Skip", "None", 20) for _ in range(0, 2)] + [
-                              UnoCard("Green", "Reverse", "None", 20) for _ in range(0, 2)] \
-                          + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        # self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
-        #                                                                             i in range(1, 10)] \
-        #                  + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                      UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                  + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
-        # self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
-        #     UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
-        #                    + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                        UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                    + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
-        # self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
-        #                                                                           in range(1, 10)] \
-        #                 + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
-        #                     UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
-        #                 + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
-        #
-        # self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
-        #     UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
-
-=======
         self.currentGameColour = ""
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
@@ -148,7 +91,6 @@ class Uno:
         self.blackCards = [UnoCard("Black", "ColorChange", "None", 50, pygame.image.load('UnoInit/Cards New/blackcolorchange.png')) for _ in range(0, 4)] + [
             UnoCard("Black", "Draw Four", "None", 50, pygame.image.load('UnoInit/Cards New/blackDrawFour.png')) for _ in range(0, 4)]
 
->>>>>>> wip-pygame-interface
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
         print(self.blackCards)
@@ -160,18 +102,15 @@ class Uno:
     # Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         # Hand out top 7 cards from the draw pile to the current player's deck.
-<<<<<<< HEAD
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
 
             # Drop those cards from the "self.drawPile".
-=======
         global CardList
         CardList = []
         i = 0
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
->>>>>>> wip-pygame-interface
             self.drawPile.pop(self.drawPile.index(UnoCard))
     
         return self.drawPile
@@ -228,7 +167,6 @@ class Uno:
         self.playerList.append(self.humanPlayer)
 
         # Ask for number of players.
-<<<<<<< HEAD
         while True:
             try:
                 AICount = int(input("Enter number of AI opponents to play against: "))
@@ -240,11 +178,6 @@ class Uno:
         # AICount = int(input("Enter number of AI opponents to play against: "))
         # for i in range(0, AICount):
         #     self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-=======
-        AICount = int(input("Enter number of AI opponents to play against: "))
-        for i in range(0, AICount):
-            self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
->>>>>>> wip-pygame-interface
 
         # Deal 7 cards to player and AIs.
         # DEBUG
@@ -309,7 +242,6 @@ class Uno:
         globals.currentGameType = self.topDiscardPileCard.cardType
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
-<<<<<<< HEAD
         ########## test ##########
         for i in self.playerList:
             print(i.playerNo)
@@ -348,16 +280,13 @@ class Uno:
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))
         print("Score is " + str(self.winnerScore()))
-=======
         self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
                                                                       self.discardPile)
->>>>>>> wip-pygame-interface
 
         #Interface for the discard pile
         
 
 # Class for handling Player activities.
-<<<<<<< HEAD
 class Player:
     def __init__(self, playerNo, plDeck=[]):
         # super().__init__()
@@ -423,7 +352,6 @@ class Player:
                 globals.current = newGame.moveToNextPlayer(globals.current)
                 return drawPile, discardPile
 
-=======
 class Player():
     def __init__(self, playerNo, plDeck=[]):
         super().__init__()
@@ -431,14 +359,12 @@ class Player():
         self.plDeck = plDeck
 
     def playTurn(self, drawPile, currentGameColour, discardPile):
->>>>>>> wip-pygame-interface
         # Select a card from your hand, and place it below the discard pile.
 
         print(f"Player {self.playerNo} -- Cards on hand:\n")
         for i in self.plDeck:
             print(i)
 
-<<<<<<< HEAD
         # Initiate special rule.
 
         cardChoice = int(
@@ -450,27 +376,26 @@ class Player():
 
         # Take top card from draw pile.
         print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
-=======
-            #Set up the cards
-            card_interface = [pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),
-            pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)), 
-            pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
-            pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
-            pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),
-            pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),
-            pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)), 
-            ]
-        
-            #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(300, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),(700, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),(800, 500))
-            screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)),(900, 500))
+        #Set up the cards
+        card_interface = [pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)), 
+        pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)), 
+        ]
+    
+        #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(300, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),(700, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),(800, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)),(900, 500))
 
-            pygame.display.update()
+        pygame.display.update()
 
         # Initiate special rule.
         #cardChoice = int(
@@ -562,7 +487,6 @@ class Player():
 
         # Take top card from draw pile.
         print("\nPlayer 1 takes the top card from the draw pile to their hand...")
->>>>>>> wip-pygame-interface
         self.plDeck.insert(0, drawPile[0])
         drawPile.pop(0)
 
@@ -571,7 +495,6 @@ class Player():
         for i in self.plDeck:
             print(i)
 
-<<<<<<< HEAD
         # print("Current game colour: ", globals.currentGameColour)
         print(
             f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
@@ -709,73 +632,71 @@ class Player():
             else:
                 print("Choice out of range, please enter the correct number")
 
-        # Return a tuple consisting of the current drawPile and discardPile.
-        # return drawPile, discardPile
-=======
-        print("Current game colour: ", currentGameColour)
+            # Return a tuple consisting of the current drawPile and discardPile.
+            # return drawPile, discardPile
+            print("Current game colour: ", currentGameColour)
 
-        # Ask player to for their choice.
-        playerChoice = int(input(
-            "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
-        # If 0, draw a card and pass.
-        if (playerChoice == 0):
-            self.plDeck.insert(0, drawPile[0])
-            drawPile.pop(0)
-        
-            #Select from the draw pile if no card can be played interface 
-            start = True
-            while start:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                for i in range(1):
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        x,y = event.pos
+            # Ask player to for their choice.
+            playerChoice = int(input(
+                "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
+            # If 0, draw a card and pass.
+            if (playerChoice == 0):
+                self.plDeck.insert(0, drawPile[0])
+                drawPile.pop(0)
 
-                        draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
+                #Select from the draw pile if no card can be played interface 
+                start = True
+                while start:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                    for i in range(1):
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            x,y = event.pos
 
-                        if  draw_pile_rect.collidepoint(x,y):       
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
-                            pygame.display.update()
+                            draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
 
-            pygame.quit()
+                            if  draw_pile_rect.collidepoint(x,y):       
+                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                                pygame.display.update()
 
-            print("\nPlayer Deck after selecting card.....")
-            for i in self.plDeck:
-                print(i)
+                pygame.quit()
 
-            print("\nDiscard pile after selecting card.....")
-            for i in discardPile:
-                print(i)
-            print(f"\nPlayer {self.playerNo} turn complete.\n")
-            return drawPile, discardPile
+                print("\nPlayer Deck after selecting card.....")
+                for i in self.plDeck:
+                    print(i)
 
-        #If 1-n, validate the card and proceed.
-        if(playerChoice in range(1, (len(self.plDeck) + 1))):
+                print("\nDiscard pile after selecting card.....")
+                for i in discardPile:
+                    print(i)
+                print(f"\nPlayer {self.playerNo} turn complete.\n")
+                return drawPile, discardPile
 
-        #If colour is same but number is different or a special card, can play.
-            if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
-                #If normal, play.
-                if(self.plDeck[playerChoice - 1].cardType == "Normal"):
-                    #Make the selection as the top card of the discard pile and add it to discard pile.
-                    discardPile.insert(0, self.plDeck[playerChoice - 1])
-                    #Remove card from player deck.
-                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                    print("Player Deck after selecting card.....")
-                    for i in self.plDeck:
-                        print(i)
-                    return drawPile, discardPile
-            #If card is special, execute special card logic.
+            #If 1-n, validate the card and proceed.
+            if(playerChoice in range(1, (len(self.plDeck) + 1))):
 
-            #If number is same, but colour is different, can play. (More or less the same as above.)
+            #If colour is same but number is different or a special card, can play.
+                if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
+                    #If normal, play.
+                    if(self.plDeck[playerChoice - 1].cardType == "Normal"):
+                        #Make the selection as the top card of the discard pile and add it to discard pile.
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        #Remove card from player deck.
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        print("Player Deck after selecting card.....")
+                        for i in self.plDeck:
+                            print(i)
+                        return drawPile, discardPile
+                #If card is special, execute special card logic.
 
-            #If colour change, can play.
+                #If number is same, but colour is different, can play. (More or less the same as above.)
 
-            #If draw4, can only play if no matching colour card on hand.
+                #If colour change, can play.
 
-        #Return a tuple consisting of the current drawPile and discardPile.
-        return drawPile,discardPile
->>>>>>> wip-pygame-interface
+                #If draw4, can only play if no matching colour card on hand.
+
+            #Return a tuple consisting of the current drawPile and discardPile.
+            return drawPile,discardPile
 
     def __repr__(self):
         playerTemp = []
@@ -784,7 +705,6 @@ class Player():
 
         return repr(f"Name: {type(self)} | Deck: {playerTemp}")
 
-<<<<<<< HEAD
 
 class AIPlayer(Player):
     def __init__(self, playerNo, plDeck=[]):
@@ -887,39 +807,15 @@ class AIPlayer(Player):
 # Card class.
 class UnoCard:
     def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
-=======
-
-class AIPlayer(Player):
-    pass
-    # Insert AI Code.
 
 
 # Card class.
 class UnoCard:
     def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None", cardimage = 'None',x = 'None', y ='None'):
->>>>>>> wip-pygame-interface
         self.cardNumber = cardNumber
         self.cardColour = cardColour
         self.cardType = cardType
         self.cardValue = cardValue
-<<<<<<< HEAD
-
-    def __repr__(self):
-        return repr(
-            f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue}")
-
-
-newGame = Uno()
-# aicard = []
-
-# ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-# ai = AI_Strategy.AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-
-
-newGame.startPreGame(newGame.createNewDeck())
-
-newGame.startGame()
-=======
         self.cardimage = cardimage
         self.x = x
         self.y = y
@@ -945,4 +841,3 @@ while start:
             newGame.startGame()
 
 pygame.quit()
->>>>>>> wip-pygame-interface
