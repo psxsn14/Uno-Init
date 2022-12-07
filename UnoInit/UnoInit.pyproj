@@ -23,6 +23,68 @@
   <ItemGroup>
     <Compile Include="UnoInit.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cards New\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Cards New\.DS_Store" />
+    <Content Include="Cards New\blackcolorchange.png" />
+    <Content Include="Cards New\blackDrawFour.png" />
+    <Content Include="Cards New\blank.png" />
+    <Content Include="Cards New\blue0.png" />
+    <Content Include="Cards New\blue1.png" />
+    <Content Include="Cards New\blue2.png" />
+    <Content Include="Cards New\blue3.png" />
+    <Content Include="Cards New\blue4.png" />
+    <Content Include="Cards New\blue5.png" />
+    <Content Include="Cards New\blue6.png" />
+    <Content Include="Cards New\blue7.png" />
+    <Content Include="Cards New\blue8.png" />
+    <Content Include="Cards New\blue9.png" />
+    <Content Include="Cards New\blueDrawTwo.png" />
+    <Content Include="Cards New\bluereverse.png" />
+    <Content Include="Cards New\blueskip.png" />
+    <Content Include="Cards New\card_back.png" />
+    <Content Include="Cards New\green0.png" />
+    <Content Include="Cards New\green1.png" />
+    <Content Include="Cards New\green2.png" />
+    <Content Include="Cards New\green3.png" />
+    <Content Include="Cards New\green4.png" />
+    <Content Include="Cards New\green5.png" />
+    <Content Include="Cards New\green6.png" />
+    <Content Include="Cards New\green7.png" />
+    <Content Include="Cards New\green8.png" />
+    <Content Include="Cards New\green9.png" />
+    <Content Include="Cards New\greenDrawTwo.png" />
+    <Content Include="Cards New\greenreverse.png" />
+    <Content Include="Cards New\greenskip.png" />
+    <Content Include="Cards New\red0.png" />
+    <Content Include="Cards New\red1.png" />
+    <Content Include="Cards New\red2.png" />
+    <Content Include="Cards New\red3.png" />
+    <Content Include="Cards New\red4.png" />
+    <Content Include="Cards New\red5.png" />
+    <Content Include="Cards New\red6.png" />
+    <Content Include="Cards New\red7.png" />
+    <Content Include="Cards New\red8.png" />
+    <Content Include="Cards New\red9.png" />
+    <Content Include="Cards New\redDrawTwo.png" />
+    <Content Include="Cards New\redReverse.png" />
+    <Content Include="Cards New\redskip.png" />
+    <Content Include="Cards New\yellow0.png" />
+    <Content Include="Cards New\yellow1.png" />
+    <Content Include="Cards New\yellow2.png" />
+    <Content Include="Cards New\yellow3.png" />
+    <Content Include="Cards New\yellow4.png" />
+    <Content Include="Cards New\yellow5.png" />
+    <Content Include="Cards New\yellow6.png" />
+    <Content Include="Cards New\yellow7.png" />
+    <Content Include="Cards New\yellow8.png" />
+    <Content Include="Cards New\yellow9.png" />
+    <Content Include="Cards New\yellowDrawTwo.png" />
+    <Content Include="Cards New\yellowreverse.png" />
+    <Content Include="Cards New\yellowskip.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in

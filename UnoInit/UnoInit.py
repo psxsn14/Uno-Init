@@ -1,45 +1,33 @@
 # UNO RULES: https://www.unorules.org/how-many-cards-in-uno/
 
-# <<<<<<< HEAD
-# Suggestions: Please go through this architecture, sparingly get familiarised with my coding style, and let us know
-# if there's something off, or if you have a much better structure. I have written some code to check certain things
-# as you see below. I will flesh it out more by tomorrow. I will reference "to-be-written" code snippets in a
-# numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2"
-# as in the startGame function. Feel free to suggest any ideas in general without hesitation. Please familiarize
-# yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of
-# a shuffled deck.
-# =======
 # Suggestions:
 # Please go through this architecture, sparingly get familiarised with my coding style, and let us know if there's something off, or if you have a much better structure.
 # I have written some code to check certain things as you see below. I will flesh it out more by tomorrow.
 # I will reference "to-be-written" code snippets in a numbered way for each function so that it's easy to communicate any difficulties. i.e "Stuck at <functionname> #2" as in the startGame function.
 # Feel free to suggest any ideas in general without hesitation.
 # Please familiarize yourself with gitlab/gitkraken by Friday and use this .py to try new things as it already has an implementation of a shuffled deck.
-# >>>>>>> wip-pygame-interface
 
 # testesttetststseteststststesetsetstsetetestsees
 
 # hihi
 # from ctypes.wintypes import VARIANT_BOOL
+# from game_over_page import *
 from pickle import NONE
 import random
 import copy
 import globals
 import AI_Strategy
-
-# from ctypes.wintypes import VARIANT_BOOL
-from pickle import NONE
-import random
-import copy
+from ctypes.wintypes import VARIANT_BOOL
 import pygame
-
 pygame.init()
 from pygame.locals import *
 import time
 import pygame.freetype
 
-screen = pygame.display.set_mode((1366, 768))
-BLUE = 70, 130, 180
+
+#Setting the screen
+screen = pygame.display.set_mode((1366,768))
+BLUE = 70,130,180
 
 
 # Class handling the game.
@@ -60,109 +48,118 @@ class Uno:
         self.discardPile = []
         self.playerList = []
         self.isGameOver = False
-        # self.currentGameColour = ""
-        # self.currentGameNumber = 0
-        # self.currentGameType = ""
-
-        # Top card from the discard pile that sets the current game colour.
-        self.topDiscardPileCard = None
-
-        # Create a new shuffled deck.
-
         self.currentGameColour = ""
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
 
-        # Card variables
-        self.image = pygame.image.load('Cards New/card_back.png')
-        self.image_small = pygame.transform.smoothscale(self.image, (100, 150))
-        self.image_small = pygame.transform.rotate(self.image_small, 90)
-        self.image_right = pygame.transform.rotate(self.image_small, 180)
-        self.image_top = pygame.transform.rotate(self.image_small, 270)
-        self.player_cards = pygame.image.load('Cards New/blank.png').convert()
-        self.player_cards = pygame.transform.smoothscale(self.player_cards, (100, 150)).convert()
-        self.card_played = pygame.image.load('Cards New/blank.png').convert()
+        #Card variables
+        self.image = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\card_back.png')
+        self.image_small = pygame.transform.smoothscale(self.image,(100,150))
+        self.image_small = pygame.transform.rotate(self.image_small,90)
+        self.image_right = pygame.transform.rotate(self.image_small,180)
+        self.image_top = pygame.transform.rotate(self.image_small,270)
+        self.player_cards = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
+        self.player_cards = pygame.transform.smoothscale(self.player_cards,(100,150)).convert()
+        self.card_played = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
 
     # Create a new shuffled deck.
     def createNewDeck(self):
         # Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load('Cards New/green' + str(i) + '.png')) for
-                           i in range(0, 10)] + [
-                              UnoCard("Green", "Normal", i, i, pygame.image.load('Cards New/green' + str(i) + '.png'))
-                              for i in range(1, 10)] \
-                          + [UnoCard("Green", "Skip", "None", 20, pygame.image.load('Cards New/greenskip' + '.png')) for
-                             _ in range(0, 2)] + [
-                              UnoCard("Green", "Reverse", "None", 20,
-                                      pygame.image.load('Cards New/greenreverse' + '.png')) for _ in range(0, 2)] \
-                          + [UnoCard("Green", "Draw Two", "None", 20,
-                                     pygame.image.load('Cards New/greenDrawTwo' + '.png')) for _ in range(0, 2)]
+        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\green'+ str(i)+'.png'))
+                                                                                      for i in range(1, 10)] \
+                          + [UnoCard("Green", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenskip'+ '.png')) for _ in range(0, 2)] + [
+                              UnoCard("Green", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenreverse'+ '.png')) for _ in range(0, 2)] \
+                          + [UnoCard("Green", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i, i, pygame.image.load('Cards New/blue' + str(i) + '.png')) for i
-                          in range(0, 10)] + [
-                             UnoCard("Blue", "Normal", i, i, pygame.image.load('Cards New/blue' + str(i) + '.png')) for
-                             i in range(1, 10)] \
-                         + [UnoCard("Blue", "Skip", "None", 20, pygame.image.load('Cards New/blueskip' + '.png')) for _
-                            in range(0, 2)] + [
-                             UnoCard("Blue", "Reverse", "None", 20, pygame.image.load('Cards New/bluereverse' + '.png'))
-                             for _ in range(0, 2)] \
-                         + [UnoCard("Blue", "Draw Two", "None", 20, pygame.image.load('Cards New/blueDrawTwo' + '.png'))
-                            for _ in range(0, 2)]
+        self.blueCards = [UnoCard("Blue", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blue'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blue'+ str(i)+'.png')) for
+                                                                                    i in range(1, 10)] \
+                         + [UnoCard("Blue", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blueskip'+ '.png')) for _ in range(0, 2)] + [
+                             UnoCard("Blue", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\bluereverse'+ '.png')) for _ in range(0, 2)] \
+                         + [UnoCard("Blue", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blueDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.yellowCards = [UnoCard("Yellow", "Normal", i, i, pygame.image.load('Cards New/yellow' + str(i) + '.png'))
-                            for i in range(0, 10)] + [
-                               UnoCard("Yellow", "Normal", i, i,
-                                       pygame.image.load('Cards New/yellow' + str(i) + '.png')) for i in range(1, 10)] \
-                           + [UnoCard("Yellow", "Skip", "None", 20, pygame.image.load('Cards New/yellowskip' + '.png'))
-                              for _ in range(0, 2)] + [
-                               UnoCard("Yellow", "Reverse", "None", 20,
-                                       pygame.image.load('Cards New/yellowreverse' + '.png')) for _ in range(0, 2)] \
-                           + [UnoCard("Yellow", "Draw Two", "None", 20,
-                                      pygame.image.load('Cards New/yellowDrawTwo' + '.png')) for _ in range(0, 2)]
+        self.yellowCards = [UnoCard("Yellow", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellow'+ str(i)+'.png')) for i in range(0, 10)] + [
+            UnoCard("Yellow", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellow'+ str(i)+'.png')) for i in range(1, 10)] \
+                           + [UnoCard("Yellow", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowskip'+ '.png')) for _ in range(0, 2)] + [
+                               UnoCard("Yellow", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowreverse'+ '.png')) for _ in range(0, 2)] \
+                           + [UnoCard("Yellow", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.redCards = [UnoCard("Red", "Normal", i, i, pygame.image.load('Cards New/red' + str(i) + '.png')) for i in
-                         range(0, 10)] + [
-                            UnoCard("Red", "Normal", i, i, pygame.image.load('Cards New/red' + str(i) + '.png')) for i
-                            in range(1, 10)] \
-                        + [UnoCard("Red", "Skip", "None", 20, pygame.image.load('Cards New/redskip' + '.png')) for _ in
-                           range(0, 2)] + [
-                            UnoCard("Red", "Reverse", "None", 20, pygame.image.load('Cards New/redreverse' + '.png'))
-                            for _ in range(0, 2)] \
-                        + [UnoCard("Red", "Draw Two", "None", 20, pygame.image.load('Cards New/redDrawTwo' + '.png'))
-                           for _ in range(0, 2)]
+        self.redCards = [UnoCard("Red", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\red'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\red'+ str(i)+'.png')) for i
+                                                                                  in range(1, 10)] \
+                        + [UnoCard("Red", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redskip'+ '.png')) for _ in range(0, 2)] + [
+                            UnoCard("Red", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redreverse'+ '.png')) for _ in range(0, 2)] \
+                        + [UnoCard("Red", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50,
-                                   pygame.image.load('Cards New/blackcolorchange.png')) for _ in range(0, 4)] + [
-                              UnoCard("Black", "Draw Four", "None", 50,
-                                      pygame.image.load('Cards New/blackDrawFour.png')) for _ in range(0, 4)]
+        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blackcolorchange.png')) for _ in range(0, 4)] + [
+            UnoCard("Black", "Draw Four", "None", 50, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blackDrawFour.png')) for _ in range(0, 4)]
 
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
         print(self.blackCards)
         random.shuffle(shuffledDeck)
-
+        
         return shuffledDeck
+        
 
     # Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         # Hand out top 7 cards from the draw pile to the current player's deck.
-
-        # for UnoCard in self.drawPile[0:7]:
-        #     playerDeck.append(UnoCard)
+        for UnoCard in self.drawPile[0:7]:
+            playerDeck.append(UnoCard)
 
             # Drop those cards from the "self.drawPile".
-
         global CardList
         CardList = []
         i = 0
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
-
             self.drawPile.pop(self.drawPile.index(UnoCard))
-
+    
         return self.drawPile
 
     # Execute all the pre-game / pre - player activity routines.
     def startPreGame(self, shuffledNewDeck):
+        
+        #Interface set up
+        BLUE = 70,130,180
+        screen.fill(BLUE)
+        fps = 60
+        fpsClock = pygame.time.Clock()
+        pygame.display.set_caption('Uno') 
+        start = True
+        count = 21
+
+            
+        if count > 0:
+            for l in range(7):
+                #Left side comp cards
+                x = 100 + l*60
+                count -= 1
+                screen.blit(self.image_small,(100,(x)))
+                pygame.display.update()
+                time.sleep(0.1)
+                    
+            for f in range(7):
+                #Right side comp cards
+                x = 100 + f*60
+                count -= 1
+                screen.blit(self.image_right,(1066,(x)))
+                pygame.display.update()
+                time.sleep(0.1)
+
+            for k in range(7):
+                #Right side comp cards
+                x = 423 + k*50
+                count -= 1
+                screen.blit(self.image_top,(x,60))
+                pygame.display.update()
+                time.sleep(0.1)
+
+            screen.blit(self.image_top,(650,280))
+
+        else:
+            start = False
+        print('test')
+
         # Create draw pile out of our shuffled deck.
         self.drawPile = shuffledNewDeck
 
@@ -171,7 +168,6 @@ class Uno:
         self.playerList.append(self.humanPlayer)
 
         # Ask for number of players.
-
         while True:
             try:
                 AICount = int(input("Enter number of AI opponents to play against: "))
@@ -180,76 +176,9 @@ class Uno:
                 break
             except:
                 print("Invalid input, please enter a number")
-
-        # Interface set up
-        BLUE = 70, 130, 180
-        screen.fill(BLUE)
-        fps = 60
-        fpsClock = pygame.time.Clock()
-        pygame.display.set_caption('Uno')
-        start = True
-        # count = 21
-        count = AICount * 7
-
-        if count > 0:
-            for l in range(7):
-                # Left side comp cards
-                x = 100 + l * 60
-                count -= 1
-                screen.blit(self.image_small, (100, (x)))
-                pygame.display.update()
-                time.sleep(0.1)
-
-            for f in range(7):
-                # Right side comp cards
-                x = 100 + f * 60
-                count -= 1
-                screen.blit(self.image_right, (1066, (x)))
-                pygame.display.update()
-                time.sleep(0.1)
-
-            for k in range(7):
-                # Right side comp cards
-                x = 423 + k * 50
-                count -= 1
-                screen.blit(self.image_top, (x, 60))
-                pygame.display.update()
-                time.sleep(0.1)
-
-            screen.blit(self.image_top, (650, 280))
-
-        else:
-            start = False
-        print('test')
-
-        # # Create draw pile out of our shuffled deck.
-        # self.drawPile = shuffledNewDeck
-        #
-        # # Add human player to the list of player.
-        # self.humanPlayer = Player(1)
-        # self.playerList.append(self.humanPlayer)
-        #
-        # # Ask for number of players.
-        #
-        # while True:
-        #     try:
-        #         AICount = int(input("Enter number of AI opponents to play against: "))
-        #         for i in range(0, AICount):
-        #             self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-        #         break
-        #     except:
-        #         print("Invalid input, please enter a number")
-
-
-
         # AICount = int(input("Enter number of AI opponents to play against: "))
         # for i in range(0, AICount):
         #     self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-
-        # AICount = int(input("Enter number of AI opponents to play against: "))
-        # for i in range(0, AICount):
-        #     self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-        # >>>>>>> wip-pygame-interface
 
         # Deal 7 cards to player and AIs.
         # DEBUG
@@ -296,15 +225,17 @@ class Uno:
         for i in self.playerList:
             for j in i.plDeck:
                 globals.winnerScore += j.cardValue
+        # pagetext((900,405),"#ffffff",25,globals.winnerScore)
         return globals.winnerScore
+
 
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
         x_top = self.drawPile[0].cardimage
         global Top_card
-        Top_card = pygame.transform.smoothscale(x_top, (100, 150))
-        screen.blit(Top_card, (500, 280))
-        # screen.blit(self.image,(100,100))
+        Top_card = pygame.transform.smoothscale(x_top,(100,150))
+        screen.blit(Top_card,(500,280))
+        #screen.blit(self.image,(100,100))
         pygame.display.update()
 
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
@@ -314,7 +245,6 @@ class Uno:
         globals.currentGameType = self.topDiscardPileCard.cardType
         self.discardPile.append(self.topDiscardPileCard)
         self.drawPile.pop(0)
-        # <<<<<<< HEAD
         ########## test ##########
         for i in self.playerList:
             print(i.playerNo)
@@ -334,7 +264,7 @@ class Uno:
                     break
             if exit_flag:
                 break
-            # while len(self.drawPile) != 0:
+        # while len(self.drawPile) != 0:
 
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
                                                                                         self.discardPile)
@@ -353,18 +283,13 @@ class Uno:
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))
         print("Score is " + str(self.winnerScore()))
-        # =======
         self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
                                                                       self.discardPile)
 
-
-# >>>>>>> wip-pygame-interface
-
-# Interface for the discard pile
-
+        #Interface for the discard pile
+        
 
 # Class for handling Player activities.
-# <<<<<<< HEAD
 class Player:
     def __init__(self, playerNo, plDeck=[]):
         # super().__init__()
@@ -430,8 +355,6 @@ class Player:
                 globals.current = newGame.moveToNextPlayer(globals.current)
                 return drawPile, discardPile
 
-
-# =======
 class Player():
     def __init__(self, playerNo, plDeck=[]):
         super().__init__()
@@ -439,14 +362,12 @@ class Player():
         self.plDeck = plDeck
 
     def playTurn(self, drawPile, currentGameColour, discardPile):
-        # >>>>>>> wip-pygame-interface
         # Select a card from your hand, and place it below the discard pile.
 
         print(f"Player {self.playerNo} -- Cards on hand:\n")
         for i in self.plDeck:
             print(i)
 
-        # <<<<<<< HEAD
         # Initiate special rule.
 
         cardChoice = int(
@@ -458,32 +379,31 @@ class Player():
 
         # Take top card from draw pile.
         print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
-
-        # Set up the cards
-        card_interface = [pygame.transform.smoothscale(self.plDeck[0].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[1].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[2].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[3].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[4].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[5].cardimage, (100, 150)),
-                          pygame.transform.smoothscale(self.plDeck[6].cardimage, (100, 150)),
-                          ]
-
-        # playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage, (100, 150)), (300, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage, (100, 150)), (400, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage, (100, 150)), (500, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage, (100, 150)), (600, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage, (100, 150)), (700, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage, (100, 150)), (800, 500))
-        screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage, (100, 150)), (900, 500))
+        #Set up the cards
+        card_interface = [pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)), 
+        pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),
+        pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)), 
+        ]
+    
+        #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(300, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),(700, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),(800, 500))
+        screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)),(900, 500))
 
         pygame.display.update()
 
         # Initiate special rule.
-        # cardChoice = int(
-        # input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
-        # Card choice select interface
+        #cardChoice = int(
+        #input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
+        #Card choice select interface
 
         start = True
         while start:
@@ -492,84 +412,77 @@ class Player():
                     pygame.quit()
             for i in range(1):
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    x, y = event.pos
+                    x,y = event.pos
 
-                    first_card_rect = pygame.transform.smoothscale(card_interface[0], (100, 150)).get_rect(
-                        topleft=(300, 500))
-                    second_card_rect = pygame.transform.smoothscale(card_interface[1], (100, 150)).get_rect(
-                        topleft=(400, 500))
-                    third_card_rect = pygame.transform.smoothscale(card_interface[2], (100, 150)).get_rect(
-                        topleft=(500, 500))
-                    fourth_card_rect = pygame.transform.smoothscale(card_interface[3], (100, 150)).get_rect(
-                        topleft=(600, 500))
-                    fifth_card_rect = pygame.transform.smoothscale(card_interface[4], (100, 150)).get_rect(
-                        topleft=(700, 500))
-                    sixth_card_rect = pygame.transform.smoothscale(card_interface[5], (100, 150)).get_rect(
-                        topleft=(800, 500))
-                    seventh_card_rect = pygame.transform.smoothscale(card_interface[6], (100, 150)).get_rect(
-                        topleft=(900, 500))
+                    first_card_rect = pygame.transform.smoothscale(card_interface[0],(100,150)).get_rect(topleft = (300,500))
+                    second_card_rect = pygame.transform.smoothscale(card_interface[1],(100,150)).get_rect(topleft = (400,500))
+                    third_card_rect = pygame.transform.smoothscale(card_interface[2],(100,150)).get_rect(topleft = (500,500))
+                    fourth_card_rect = pygame.transform.smoothscale(card_interface[3],(100,150)).get_rect(topleft = (600,500))
+                    fifth_card_rect = pygame.transform.smoothscale(card_interface[4],(100,150)).get_rect(topleft = (700,500))
+                    sixth_card_rect = pygame.transform.smoothscale(card_interface[5],(100,150)).get_rect(topleft = (800,500))
+                    seventh_card_rect = pygame.transform.smoothscale(card_interface[6],(100,150)).get_rect(topleft = (900,500))
                     draw_pile_image = drawPile[0].cardimage
 
                     counter = 1
                     while counter > 0:
-                        # Check if the card is clicked
-                        if first_card_rect.collidepoint(x, y):
-                            pygame.draw.rect(screen, BLUE, (300, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (300, 500))
+                        #Check if the card is clicked 
+                        if  first_card_rect.collidepoint(x,y):       
+                            pygame.draw.rect(screen, BLUE, (300,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(300, 500))
                             pygame.display.update()
                             position = 1
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif second_card_rect.collidepoint(x, y):
-                            pygame.draw.rect(screen, BLUE, (400, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (400, 500))
+                        elif  second_card_rect.collidepoint(x,y):     
+                            pygame.draw.rect(screen, BLUE, (400,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(400, 500))
                             pygame.display.update()
                             position = 2
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif third_card_rect.collidepoint(x, y):
-
-                            pygame.draw.rect(screen, BLUE, (500, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (500, 500))
+                        elif third_card_rect.collidepoint(x,y):
+                                
+                            pygame.draw.rect(screen, BLUE, (500,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
                             pygame.display.update()
                             position = 3
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif fourth_card_rect.collidepoint(x, y):
-
-                            pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (600, 500))
+                        elif fourth_card_rect.collidepoint(x,y):
+                            
+                            pygame.draw.rect(screen, BLUE, (600,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(600, 500))
                             pygame.display.update()
                             position = 4
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif fifth_card_rect.collidepoint(x, y):
-
-                            pygame.draw.rect(screen, BLUE, (700, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (700, 500))
+                        elif fifth_card_rect.collidepoint(x,y):
+                            
+                            pygame.draw.rect(screen, BLUE, (700,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(700, 500))
                             pygame.display.update()
                             position = 5
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif sixth_card_rect.collidepoint(x, y):
-
-                            pygame.draw.rect(screen, BLUE, (800, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (800, 500))
+                        elif  sixth_card_rect.collidepoint(x,y):
+                                
+                            pygame.draw.rect(screen, BLUE, (800,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(800, 500))
                             pygame.display.update()
                             position = 6
-                            counter = counter - 1
+                            counter = counter -1
 
-                        elif seventh_card_rect.collidepoint(x, y):
-
-                            pygame.draw.rect(screen, BLUE, (900, 500, 100, 150))
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (900, 500))
+                        elif seventh_card_rect.collidepoint(x,y):
+                            
+                            pygame.draw.rect(screen, BLUE, (900,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(900, 500))
                             pygame.display.update()
                             position = 7
-                            counter = counter - 1
-
+                            counter = counter -1
+                
                     cardChoice = position
         pygame.quit()
-
+                    
         # Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
@@ -722,74 +635,71 @@ class Player():
             else:
                 print("Choice out of range, please enter the correct number")
 
-        # Return a tuple consisting of the current drawPile and discardPile.
-        # return drawPile, discardPile
-        print("Current game colour: ", currentGameColour)
+            # Return a tuple consisting of the current drawPile and discardPile.
+            # return drawPile, discardPile
+            print("Current game colour: ", currentGameColour)
 
-        # Ask player to for their choice.
-        playerChoice = int(input(
-            "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
-        # If 0, draw a card and pass.
-        if (playerChoice == 0):
-            self.plDeck.insert(0, drawPile[0])
-            drawPile.pop(0)
+            # Ask player to for their choice.
+            playerChoice = int(input(
+                "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
+            # If 0, draw a card and pass.
+            if (playerChoice == 0):
+                self.plDeck.insert(0, drawPile[0])
+                drawPile.pop(0)
 
-            # Select from the draw pile if no card can be played interface
-            start = True
-            while start:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                for i in range(1):
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        x, y = event.pos
+                #Select from the draw pile if no card can be played interface 
+                start = True
+                while start:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                    for i in range(1):
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            x,y = event.pos
 
-                        draw_pile_rect = pygame.transform.smoothscale(draw_pile_image, (100, 150)).get_rect(
-                            topleft=(650, 280))
+                            draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
 
-                        if draw_pile_rect.collidepoint(x, y):
-                            screen.blit(pygame.transform.smoothscale(draw_pile_image, (100, 150)), (500, 500))
-                            pygame.display.update()
+                            if  draw_pile_rect.collidepoint(x,y):       
+                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                                pygame.display.update()
 
-            pygame.quit()
+                pygame.quit()
 
-            print("\nPlayer Deck after selecting card.....")
-            for i in self.plDeck:
-                print(i)
+                print("\nPlayer Deck after selecting card.....")
+                for i in self.plDeck:
+                    print(i)
 
-            print("\nDiscard pile after selecting card.....")
-            for i in discardPile:
-                print(i)
-            print(f"\nPlayer {self.playerNo} turn complete.\n")
-            return drawPile, discardPile
+                print("\nDiscard pile after selecting card.....")
+                for i in discardPile:
+                    print(i)
+                print(f"\nPlayer {self.playerNo} turn complete.\n")
+                return drawPile, discardPile
 
-        # If 1-n, validate the card and proceed.
-        if (playerChoice in range(1, (len(self.plDeck) + 1))):
+            #If 1-n, validate the card and proceed.
+            if(playerChoice in range(1, (len(self.plDeck) + 1))):
 
-            # If colour is same but number is different or a special card, can play.
-            if (self.plDeck[playerChoice - 1].cardColour == currentGameColour):
-                # If normal, play.
-                if (self.plDeck[playerChoice - 1].cardType == "Normal"):
-                    # Make the selection as the top card of the discard pile and add it to discard pile.
-                    discardPile.insert(0, self.plDeck[playerChoice - 1])
-                    # Remove card from player deck.
-                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                    print("Player Deck after selecting card.....")
-                    for i in self.plDeck:
-                        print(i)
-                    return drawPile, discardPile
-            # If card is special, execute special card logic.
+            #If colour is same but number is different or a special card, can play.
+                if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
+                    #If normal, play.
+                    if(self.plDeck[playerChoice - 1].cardType == "Normal"):
+                        #Make the selection as the top card of the discard pile and add it to discard pile.
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        #Remove card from player deck.
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        print("Player Deck after selecting card.....")
+                        for i in self.plDeck:
+                            print(i)
+                        return drawPile, discardPile
+                #If card is special, execute special card logic.
 
-            # If number is same, but colour is different, can play. (More or less the same as above.)
+                #If number is same, but colour is different, can play. (More or less the same as above.)
 
-            # If colour change, can play.
+                #If colour change, can play.
 
-            # If draw4, can only play if no matching colour card on hand.
+                #If draw4, can only play if no matching colour card on hand.
 
-        # Return a tuple consisting of the current drawPile and discardPile.
-        return drawPile, discardPile
-
-    # >>>>>>> wip-pygame-interface
+            #Return a tuple consisting of the current drawPile and discardPile.
+            return drawPile,discardPile
 
     def __repr__(self):
         playerTemp = []
@@ -798,8 +708,6 @@ class Player():
 
         return repr(f"Name: {type(self)} | Deck: {playerTemp}")
 
-
-# <<<<<<< HEAD
 
 class AIPlayer(Player):
     def __init__(self, playerNo, plDeck=[]):
@@ -901,26 +809,17 @@ class AIPlayer(Player):
 
 # Card class.
 class UnoCard:
-    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None", cardimage='None', x='None', y='None'):
-        self.cardimage = cardimage
+    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
+        pass
+
+
+# Card class.
+class UnoCard:
+    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None", cardimage = 'None',x = 'None', y ='None'):
         self.cardNumber = cardNumber
         self.cardColour = cardColour
         self.cardType = cardType
         self.cardValue = cardValue
-        self.x = x
-        self.y = y
-
-    def __repr__(self):
-        return repr(
-            f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue}")
-        # aicard = []
-
-        # ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-        # ai = AI_Strategy.AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-
-        # newGame.startPreGame(newGame.createNewDeck())
-
-        # newGame.startGame()
         self.cardimage = cardimage
         self.x = x
         self.y = y
@@ -929,21 +828,20 @@ class UnoCard:
         return repr(
             f"Number on Card: {self.cardNumber} | Card Colour: {self.cardColour} | Card Type: {self.cardType} | Card Value: {self.cardValue} | Image: {self.cardimage}")
 
-    def Image(self, x, y):
+    def Image(self,x,y):
         z = self.cardimage
-        screen.blit(z, (x, y))
-
+        screen.blit(z,(x,y))
 
 start = True
 while start:
     for event in pygame.event.get():
-        if event.type == QUIT:
-            start = False
-            pygame.quit()
-        newGame = Uno()
+            if event.type == QUIT:
+                    start = False
+                    pygame.quit()
+            newGame = Uno()
 
-        newGame.startPreGame(newGame.createNewDeck())
+            newGame.startPreGame(newGame.createNewDeck())
 
-        newGame.startGame()
+            newGame.startGame()
 
 pygame.quit()
