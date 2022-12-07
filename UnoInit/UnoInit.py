@@ -807,6 +807,7 @@ class AIPlayer(Player):
 # Card class.
 class UnoCard:
     def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
+        pass
 
 
 # Card class.
