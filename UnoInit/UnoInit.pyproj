@@ -22,15 +22,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\PlayerClass.py" />
-    <Compile Include="Base Classes\UnoClass.py" />
     <Compile Include="UnoInit.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base Classes\" />
     <Folder Include="BaseClasses\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Base Classes\.gitkeep" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
