@@ -177,16 +177,16 @@ class Uno:
         # if globals.currentGameType == 'Draw Two':
 
         #########################    Real one
-        # exit_flag = False
-        # while not globals.GameOver:
-        #     for i in self.playerList:
-        #         if len(i.plDeck) == 0:
-        #             exit_flag = True
-        #             globals.GameOver = not globals.GameOver
-        #             break
-        #     if exit_flag:
-        #         break
-        while len(self.drawPile) != 0:
+        exit_flag = False
+        while not globals.GameOver:
+            for i in self.playerList:
+                if len(i.plDeck) != 0:
+                    exit_flag = True
+                    globals.GameOver = not globals.GameOver
+                    break
+            if exit_flag:
+                break
+        # while len(self.drawPile) != 0:
 
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
                                                                                         self.discardPile)
