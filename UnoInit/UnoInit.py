@@ -188,6 +188,7 @@ class Uno:
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
         x_top = self.drawPile[0].cardimage
+        global Top_card
         Top_card = pygame.transform.smoothscale(x_top,(100,150))
         screen.blit(Top_card,(500,280))
         #screen.blit(self.image,(100,100))
@@ -259,50 +260,68 @@ class Player():
                     fifth_card_rect = pygame.transform.smoothscale(card_interface[4],(100,150)).get_rect(topleft = (700,500))
                     sixth_card_rect = pygame.transform.smoothscale(card_interface[5],(100,150)).get_rect(topleft = (800,500))
                     seventh_card_rect = pygame.transform.smoothscale(card_interface[6],(100,150)).get_rect(topleft = (900,500))
+                    draw_pile_image = drawPile[0].cardimage
 
-                    #Check if the card is clicked 
-                    if  first_card_rect.collidepoint(x,y):       
-                        pygame.draw.rect(screen, BLUE, (300,500,100,150))
-                        pygame.display.update()
-                        position = 1
+                    counter = 1
+                    while counter > 0:
+                        #Check if the card is clicked 
+                        if  first_card_rect.collidepoint(x,y):       
+                            pygame.draw.rect(screen, BLUE, (300,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(300, 500))
+                            pygame.display.update()
+                            position = 1
+                            counter = counter -1
 
-                    if  second_card_rect.collidepoint(x,y):     
-                        pygame.draw.rect(screen, BLUE, (400,500,100,150))
-                        pygame.display.update()
-                        position = 2
+                        elif  second_card_rect.collidepoint(x,y):     
+                            pygame.draw.rect(screen, BLUE, (400,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(400, 500))
+                            pygame.display.update()
+                            position = 2
+                            counter = counter -1
 
-                    if third_card_rect.collidepoint(x,y):
+                        elif third_card_rect.collidepoint(x,y):
+                                
+                            pygame.draw.rect(screen, BLUE, (500,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                            pygame.display.update()
+                            position = 3
+                            counter = counter -1
+
+                        elif fourth_card_rect.collidepoint(x,y):
                             
-                        pygame.draw.rect(screen, BLUE, (500,500,100,150))
-                        pygame.display.update()
-                        position = 3
+                            pygame.draw.rect(screen, BLUE, (600,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(600, 500))
+                            pygame.display.update()
+                            position = 4
+                            counter = counter -1
 
-                    if fourth_card_rect.collidepoint(x,y):
-                        
-                        pygame.draw.rect(screen, BLUE, (600,500,100,150))
-                        pygame.display.update()
-                        position = 4
-
-                    if fifth_card_rect.collidepoint(x,y):
-                        
-                        pygame.draw.rect(screen, BLUE, (700,500,100,150))
-                        pygame.display.update()
-                        position = 5
-
-                    if  sixth_card_rect.collidepoint(x,y):
+                        elif fifth_card_rect.collidepoint(x,y):
                             
-                        pygame.draw.rect(screen, BLUE, (800,500,100,150))
-                        pygame.display.update()
-                        position = 6
+                            pygame.draw.rect(screen, BLUE, (700,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(700, 500))
+                            pygame.display.update()
+                            position = 5
+                            counter = counter -1
 
-                    if seventh_card_rect.collidepoint(x,y):
-                        
-                        pygame.draw.rect(screen, BLUE, (900,500,100,150))
-                        pygame.display.update()
-                        position = 7
+                        elif  sixth_card_rect.collidepoint(x,y):
+                                
+                            pygame.draw.rect(screen, BLUE, (800,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(800, 500))
+                            pygame.display.update()
+                            position = 6
+                            counter = counter -1
 
-                    cardChoice = position
-                    print(cardChoice)
+                        elif seventh_card_rect.collidepoint(x,y):
+                            
+                            pygame.draw.rect(screen, BLUE, (900,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(900, 500))
+                            pygame.display.update()
+                            position = 7
+                            counter = counter -1
+
+                        cardChoice = position
+            
+                        print(cardChoice)
 
         pygame.quit()
 
@@ -314,6 +333,12 @@ class Player():
         # Take top card from draw pile.
         print("\nPlayer 1 takes the top card from the draw pile to their hand...")
         self.plDeck.insert(0, drawPile[0])
+
+        #Interface for taking card from draw pile
+    
+                
+
+
 
         # Play a card or pick another card to pass.
         print("\nCards on hand pre execute:\n")
