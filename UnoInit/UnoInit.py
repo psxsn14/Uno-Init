@@ -47,9 +47,6 @@ class Uno:
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
 
-        # Which player is current playing
-        # self.currentPlayerIndex = 0
-
         # ascending or not
         self.ascending = True
 
@@ -62,26 +59,26 @@ class Uno:
                               UnoCard("Green", "Reverse", "None", 20) for _ in range(0, 2)] \
                           + [UnoCard("Green", "Draw Two", "None", 20) for _ in range(0, 2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
-                                                                                    i in range(1, 10)] \
-                         + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
-                             UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
-                         + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
-            UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
-                           + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
-                               UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
-                           + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
-                                                                                  in range(1, 10)] \
-                        + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
-                            UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
-                        + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
-
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
-            UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
+        # self.blueCards = [UnoCard("Blue", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i) for
+        #                                                                             i in range(1, 10)] \
+        #                  + [UnoCard("Blue", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                      UnoCard("Blue", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                  + [UnoCard("Blue", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.yellowCards = [UnoCard("Yellow", "Normal", i, i) for i in range(0, 10)] + [
+        #     UnoCard("Yellow", "Normal", i, i) for i in range(1, 10)] \
+        #                    + [UnoCard("Yellow", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                        UnoCard("Yellow", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                    + [UnoCard("Yellow", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.redCards = [UnoCard("Red", "Normal", i, i) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i) for i
+        #                                                                           in range(1, 10)] \
+        #                 + [UnoCard("Red", "Skip", "None", 20) for _ in range(0, 2)] + [
+        #                     UnoCard("Red", "Reverse", "None", 20) for _ in range(0, 2)] \
+        #                 + [UnoCard("Red", "Draw Two", "None", 20) for _ in range(0, 2)]
+        #
+        # self.blackCards = [UnoCard("Black", "ColorChange", "None", 50) for _ in range(0, 4)] + [
+        #     UnoCard("Black", "Draw Four", "None", 50) for _ in range(0, 4)]
 
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
@@ -108,14 +105,17 @@ class Uno:
         self.playerList.append(self.humanPlayer)
 
         # Ask for number of players.
-        while True:
-            try:
-                AICount = int(input("Enter number of AI opponents to play against: "))
-                for i in range(0, AICount):
-                    self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
-                break
-            except:
-                print("Invalid input, please enter a number")
+        # while True:
+        #     try:
+        #         AICount = int(input("Enter number of AI opponents to play against: "))
+        #         for i in range(0, AICount):
+        #             self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
+        #         break
+        #     except:
+        #         print("Invalid input, please enter a number")
+        AICount = int(input("Enter number of AI opponents to play against: "))
+        for i in range(0, AICount):
+            self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
 
         # Deal 7 cards to player and AIs.
         # DEBUG
@@ -183,17 +183,17 @@ class Uno:
         # For the first card
         # if globals.currentGameType == 'Draw Two':
 
-
-        exit_flag = False
-        while not globals.GameOver:
-            for i in self.playerList:
-                if len(i.plDeck) != 0:
-                    exit_flag = True
-                    globals.GameOver = not globals.GameOver
-                    break
-            if exit_flag:
-                break
-        # while len(self.drawPile) != 0:
+        #########################    Real one
+        # exit_flag = False
+        # while not globals.GameOver:
+        #     for i in self.playerList:
+        #         if len(i.plDeck) == 0:
+        #             exit_flag = True
+        #             globals.GameOver = not globals.GameOver
+        #             break
+        #     if exit_flag:
+        #         break
+        while len(self.drawPile) != 0:
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
                                                                                         self.discardPile)
 
@@ -214,7 +214,7 @@ class Uno:
 # Class for handling Player activities.
 class Player:
     def __init__(self, playerNo, plDeck=[]):
-        super().__init__()
+        # super().__init__()
         self.playerNo = playerNo
         self.plDeck = plDeck
 
@@ -450,21 +450,59 @@ class Player:
 
 
 class AIPlayer(Player):
-    # def __init__(self, playerNo, plDeck=[]):
-    #     super().__init__()
-    #     self.playerNo = playerNo
-    #     self.plDeck = plDeck
+    def __init__(self, playerNo, plDeck=[]):
+        super().__init__(playerNo, plDeck)
+        # self.playerNo = playerNo
+        # self.plDeck = plDeck
     #
-    # def playTurn(self, drawPile, discardPile):
-    #     # AI action
-    #     # 无牌可出，摸牌
-    #     if command == "draw":
-    #         pass
-    #     # 出一张牌
-    #     if command == "play":
-    #         pass
+    def playTurn(self, drawPile, discardPile):
+        # AI action
+        # aicard = []
+        ai = AI_Strategy.AI(self.plDeck, globals.currentGameCard, drawPile)
+        ai_discard, _ = ai.change_card()
+        # ai.can_play()
+        ai_play, action = ai.play_action()
+        print("AI discard: " + str(ai_discard))
+        print("AI play: " + str(ai_play))
+        print("AI action: " + action)
+
+        # discard one
+        discardPile.append(ai_discard)
+        self.plDeck.remove(ai_discard)
+        # draw one
+        self.plDeck.insert(0, drawPile[0])
+        drawPile.pop(0)
+
+        # judge by action
+        if action == 'play':
+            if ai_play.cardType == "Normal":
+                pass
+            elif ai_play.cardType == "Reverse":
+                pass
+            elif ai_play.cardType == "Reverse":
+                pass
+            elif ai_play.cardType == "Reverse":
+                pass
+            elif ai_play.cardType == "Reverse":
+                pass
+            elif ai_play.cardType == "Reverse":
+                pass
+
+
+        return drawPile, discardPile
+        # print("###############################AI change card below")
+        # ai.change_card()
+        # print("###############################AI canplay below")
+        # print("###############################AI play action below")
+        # ai.play_action()
+        # 无牌可出，摸牌
+        # if command == "draw":
+        #     pass
+        # # 出一张牌
+        # if command == "play":
+        #     pass
         #
-        pass
+        # pass
     # Insert AI Code.
 
 
@@ -482,10 +520,10 @@ class UnoCard:
 
 
 newGame = Uno()
-aicard = []
+# aicard = []
 
 # ai = AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
-ai = AI_Strategy.AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
+# ai = AI_Strategy.AI(aicard, newGame.topDiscardPileCard, newGame.drawPile)
 
 
 newGame.startPreGame(newGame.createNewDeck())

@@ -1,4 +1,5 @@
 # from UnoInit import *
+import random
 
 
 #  AI的基本功能：根据规则，1-换牌 2-执行action
@@ -105,6 +106,19 @@ class AI:
 
     # What AI should do
     def play_action(self):
+        self.can_play_cards = []
+        print("AI can play")
+        show_card_list(self.hand_list)
+        for i in self.hand_list:
+            if i.cardNumber is not None:  # 数字牌情况:颜色相同或者数字相同
+                if i.cardColour == self.top_card.cardColour or i.cardNumber == self.top_card.cardNumber:
+                    self.can_play_cards.append(i)
+                    # print(i)
+            else:  # 功能牌情况：黑色牌或者功能相同
+                if i.cardColour == 'Black' or i.cardcardType == self.top_card.cardType:
+                    self.can_play_cards.append(i)
+                    # print(i)
+                pass
 
         if len(self.can_play_cards) == 0:
             print("No card can play, draw a card")
