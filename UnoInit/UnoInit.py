@@ -318,13 +318,10 @@ class Player():
                             pygame.display.update()
                             position = 7
                             counter = counter -1
-
-                        cardChoice = position
-            
-                        print(cardChoice)
-
+                
+                    cardChoice = position
         pygame.quit()
-
+                    
         # Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
@@ -333,12 +330,6 @@ class Player():
         # Take top card from draw pile.
         print("\nPlayer 1 takes the top card from the draw pile to their hand...")
         self.plDeck.insert(0, drawPile[0])
-
-        #Interface for taking card from draw pile
-    
-                
-
-
 
         # Play a card or pick another card to pass.
         print("\nCards on hand pre execute:\n")
@@ -354,6 +345,25 @@ class Player():
         if (playerChoice == 0):
             self.plDeck.insert(0, drawPile[0])
             drawPile.pop(0)
+        
+            #Select from the draw pile if no card can be played interface 
+            start = True
+            while start:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                for i in range(1):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        x,y = event.pos
+
+                        draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
+
+                        if  draw_pile_rect.collidepoint(x,y):       
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                            pygame.display.update()
+
+            pygame.quit()
+
             print("\nPlayer Deck after selecting card.....")
             for i in self.plDeck:
                 print(i)
