@@ -1,5 +1,6 @@
 GameOver = False
 current = 0
+ascending = True
 currentGameCard = None
 currentGameColour = ""
 currentGameNumber = 0

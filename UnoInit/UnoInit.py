@@ -24,9 +24,6 @@ class Uno:
     drawPile = []
     discardPile = []
 
-    # global current
-    # global ascending
-
     def __init__(self):
         # Instance variables for card groups.
         self.greenCards = []
@@ -46,9 +43,6 @@ class Uno:
 
         # Top card from the discard pile that sets the current game colour.
         self.topDiscardPileCard = None
-
-        # ascending or not
-        self.ascending = True
 
     # Create a new shuffled deck.
     def createNewDeck(self):
@@ -140,7 +134,7 @@ class Uno:
         ###
 
     def moveToNextPlayer(self, current):
-        if self.ascending:
+        if globals.ascending:
             if current == len(self.playerList) - 1:
                 current = 0
             else:
@@ -163,7 +157,6 @@ class Uno:
             for j in i.plDeck:
                 globals.winnerScore += j.cardValue
         return globals.winnerScore
-
 
     def startGame(self):
         self.topDiscardPileCard = self.drawPile[0]
@@ -194,14 +187,17 @@ class Uno:
         #     if exit_flag:
         #         break
         while len(self.drawPile) != 0:
+
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self.drawPile,
                                                                                         self.discardPile)
 
             globals.current = self.moveToNextPlayer(globals.current)
             globals.currentGameCard = self.discardPile[0]
             globals.currentGameNumber = self.discardPile[0].cardNumber
-            globals.currentGameColour = self.discardPile[0].cardColour
             globals.currentGameType = self.discardPile[0].cardType
+            if globals.currentGameType != "ColorChange" or "Draw Four":
+                globals.currentGameColour = self.discardPile[0].cardColour
+            # globals.currentGameType = self.discardPile[0].cardType
 
             globals.gameRound += 1
             print('Round ' + str(globals.gameRound))
@@ -233,7 +229,7 @@ class Player:
                 return drawPile, discardPile
 
             elif globals.currentGameType == 'Reverse':
-                newGame.ascending = not newGame.ascending
+                globals.ascending = not globals.ascending
 
             elif globals.currentGameType == 'ColorChange':
                 while True:
@@ -303,7 +299,8 @@ class Player:
             print(i)
 
         # print("Current game colour: ", globals.currentGameColour)
-        print(f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
+        print(
+            f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
 
         # inturn = True
         # Check the card is valid or not
@@ -415,7 +412,7 @@ class Player:
 
                         ######## Reverse ########
                         if self.plDeck[playerChoice - 1].cardType == "Reverse":
-                            newGame.ascending = not newGame.ascending
+                            globals.ascending = not globals.ascending
                             discardPile.insert(0, self.plDeck[playerChoice - 1])
                             # Remove card from player deck.
                             self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
@@ -454,6 +451,7 @@ class AIPlayer(Player):
         super().__init__(playerNo, plDeck)
         # self.playerNo = playerNo
         # self.plDeck = plDeck
+
     #
     def playTurn(self, drawPile, discardPile):
         # AI action
@@ -474,22 +472,62 @@ class AIPlayer(Player):
         drawPile.pop(0)
 
         # judge by action
-        if action == 'play':
+        # draw means no card to play
+        if action == 'draw':
+            self.plDeck.insert(0, drawPile[0])
+            drawPile.pop(0)
+            return drawPile, discardPile
+        elif action == 'play':
             if ai_play.cardType == "Normal":
-                pass
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
+                return drawPile, discardPile
             elif ai_play.cardType == "Reverse":
-                pass
-            elif ai_play.cardType == "Reverse":
-                pass
-            elif ai_play.cardType == "Reverse":
-                pass
-            elif ai_play.cardType == "Reverse":
-                pass
-            elif ai_play.cardType == "Reverse":
-                pass
+                globals.ascending = not globals.ascending
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
+                return drawPile, discardPile
+            elif ai_play.cardType == "Skip":
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
+                globals.current = newGame.moveToNextPlayer(globals.current)
+                return drawPile, discardPile
+            elif ai_play.cardType == "Draw Two":
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
 
+                nextPlayer = newGame.moveToNextPlayer(globals.current)
+                for UnoCard in drawPile[0:2]:
+                    # print(nextPlayer)
+                    newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                    drawPile.pop(drawPile.index(UnoCard))
+                # Skip the next person's round
+                globals.current = newGame.moveToNextPlayer(globals.current)
+                return drawPile, discardPile
+        else:
+            if ai_play.cardType == "ColorChange":
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
 
-        return drawPile, discardPile
+                globals.currentGameColour = action
+                return drawPile, discardPile
+            elif ai_play.cardType == "Draw Four":
+                discardPile.insert(0, ai_play)
+                self.plDeck.remove(ai_play)
+
+                globals.currentGameColour = action
+
+                nextPlayer = newGame.moveToNextPlayer(globals.current)
+                for UnoCard in drawPile[0:4]:
+                    # print(nextPlayer)
+                    newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                    drawPile.pop(drawPile.index(UnoCard))
+                # Skip the next person's round
+                globals.current = newGame.moveToNextPlayer(globals.current)
+
+                return drawPile, discardPile
+
+        # return drawPile, discardPile
         # print("###############################AI change card below")
         # ai.change_card()
         # print("###############################AI canplay below")
