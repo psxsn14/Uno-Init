@@ -1,3 +1,4 @@
+import UnoInit
 class Button():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
         self.image=image
@@ -29,16 +30,16 @@ class Button():
         else:
             self.text=self.font.render(self.text_input, True, self.base_color)
 
-def play():
-    pygame.display.set_caption("PLAY")
+def chooselevel():
+    pygame.display.set_caption("chooselevel")
     
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
     
         SCREEN.fill("black")# background color
         
-        PLAY_TEXT = get_font(45).render("This is the play screen", True, "white")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        PLAY_TEXT = get_font(45).render("Choose the level of games", True, "white")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(683, 384))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
     
         PLAY_BACK = Button(image=None, pos=(640,460),

@@ -52,44 +52,44 @@ class Uno:
         self.topDiscardPileCard = None
 
         #Card variables
-        self.image = pygame.image.load('UnoInit/Cards New/card_back.png')
+        self.image = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\card_back.png')
         self.image_small = pygame.transform.smoothscale(self.image,(100,150))
         self.image_small = pygame.transform.rotate(self.image_small,90)
         self.image_right = pygame.transform.rotate(self.image_small,180)
         self.image_top = pygame.transform.rotate(self.image_small,270)
-        self.player_cards = pygame.image.load('UnoInit/Cards New/blank.png').convert()
+        self.player_cards = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
         self.player_cards = pygame.transform.smoothscale(self.player_cards,(100,150)).convert()
-        self.card_played = pygame.image.load('UnoInit/Cards New/blank.png').convert()
+        self.card_played = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
 
     # Create a new shuffled deck.
     def createNewDeck(self):
         # Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load('UnoInit/Cards New/green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load('UnoInit/Cards New/green'+ str(i)+'.png'))
+        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\green'+ str(i)+'.png'))
                                                                                       for i in range(1, 10)] \
-                          + [UnoCard("Green", "Skip", "None", 20, pygame.image.load('UnoInit/Cards New/greenskip'+ '.png')) for _ in range(0, 2)] + [
-                              UnoCard("Green", "Reverse", "None", 20, pygame.image.load('UnoInit/Cards New/greenreverse'+ '.png')) for _ in range(0, 2)] \
-                          + [UnoCard("Green", "Draw Two", "None", 20, pygame.image.load('UnoInit/Cards New/greenDrawTwo'+ '.png')) for _ in range(0, 2)]
+                          + [UnoCard("Green", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenskip'+ '.png')) for _ in range(0, 2)] + [
+                              UnoCard("Green", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenreverse'+ '.png')) for _ in range(0, 2)] \
+                          + [UnoCard("Green", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\greenDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blueCards = [UnoCard("Blue", "Normal", i, i, pygame.image.load('UnoInit/Cards New/blue'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i, pygame.image.load('UnoInit/Cards New/blue'+ str(i)+'.png')) for
+        self.blueCards = [UnoCard("Blue", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blue'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Blue", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blue'+ str(i)+'.png')) for
                                                                                     i in range(1, 10)] \
-                         + [UnoCard("Blue", "Skip", "None", 20, pygame.image.load('UnoInit/Cards New/blueskip'+ '.png')) for _ in range(0, 2)] + [
-                             UnoCard("Blue", "Reverse", "None", 20, pygame.image.load('UnoInit/Cards New/bluereverse'+ '.png')) for _ in range(0, 2)] \
-                         + [UnoCard("Blue", "Draw Two", "None", 20, pygame.image.load('UnoInit/Cards New/blueDrawTwo'+ '.png')) for _ in range(0, 2)]
+                         + [UnoCard("Blue", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blueskip'+ '.png')) for _ in range(0, 2)] + [
+                             UnoCard("Blue", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\bluereverse'+ '.png')) for _ in range(0, 2)] \
+                         + [UnoCard("Blue", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blueDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.yellowCards = [UnoCard("Yellow", "Normal", i, i, pygame.image.load('UnoInit/Cards New/yellow'+ str(i)+'.png')) for i in range(0, 10)] + [
-            UnoCard("Yellow", "Normal", i, i, pygame.image.load('UnoInit/Cards New/yellow'+ str(i)+'.png')) for i in range(1, 10)] \
-                           + [UnoCard("Yellow", "Skip", "None", 20, pygame.image.load('UnoInit/Cards New/yellowskip'+ '.png')) for _ in range(0, 2)] + [
-                               UnoCard("Yellow", "Reverse", "None", 20, pygame.image.load('UnoInit/Cards New/yellowreverse'+ '.png')) for _ in range(0, 2)] \
-                           + [UnoCard("Yellow", "Draw Two", "None", 20, pygame.image.load('UnoInit/Cards New/yellowDrawTwo'+ '.png')) for _ in range(0, 2)]
+        self.yellowCards = [UnoCard("Yellow", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellow'+ str(i)+'.png')) for i in range(0, 10)] + [
+            UnoCard("Yellow", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellow'+ str(i)+'.png')) for i in range(1, 10)] \
+                           + [UnoCard("Yellow", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowskip'+ '.png')) for _ in range(0, 2)] + [
+                               UnoCard("Yellow", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowreverse'+ '.png')) for _ in range(0, 2)] \
+                           + [UnoCard("Yellow", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\yellowDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.redCards = [UnoCard("Red", "Normal", i, i, pygame.image.load('UnoInit/Cards New/red'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i, pygame.image.load('UnoInit/Cards New/red'+ str(i)+'.png')) for i
+        self.redCards = [UnoCard("Red", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\red'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Red", "Normal", i, i, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\red'+ str(i)+'.png')) for i
                                                                                   in range(1, 10)] \
-                        + [UnoCard("Red", "Skip", "None", 20, pygame.image.load('UnoInit/Cards New/redskip'+ '.png')) for _ in range(0, 2)] + [
-                            UnoCard("Red", "Reverse", "None", 20, pygame.image.load('UnoInit/Cards New/redreverse'+ '.png')) for _ in range(0, 2)] \
-                        + [UnoCard("Red", "Draw Two", "None", 20, pygame.image.load('UnoInit/Cards New/redDrawTwo'+ '.png')) for _ in range(0, 2)]
+                        + [UnoCard("Red", "Skip", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redskip'+ '.png')) for _ in range(0, 2)] + [
+                            UnoCard("Red", "Reverse", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redreverse'+ '.png')) for _ in range(0, 2)] \
+                        + [UnoCard("Red", "Draw Two", "None", 20, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\redDrawTwo'+ '.png')) for _ in range(0, 2)]
 
-        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50, pygame.image.load('UnoInit/Cards New/blackcolorchange.png')) for _ in range(0, 4)] + [
-            UnoCard("Black", "Draw Four", "None", 50, pygame.image.load('UnoInit/Cards New/blackDrawFour.png')) for _ in range(0, 4)]
+        self.blackCards = [UnoCard("Black", "ColorChange", "None", 50, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blackcolorchange.png')) for _ in range(0, 4)] + [
+            UnoCard("Black", "Draw Four", "None", 50, pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blackDrawFour.png')) for _ in range(0, 4)]
 
         # Combine, shuffle and return the deck as a list of UnoCard objects.
         shuffledDeck = self.greenCards + self.yellowCards + self.redCards + self.blueCards + self.blackCards
@@ -807,6 +807,7 @@ class AIPlayer(Player):
 # Card class.
 class UnoCard:
     def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
+        pass
 
 
 # Card class.
