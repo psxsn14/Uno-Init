@@ -11,7 +11,7 @@
 
 # hihi
 # from ctypes.wintypes import VARIANT_BOOL
-from game_over_page import pagetext
+# from game_over_page import *
 from pickle import NONE
 import random
 import copy
@@ -225,7 +225,7 @@ class Uno:
         for i in self.playerList:
             for j in i.plDeck:
                 globals.winnerScore += j.cardValue
-        pagetext((900,405),"#ffffff",25,globals.winnerScore)
+        # pagetext((900,405),"#ffffff",25,globals.winnerScore)
         return globals.winnerScore
 
 
