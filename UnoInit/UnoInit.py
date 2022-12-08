@@ -103,15 +103,12 @@ class Uno:
     # Deal cards to a player and update the self.drawPile.
     def dealCards(self, playerDeck):
         # Hand out top 7 cards from the draw pile to the current player's deck.
-        for UnoCard in self.drawPile[0:7]:
-            playerDeck.append(UnoCard)
-
-            # Drop those cards from the "self.drawPile".
         global CardList
         CardList = []
         i = 0
         for UnoCard in self.drawPile[0:7]:
             playerDeck.append(UnoCard)
+            # Drop those cards from the "self.drawPile".
             self.drawPile.pop(self.drawPile.index(UnoCard))
 
         return self.drawPile
@@ -388,6 +385,7 @@ class Player():
         start = True
         while start:
             for event in pygame.event.get():
+                    counter = 1
                     if event.type == pygame.QUIT:
                         pygame.quit()
                     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -402,70 +400,67 @@ class Player():
                         seventh_card_rect = pygame.transform.smoothscale(card_interface[6],(100,150)).get_rect(topleft = (900,500))
                         draw_pile_image = drawPile[0].cardimage
 
-                        counter = 1
+                        
                         #while counter > 0:
-                        for i in range(1):
-                                #Check if the card is clicked
-                            if  first_card_rect.collidepoint(x,y):
-                                pygame.draw.rect(screen, BLUE, (300,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(300, 500))
-                                pygame.display.update()
-                                cardChoice = 1
-                                counter = counter -1
+                        if  first_card_rect.collidepoint(x,y):
+                            pygame.draw.rect(screen, BLUE, (300,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(300, 500))
+                            pygame.display.update()
+                            cardChoice = 1
+                            counter = counter -1
 
-                            if  second_card_rect.collidepoint(x,y):
-                                pygame.draw.rect(screen, BLUE, (400,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(400, 500))
-                                pygame.display.update()
-                                cardChoice = 2
-                                counter = counter -1
+                        elif  second_card_rect.collidepoint(x,y):
+                            pygame.draw.rect(screen, BLUE, (400,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(400, 500))
+                            pygame.display.update()
+                            cardChoice = 2
+                            counter = counter -1
 
-                            if third_card_rect.collidepoint(x,y):
+                        elif third_card_rect.collidepoint(x,y):
 
-                                pygame.draw.rect(screen, BLUE, (500,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
-                                pygame.display.update()
-                                cardChoice = 3
-                                counter = counter -1
+                            pygame.draw.rect(screen, BLUE, (500,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                            pygame.display.update()
+                            cardChoice = 3
+                            counter = counter -1
 
-                            if fourth_card_rect.collidepoint(x,y):
+                        elif fourth_card_rect.collidepoint(x,y):
 
-                                pygame.draw.rect(screen, BLUE, (600,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(600, 500))
-                                pygame.display.update()
-                                cardChoice = 4
-                                counter = counter -1
+                            pygame.draw.rect(screen, BLUE, (600,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(600, 500))
+                            pygame.display.update()
+                            cardChoice = 4
+                            counter = counter -1
 
-                            if fifth_card_rect.collidepoint(x,y):
+                        elif fifth_card_rect.collidepoint(x,y):
 
-                                pygame.draw.rect(screen, BLUE, (700,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(700, 500))
-                                pygame.display.update()
-                                cardChoice = 5
-                                counter = counter -1
+                            pygame.draw.rect(screen, BLUE, (700,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(700, 500))
+                            pygame.display.update()
+                            cardChoice = 5
+                            counter = counter -1
 
-                            if  sixth_card_rect.collidepoint(x,y):
+                        elif  sixth_card_rect.collidepoint(x,y):
 
-                                pygame.draw.rect(screen, BLUE, (800,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(800, 500))
-                                pygame.display.update()
-                                cardChoice = 6
-                                counter = counter -1
+                            pygame.draw.rect(screen, BLUE, (800,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(800, 500))
+                            pygame.display.update()
+                            cardChoice = 6
+                            counter = counter -1
 
-                            if seventh_card_rect.collidepoint(x,y):
+                        elif seventh_card_rect.collidepoint(x,y):
 
-                                pygame.draw.rect(screen, BLUE, (900,500,100,150))
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(900, 500))
-                                pygame.display.update()
-                                cardChoice = 7
-                                counter = counter -1
-                            
-                        if counter == 0:
-                            break
-                        print(cardChoice)
-                    
+                            pygame.draw.rect(screen, BLUE, (900,500,100,150))
+                            screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(900, 500))
+                            pygame.display.update()
+                            cardChoice = 7
+                            counter = counter -1
+            if counter == 0:
+                pygame.display.update()
+                break
+                
         #Check the click interface works 
-        
+        print(cardChoice)
 
         #cardChoice = int(
         #input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
@@ -495,8 +490,8 @@ class Player():
             # Ask player to for their choice.
             while True:
 
-                counter = 1
-                while counter > 0:
+                counter1 = 1
+                while counter1 > 0:
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             x,y = event.pos
                             
@@ -505,14 +500,14 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(500,280))
                             pygame.display.update()
                             playerChoice = 1
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif  second_card_rect.collidepoint(x,y):
                             pygame.draw.rect(screen, BLUE, (400,500,100,150))
                             screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 2
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif third_card_rect.collidepoint(x,y):
 
@@ -520,7 +515,7 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 3
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif fourth_card_rect.collidepoint(x,y):
 
@@ -528,7 +523,7 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 4
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif fifth_card_rect.collidepoint(x,y):
 
@@ -536,7 +531,7 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 5
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif  sixth_card_rect.collidepoint(x,y):
 
@@ -544,7 +539,7 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 6
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                         elif seventh_card_rect.collidepoint(x,y):
 
@@ -552,7 +547,7 @@ class Player():
                             screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage,(100,150)),(500, 280))
                             pygame.display.update()
                             playerChoice = 7
-                            counter = counter -1
+                            counter1 = counter1 -1
 
                 try:
                     playerChoice = int(input(
