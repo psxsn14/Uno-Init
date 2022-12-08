@@ -258,7 +258,7 @@ class Uno:
         exit_flag = False
         while not globals.GameOver:
             for i in self.playerList:
-                if len(i.plDeck) != 0:
+                if len(i.plDeck) == 0:
                     exit_flag = True
                     globals.GameOver = not globals.GameOver
                     break
@@ -283,7 +283,7 @@ class Uno:
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))
         print("Score is " + str(self.winnerScore()))
-        self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile, self.currentGameColour,
+        self.drawPile, self.discardPile = self.playerList[0].playTurn(self.drawPile,
                                                                       self.discardPile)
 
         #Interface for the discard pile
@@ -360,14 +360,6 @@ class Player():
         for i in self.plDeck:
             print(i)
 
-        # Initiate special rule.
-
-        cardChoice = int(
-            input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
-        # Add player card to the discard pile.
-        discardPile.append(self.plDeck[cardChoice - 1])
-        # Remove card from player's deck.
-        self.plDeck.pop(cardChoice - 1)
 
         # Take top card from draw pile.
         print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
@@ -393,16 +385,12 @@ class Player():
         pygame.display.update()
 
         # Initiate special rule.
-        #cardChoice = int(
-        #input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
-        #Card choice select interface
-
         start = True
         while start:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-            for i in range(1):
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x,y = event.pos
 
@@ -471,9 +459,13 @@ class Player():
                             pygame.display.update()
                             position = 7
                             counter = counter -1
-
                     cardChoice = position
-        pygame.quit()
+        
+        #Check the click interface works 
+        
+        print(cardChoice)
+        cardChoice = int(
+            input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
 
         # Add player card to the discard pile.
         discardPile.append(self.plDeck[cardChoice - 1])
@@ -499,6 +491,25 @@ class Player():
         while True:
             # Ask player to for their choice.
             while True:
+
+                #pygame interface for selecting a card
+                start = True
+                while start:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                    for i in range(1):
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            x,y = event.pos
+
+                            draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
+
+                            if  draw_pile_rect.collidepoint(x,y):
+                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
+                                pygame.display.update()
+
+                pygame.quit()
+
                 try:
                     playerChoice = int(input(
                         "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
@@ -627,71 +638,7 @@ class Player():
             else:
                 print("Choice out of range, please enter the correct number")
 
-            # Return a tuple consisting of the current drawPile and discardPile.
-            # return drawPile, discardPile
-            print("Current game colour: ", currentGameColour)
-
-            # Ask player to for their choice.
-            playerChoice = int(input(
-                "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
-            # If 0, draw a card and pass.
-            if (playerChoice == 0):
-                self.plDeck.insert(0, drawPile[0])
-                drawPile.pop(0)
-
-                #Select from the draw pile if no card can be played interface
-                start = True
-                while start:
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            pygame.quit()
-                    for i in range(1):
-                        if event.type == pygame.MOUSEBUTTONDOWN:
-                            x,y = event.pos
-
-                            draw_pile_rect = pygame.transform.smoothscale(draw_pile_image,(100,150)).get_rect(topleft = (650,280))
-
-                            if  draw_pile_rect.collidepoint(x,y):
-                                screen.blit(pygame.transform.smoothscale(draw_pile_image,(100,150)),(500, 500))
-                                pygame.display.update()
-
-                pygame.quit()
-
-                print("\nPlayer Deck after selecting card.....")
-                for i in self.plDeck:
-                    print(i)
-
-                print("\nDiscard pile after selecting card.....")
-                for i in discardPile:
-                    print(i)
-                print(f"\nPlayer {self.playerNo} turn complete.\n")
-                return drawPile, discardPile
-
-            #If 1-n, validate the card and proceed.
-            if(playerChoice in range(1, (len(self.plDeck) + 1))):
-
-            #If colour is same but number is different or a special card, can play.
-                if(self.plDeck[playerChoice - 1].cardColour == currentGameColour):
-                    #If normal, play.
-                    if(self.plDeck[playerChoice - 1].cardType == "Normal"):
-                        #Make the selection as the top card of the discard pile and add it to discard pile.
-                        discardPile.insert(0, self.plDeck[playerChoice - 1])
-                        #Remove card from player deck.
-                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                        print("Player Deck after selecting card.....")
-                        for i in self.plDeck:
-                            print(i)
-                        return drawPile, discardPile
-                #If card is special, execute special card logic.
-
-                #If number is same, but colour is different, can play. (More or less the same as above.)
-
-                #If colour change, can play.
-
-                #If draw4, can only play if no matching colour card on hand.
-
-            #Return a tuple consisting of the current drawPile and discardPile.
-            return drawPile,discardPile
+            
 
     def __repr__(self):
         playerTemp = []
@@ -798,11 +745,6 @@ class AIPlayer(Player):
         # pass
     # Insert AI Code.
 
-
-# Card class.
-class UnoCard:
-    def __init__(self, cardColour, cardType, cardNumber="None", cardValue="None"):
-        pass
 
 
 # Card class.
