@@ -1,5 +1,5 @@
 import pygame,sys
-
+from pygame.locals import *
 pygame.init()
 SCREEN = pygame.display.set_mode((1366, 768))
 pygame.display.set_caption("Ending")
@@ -49,8 +49,12 @@ def main_menu():
     buttonBGgreen=pygame.transform.scale(greenbuttonBG,(150,250))
     yellowbuttonBG= pygame.image.load("UnoInit/Cards New/yellowReverse.png")
     buttonBGyellow=pygame.transform.scale(yellowbuttonBG,(150,250))
-
-    graph=buttonBGgreen=pygame.transform.scale(greenbuttonBG,(150,250))
+    reversign=pygame.image.load("UnoInit/Buttons New/reverse.png")
+    graph=pygame.transform.scale(reversign,(150,250))
+    graph0=pygame.image.load("UnoInit/Buttons New/reverse1.png")
+    graph1=pygame.transform.scale(graph0,(150,250))
+    graph3=pygame.transform.scale(reversign,(150,250))
+    
 
     while True:
         clock.tick(60)
@@ -60,8 +64,8 @@ def main_menu():
 
         QUIT_BUTTON=Button(image=None, pos=(1083,660),text_input="Qiut",font=get_font(45), base_color="#d7fcd4", hovering_color="white")
         
-        Redreverse_BUTTON=Button(image=buttonBGred, pos=(200,300),text_input="  ",font=get_font(15),base_color="white",hovering_color="red")
-        Bluereverse_BUTTON=Button(image=buttonBGblue, pos=(4000,400),text_input="  ",font=get_font(15),base_color="white",hovering_color="blue")       
+        Redreverse_BUTTON=Button(image=buttonBGred, pos=(200,300),text_input=" ",font=get_font(15),base_color="white",hovering_color="red")
+        Bluereverse_BUTTON=Button(image=buttonBGblue, pos=(400,400),text_input="  ",font=get_font(15),base_color="white",hovering_color="blue")       
         Greenreverse_BUTTON=Button(image=buttonBGgreen, pos=(600,500),text_input="  ",font=get_font(12),base_color="white",hovering_color="green")
         Yellowreverse_BUTTON=Button(image=buttonBGyellow, pos=(800,600),text_input="  ",font=get_font(12),base_color="white",hovering_color="yellow")
         
@@ -75,14 +79,14 @@ def main_menu():
                 sys.exit()
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if event.button==1:
-                    if Red_BUTTON.rect.collidepoint(event.pos):
-                        graph=newbuttonBGred
-                    if Blue_BUTTON.rect.collidepoint(event.pos):
-                        graph=newbuttonBGblue
-                    if Yellow_BUTTON.rect.collidepoint(event.pos):
-                        graph=newbuttonBGyellow
-                    if Green_BUTTON.rect.collidepoint(event.pos):
-                        graph=newbuttonBGgreen
+                    if Redreverse_BUTTON.rect.collidepoint(event.pos):
+                         graph=graph1
+                    if Bluereverse_BUTTON.rect.collidepoint(event.pos):
+                         graph=graph1
+                    if Yellowreverse_BUTTON.rect.collidepoint(event.pos):
+                         graph=graph1
+                    if Greenreverse_BUTTON.rect.collidepoint(event.pos):
+                         graph=graph1
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
