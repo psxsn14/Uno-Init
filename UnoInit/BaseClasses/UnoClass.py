@@ -56,7 +56,7 @@ class Uno:
     # Create a new shuffled deck.
     def createNewDeck(self):
        # Create and save all new UnoCard objects to their respective lists.
-        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load('Cards New/green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load('Cards New/green'+ str(i)+'.png'))
+        self.greenCards = [UnoCard("Green", "Normal", i, i, pygame.image.load('UnoInitCards New/green'+ str(i)+'.png')) for i in range(0, 10)] + [UnoCard("Green", "Normal", i, i, pygame.image.load('Cards New/green'+ str(i)+'.png'))
                                                                                       for i in range(1, 10)] \
                           + [UnoCard("Green", "Skip", "None", 20, pygame.image.load('Cards New/greenskip'+ '.png')) for _ in range(0, 2)] + [
                               UnoCard("Green", "Reverse", "None", 20, pygame.image.load('Cards New/greenreverse'+ '.png')) for _ in range(0, 2)] \
