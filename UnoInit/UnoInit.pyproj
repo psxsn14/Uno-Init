@@ -36,6 +36,8 @@
     <Compile Include="BaseClasses\UnoClass.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="changecolor.py" />
+    <Compile Include="changedirection.py" />
     <Compile Include="WelcomePage.py">
       <SubType>Code</SubType>
     </Compile>

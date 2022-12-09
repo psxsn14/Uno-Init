@@ -9,3 +9,9 @@ currentGameType = ""
 winnerScore = 0
 
 gameRound = 0
+
+
+#Pygame Choice variables.
+choosecolor = "None"
+AIlevel = "None"
+AIplayers = None
