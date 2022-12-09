@@ -83,14 +83,14 @@ class Player:
 
         # Take top card from draw pile.
         print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
-        
+
         #Set up the cards - pygame.
         card_interface = []
         for j in range(len(self.plDeck)):
-            
+
             card_interface.append(pygame.transform.smoothscale(self.plDeck[j].cardimage,(100,150)))
             screen.blit(pygame.transform.smoothscale(self.plDeck[j].cardimage,(100,150)),(300 + j*100, 500))
-            
+
             #pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),
             #pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
             #pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
@@ -100,9 +100,9 @@ class Player:
             #]
 
         #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
-        
 
-        
+
+
         #screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
         #screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
         #screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
@@ -125,7 +125,7 @@ class Player:
                         pygame.quit()
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         x,y = event.pos
-                        
+
 
                         first_card_rect = pygame.transform.smoothscale(card_interface[j],(100,150)).get_rect(topleft = (300,500))
                         second_card_rect = pygame.transform.smoothscale(card_interface[j],(100,150)).get_rect(topleft = (400,500))
@@ -137,7 +137,7 @@ class Player:
                         draw_pile_image = drawPile[0].cardimage
 
                         #Creating colour value for BLUE as part of refac.
-                        BLUE = 70,130,180 
+                        BLUE = 70,130,180
 
                         #while counter > 0:
                         if  first_card_rect.collidepoint(x,y):
@@ -204,14 +204,14 @@ class Player:
             elif cardChoice != 0:
                 start = False
                 return cardChoice
-                
-        #Check the click interface works 
+
+        #Check the click interface works
 
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
         self.plDeck.pop(cardChoice - 1)
-                
-        self.plDeck.insert(0, drawPile[0])
+
+        self.plDeck.insert(cardChoice - 1, drawPile[0])
         drawPile.pop(0)
 
         # Play a card or pick another card to pass.
@@ -237,7 +237,7 @@ class Player:
                                 pygame.quit()
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 x,y = event.pos
-                            
+
                                 if  first_card_rect.collidepoint(x,y):
                                     pygame.draw.rect(screen, BLUE, (300,500,100,150))
                                     screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(500,280))
