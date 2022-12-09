@@ -9,3 +9,5 @@ currentGameType = ""
 winnerScore = 0
 
 gameRound = 0
+
+choosecolor="None"

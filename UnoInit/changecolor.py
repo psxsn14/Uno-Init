@@ -93,16 +93,20 @@ def main_menu():
                 if event.button==1:
                     if Red_BUTTON.rect.collidepoint(event.pos):
                         graph=newbuttonBGred
+                        choosecolor="red"
                     if Blue_BUTTON.rect.collidepoint(event.pos):
                         graph=newbuttonBGblue
+                        choosecolor="blue"
                     if Yellow_BUTTON.rect.collidepoint(event.pos):
                         graph=newbuttonBGyellow
+                        choosecolor="yellow"
                     if Green_BUTTON.rect.collidepoint(event.pos):
                         graph=newbuttonBGgreen
+                        choosecolor="green"
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
-
+        
         SCREEN.blit(graph, (300,300))
         pygame.display.update()
 main_menu()
