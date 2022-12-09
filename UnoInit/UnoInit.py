@@ -17,7 +17,7 @@ import random
 import copy
 import globals
 import AI_Strategy
-from ctypes.wintypes import VARIANT_BOOL
+# from ctypes.wintypes import VARIANT_BOOL
 import pygame
 pygame.init()
 from pygame.locals import *
@@ -363,10 +363,10 @@ class Player():
         #Set up the cards
         card_interface = []
         for j in range(len(self.plDeck)):
-            
+
             card_interface.append(pygame.transform.smoothscale(self.plDeck[j].cardimage,(100,150)))
             screen.blit(pygame.transform.smoothscale(self.plDeck[j].cardimage,(100,150)),(300 + j*100, 500))
-            
+
             #pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),
             #pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
             #pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),
@@ -376,9 +376,9 @@ class Player():
             #]
 
         #playersHand = pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150))
-        
 
-        
+
+
         #screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),(400, 500))
         #screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),(500, 500))
         #screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage,(100,150)),(600, 500))
@@ -397,7 +397,7 @@ class Player():
                         pygame.quit()
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         x,y = event.pos
-                        
+
 
                         first_card_rect = pygame.transform.smoothscale(card_interface[j],(100,150)).get_rect(topleft = (300,500))
                         second_card_rect = pygame.transform.smoothscale(card_interface[j],(100,150)).get_rect(topleft = (400,500))
@@ -408,7 +408,7 @@ class Player():
                         seventh_card_rect = pygame.transform.smoothscale(card_interface[j],(100,150)).get_rect(topleft = (900,500))
                         draw_pile_image = drawPile[0].cardimage
 
-                        
+
                         #while counter > 0:
                         if  first_card_rect.collidepoint(x,y):
                             pygame.draw.rect(screen, BLUE, (300,500,100,150))
@@ -466,8 +466,8 @@ class Player():
             if counter == 0:
                 pygame.display.update()
                 break
-                
-        #Check the click interface works 
+
+        #Check the click interface works
         print('Card Choice:')
         print(cardChoice)
 
@@ -503,7 +503,7 @@ class Player():
                     while counter1 > 0:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 x,y = event.pos
-                            
+
                             if  first_card_rect.collidepoint(x,y):
                                 pygame.draw.rect(screen, BLUE, (300,500,100,150))
                                 screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage,(100,150)),(500,280))
@@ -685,7 +685,7 @@ class Player():
             else:
                 print("Choice out of range, please enter the correct number")
 
-            
+
 
     def __repr__(self):
         playerTemp = []
