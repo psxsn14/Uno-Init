@@ -11,6 +11,129 @@ class Player:
         self.playerNo = playerNo
         self.plDeck = plDeck
 
+    def check(self, drawPile, discardPile, playerChoice, newGame):
+        # If 0, draw a card and pass.
+        if playerChoice == 0:
+            self.plDeck.insert(0, drawPile[0])
+            drawPile.pop(0)
+            print("\nPlayer Deck after selecting card.....")
+            for i in self.plDeck:
+                print(i)
+
+            print("\nDiscard pile after selecting card.....")
+            for i in discardPile:
+                print(i)
+            print(f"\nPlayer {self.playerNo} turn complete.\n")
+            return drawPile, discardPile
+
+        # If 1-n, validate the card and proceed.
+        elif playerChoice in range(1, (len(self.plDeck) + 1)):
+            # If black card
+            if self.plDeck[playerChoice - 1].cardColour == "Black":
+                # Wild
+                if self.plDeck[playerChoice - 1].cardType == "ColorChange":
+                    discardPile.insert(0, self.plDeck[playerChoice - 1])
+                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                    # change the color
+                    while True:
+                        newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+                        if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+                            break
+                        else:
+                            print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+                    globals.currentGameColour = newColour
+                    return drawPile, discardPile
+
+                # Wild Draw
+                if self.plDeck[playerChoice - 1].cardType == "Draw Four":
+                    discardPile.insert(0, self.plDeck[playerChoice - 1])
+                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                    # change the color
+                    while True:
+                        newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+                        if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+                            break
+                        else:
+                            print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+                    globals.currentGameColour = newColour
+                    # Next player draw four and skip
+                    nextPlayer = newGame.moveToNextPlayer(globals.current)
+                    for UnoCard in drawPile[0:4]:
+                        # print(nextPlayer)
+                        newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                        drawPile.pop(drawPile.index(UnoCard))
+                    # Skip the next person's round
+                    globals.current = newGame.moveToNextPlayer(globals.current)
+
+                    return drawPile, discardPile
+
+            # If normal card
+            elif self.plDeck[playerChoice - 1].cardType == "Normal":
+                # Check color is the same or number is the same
+                if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
+                        self.plDeck[playerChoice - 1].cardNumber == globals.currentGameNumber:
+                    # Make the selection as the top card of the discard pile and add it to discard pile.
+                    discardPile.insert(0, self.plDeck[playerChoice - 1])
+                    # Remove card from player deck.
+                    self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                    print("Player Deck after selecting card.....")
+                    for i in self.plDeck:
+                        print(i)
+                    return drawPile, discardPile
+                else:
+                    print("It is not a valid card, please choose again")
+
+            # If not a normal card (functional card)
+            elif self.plDeck[playerChoice - 1].cardType != "Normal":
+                if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
+                        self.plDeck[playerChoice - 1].cardType == globals.currentGameType:
+                    ######### Draw 2 ########
+                    if self.plDeck[playerChoice - 1].cardType == "Draw Two":
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        # You draw two cards
+                        nextPlayer = newGame.moveToNextPlayer(globals.current)
+                        for UnoCard in drawPile[0:2]:
+                            # print(nextPlayer)
+                            newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                            drawPile.pop(drawPile.index(UnoCard))
+                        # Skip the next person's round
+                        globals.current = newGame.moveToNextPlayer(globals.current)
+                        # Test
+                        # print("Next player deck after the privious player use draw two card.....")
+                        # for i in newGame.playerList[nextPlayer].plDeck:
+                        #     print(i)
+
+                        print("Player Deck after selecting card.....")
+                        for i in self.plDeck:
+                            print(i)
+                        return drawPile, discardPile
+
+                    ######## Reverse ########
+                    if self.plDeck[playerChoice - 1].cardType == "Reverse":
+                        globals.ascending = not globals.ascending
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        # Remove card from player deck.
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        print("Player Deck after selecting card.....")
+                        for i in self.plDeck:
+                            print(i)
+                        return drawPile, discardPile
+
+                    ######## Skip ########
+                    if self.plDeck[playerChoice - 1].cardType == "Skip":
+                        discardPile.insert(0, self.plDeck[playerChoice - 1])
+                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+                        print(globals.current)
+                        globals.current = newGame.moveToNextPlayer(globals.current)
+                        print(globals.current)
+                        return drawPile, discardPile
+
+                else:
+                    print("It is not a valid card, please choose again")
+        else:
+            print("Choice out of range, please enter the correct number")
+
     def playTurn(self, newGame, drawPile, discardPile, screen):
         # Rules for the revealed card
         if globals.gameRound == 0:
@@ -111,12 +234,10 @@ class Player:
         pygame.display.update()
 
         # Initiate special rule.
-
         start = True
         cardChoice = 0
         counter = 1
         while start:
-
             if counter > 0:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -236,6 +357,7 @@ class Player:
                 try:
                     counter1 = 1
                     while counter1 > 0:
+                        canPlay = False
                         for event in pygame.event.get():
                             if event.type == pygame.QUIT:
                                 pygame.quit()
@@ -243,192 +365,206 @@ class Player:
                                 x, y = event.pos
 
                                 if first_card_rect.collidepoint(x, y):
-                                    pygame.draw.rect(screen, BLUE, (300, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 1
-                                    counter1 = counter1 - 1
+                                    # self.check(drawPile, discardPile, playerChoice, newGame)
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        counter1 = counter1 - 1
+                                        pygame.draw.rect(screen, BLUE, (300, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
 
                                 elif second_card_rect.collidepoint(x, y):
-                                    pygame.draw.rect(screen, BLUE, (400, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 2
-                                    counter1 = counter1 - 1
+                                    # self.check(drawPile, discardPile, playerChoice, newGame)
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (400, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+                                        counter1 = counter1 - 1
 
                                 elif third_card_rect.collidepoint(x, y):
-
-                                    pygame.draw.rect(screen, BLUE, (500, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 3
-                                    counter1 = counter1 - 1
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (500, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+
+                                        counter1 = counter1 - 1
 
                                 elif fourth_card_rect.collidepoint(x, y):
-
-                                    pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 4
-                                    counter1 = counter1 - 1
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+
+                                        counter1 = counter1 - 1
+
+
 
                                 elif fifth_card_rect.collidepoint(x, y):
-
-                                    pygame.draw.rect(screen, BLUE, (700, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 5
-                                    counter1 = counter1 - 1
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (700, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+
+                                        counter1 = counter1 - 1
+
+
 
                                 elif sixth_card_rect.collidepoint(x, y):
-
-                                    pygame.draw.rect(screen, BLUE, (800, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 6
-                                    counter1 = counter1 - 1
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+
+                                        pygame.draw.rect(screen, BLUE, (800, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+                                        counter1 = counter1 - 1
 
                                 elif seventh_card_rect.collidepoint(x, y):
-
-                                    pygame.draw.rect(screen, BLUE, (900, 500, 100, 150))
-                                    screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage, (100, 150)),
-                                                (500, 280))
-                                    pygame.display.update()
                                     playerChoice = 7
-                                    counter1 = counter1 - 1
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (900, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+                                        counter1 = counter1 - 1
+
+                            # self.check(drawPile, discardPile, playerChoice, newGame)
 
                     # playerChoice = int(input(
                     # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
                     break
                 except:
                     print("Invalid choice, please enter a number")
-            # If 0, draw a card and pass.
-            if playerChoice == 0:
-                self.plDeck.insert(0, drawPile[0])
-                drawPile.pop(0)
-                print("\nPlayer Deck after selecting card.....")
-                for i in self.plDeck:
-                    print(i)
-
-                print("\nDiscard pile after selecting card.....")
-                for i in discardPile:
-                    print(i)
-                print(f"\nPlayer {self.playerNo} turn complete.\n")
-                return drawPile, discardPile
-
-            # If 1-n, validate the card and proceed.
-            elif playerChoice in range(1, (len(self.plDeck) + 1)):
-                # If black card
-                if self.plDeck[playerChoice - 1].cardColour == "Black":
-                    # Wild
-                    if self.plDeck[playerChoice - 1].cardType == "ColorChange":
-                        discardPile.insert(0, self.plDeck[playerChoice - 1])
-                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                        # change the color
-                        while True:
-                            newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
-                            if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
-                                break
-                            else:
-                                print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
-                        globals.currentGameColour = newColour
-                        return drawPile, discardPile
-
-                    # Wild Draw
-                    if self.plDeck[playerChoice - 1].cardType == "Draw Four":
-                        discardPile.insert(0, self.plDeck[playerChoice - 1])
-                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                        # change the color
-                        while True:
-                            newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
-                            if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
-                                break
-                            else:
-                                print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
-                        globals.currentGameColour = newColour
-                        # Next player draw four and skip
-                        nextPlayer = newGame.moveToNextPlayer(globals.current)
-                        for UnoCard in drawPile[0:4]:
-                            # print(nextPlayer)
-                            newGame.playerList[nextPlayer].plDeck.append(UnoCard)
-                            drawPile.pop(drawPile.index(UnoCard))
-                        # Skip the next person's round
-                        globals.current = newGame.moveToNextPlayer(globals.current)
-
-                        return drawPile, discardPile
-
-                # If normal card
-                elif self.plDeck[playerChoice - 1].cardType == "Normal":
-                    # Check color is the same or number is the same
-                    if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
-                            self.plDeck[playerChoice - 1].cardNumber == globals.currentGameNumber:
-                        # Make the selection as the top card of the discard pile and add it to discard pile.
-                        discardPile.insert(0, self.plDeck[playerChoice - 1])
-                        # Remove card from player deck.
-                        self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                        print("Player Deck after selecting card.....")
-                        for i in self.plDeck:
-                            print(i)
-                        return drawPile, discardPile
-                    else:
-                        print("It is not a valid card, please choose again")
-
-                # If not a normal card (functional card)
-                elif self.plDeck[playerChoice - 1].cardType != "Normal":
-                    if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
-                            self.plDeck[playerChoice - 1].cardType == globals.currentGameType:
-                        ######### Draw 2 ########
-                        if self.plDeck[playerChoice - 1].cardType == "Draw Two":
-                            discardPile.insert(0, self.plDeck[playerChoice - 1])
-                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                            # You draw two cards
-                            nextPlayer = newGame.moveToNextPlayer(globals.current)
-                            for UnoCard in drawPile[0:2]:
-                                # print(nextPlayer)
-                                newGame.playerList[nextPlayer].plDeck.append(UnoCard)
-                                drawPile.pop(drawPile.index(UnoCard))
-                            # Skip the next person's round
-                            globals.current = newGame.moveToNextPlayer(globals.current)
-                            # Test
-                            # print("Next player deck after the privious player use draw two card.....")
-                            # for i in newGame.playerList[nextPlayer].plDeck:
-                            #     print(i)
-
-                            print("Player Deck after selecting card.....")
-                            for i in self.plDeck:
-                                print(i)
-                            return drawPile, discardPile
-
-                        ######## Reverse ########
-                        if self.plDeck[playerChoice - 1].cardType == "Reverse":
-                            globals.ascending = not globals.ascending
-                            discardPile.insert(0, self.plDeck[playerChoice - 1])
-                            # Remove card from player deck.
-                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                            print("Player Deck after selecting card.....")
-                            for i in self.plDeck:
-                                print(i)
-                            return drawPile, discardPile
-
-                        ######## Skip ########
-                        if self.plDeck[playerChoice - 1].cardType == "Skip":
-                            discardPile.insert(0, self.plDeck[playerChoice - 1])
-                            self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
-                            print(globals.current)
-                            globals.current = newGame.moveToNextPlayer(globals.current)
-                            print(globals.current)
-                            return drawPile, discardPile
-
-                    else:
-                        print("It is not a valid card, please choose again")
-            else:
-                print("Choice out of range, please enter the correct number")
+            # # If 0, draw a card and pass.
+            # if playerChoice == 0:
+            #     self.plDeck.insert(0, drawPile[0])
+            #     drawPile.pop(0)
+            #     print("\nPlayer Deck after selecting card.....")
+            #     for i in self.plDeck:
+            #         print(i)
+            #
+            #     print("\nDiscard pile after selecting card.....")
+            #     for i in discardPile:
+            #         print(i)
+            #     print(f"\nPlayer {self.playerNo} turn complete.\n")
+            #     return drawPile, discardPile
+            #
+            # # If 1-n, validate the card and proceed.
+            # elif playerChoice in range(1, (len(self.plDeck) + 1)):
+            #     # If black card
+            #     if self.plDeck[playerChoice - 1].cardColour == "Black":
+            #         # Wild
+            #         if self.plDeck[playerChoice - 1].cardType == "ColorChange":
+            #             discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #             self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #             # change the color
+            #             while True:
+            #                 newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+            #                 if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+            #                     break
+            #                 else:
+            #                     print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+            #             globals.currentGameColour = newColour
+            #             return drawPile, discardPile
+            #
+            #         # Wild Draw
+            #         if self.plDeck[playerChoice - 1].cardType == "Draw Four":
+            #             discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #             self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #             # change the color
+            #             while True:
+            #                 newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+            #                 if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+            #                     break
+            #                 else:
+            #                     print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+            #             globals.currentGameColour = newColour
+            #             # Next player draw four and skip
+            #             nextPlayer = newGame.moveToNextPlayer(globals.current)
+            #             for UnoCard in drawPile[0:4]:
+            #                 # print(nextPlayer)
+            #                 newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+            #                 drawPile.pop(drawPile.index(UnoCard))
+            #             # Skip the next person's round
+            #             globals.current = newGame.moveToNextPlayer(globals.current)
+            #
+            #             return drawPile, discardPile
+            #
+            #     # If normal card
+            #     elif self.plDeck[playerChoice - 1].cardType == "Normal":
+            #         # Check color is the same or number is the same
+            #         if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
+            #                 self.plDeck[playerChoice - 1].cardNumber == globals.currentGameNumber:
+            #             # Make the selection as the top card of the discard pile and add it to discard pile.
+            #             discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #             # Remove card from player deck.
+            #             self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #             print("Player Deck after selecting card.....")
+            #             for i in self.plDeck:
+            #                 print(i)
+            #             return drawPile, discardPile
+            #         else:
+            #             print("It is not a valid card, please choose again")
+            #
+            #     # If not a normal card (functional card)
+            #     elif self.plDeck[playerChoice - 1].cardType != "Normal":
+            #         if self.plDeck[playerChoice - 1].cardColour == globals.currentGameColour or \
+            #                 self.plDeck[playerChoice - 1].cardType == globals.currentGameType:
+            #             ######### Draw 2 ########
+            #             if self.plDeck[playerChoice - 1].cardType == "Draw Two":
+            #                 discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #                 self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #                 # You draw two cards
+            #                 nextPlayer = newGame.moveToNextPlayer(globals.current)
+            #                 for UnoCard in drawPile[0:2]:
+            #                     # print(nextPlayer)
+            #                     newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+            #                     drawPile.pop(drawPile.index(UnoCard))
+            #                 # Skip the next person's round
+            #                 globals.current = newGame.moveToNextPlayer(globals.current)
+            #                 # Test
+            #                 # print("Next player deck after the privious player use draw two card.....")
+            #                 # for i in newGame.playerList[nextPlayer].plDeck:
+            #                 #     print(i)
+            #
+            #                 print("Player Deck after selecting card.....")
+            #                 for i in self.plDeck:
+            #                     print(i)
+            #                 return drawPile, discardPile
+            #
+            #             ######## Reverse ########
+            #             if self.plDeck[playerChoice - 1].cardType == "Reverse":
+            #                 globals.ascending = not globals.ascending
+            #                 discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #                 # Remove card from player deck.
+            #                 self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #                 print("Player Deck after selecting card.....")
+            #                 for i in self.plDeck:
+            #                     print(i)
+            #                 return drawPile, discardPile
+            #
+            #             ######## Skip ########
+            #             if self.plDeck[playerChoice - 1].cardType == "Skip":
+            #                 discardPile.insert(0, self.plDeck[playerChoice - 1])
+            #                 self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
+            #                 print(globals.current)
+            #                 globals.current = newGame.moveToNextPlayer(globals.current)
+            #                 print(globals.current)
+            #                 return drawPile, discardPile
+            #
+            #         else:
+            #             print("It is not a valid card, please choose again")
+            # else:
+            #     print("Choice out of range, please enter the correct number")
 
     def __repr__(self):
         playerTemp = []
