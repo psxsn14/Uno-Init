@@ -124,7 +124,13 @@ class AI:
             print("No card can play, draw a card")
             self.action = 'draw'
         else:
-            self.the_card = random.choice(self.can_play_cards)
+            if globals.AIlevel == "easy":
+                self.the_card = random.choice(self.can_play_cards)
+            elif globals.AIlevel == "medium":
+                self.the_card = random.choice(self.can_play_cards)
+            elif globals.AIlevel == "invincible":
+                self.the_card = random.choice(self.can_play_cards)
+            
             self.action = 'play'
             print("AI plays :", self.the_card)
 

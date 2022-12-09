@@ -10,7 +10,7 @@ class AIPlayer(Player):
         # self.plDeck = plDeck
 
     #
-    def playTurn(self, newGame, drawPile, discardPile):
+    def playTurn(self, newGame, drawPile, discardPile, screen):
         # AI action
         # aicard = []
         ai = AI_Strategy.AI(self.plDeck, globals.currentGameCard, drawPile)
