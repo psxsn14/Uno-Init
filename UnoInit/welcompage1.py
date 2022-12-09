@@ -1,4 +1,3 @@
-# import UnoInit
 class Button():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
         self.image=image
@@ -36,16 +35,32 @@ def chooselevel():
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
     
-        SCREEN.fill("black")# background color
+        SCREEN.fill((70,130,180))# background color
         
-        PLAY_TEXT = get_font(45).render("Choose the level of games", True, "white")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(683, 384))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        Main_TEXT = get_font(45).render("Choose the level of games", True, "white")
+        Main_RECT = Main_TEXT.get_rect(center=(683, 84))
+        SCREEN.blit(Main_TEXT, Main_RECT)
     
-        PLAY_BACK = Button(image=None, pos=(640,460),
-                     text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")#悬停的颜色
+        PLAY_BACK = Button(image=None, pos=(683,660),
+                     text_input="BACK", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
+
+        EASY_LEVEL = Button(image=None, pos=(250,360),
+                     text_input="EASY", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        EASY_LEVEL.changeColor(PLAY_MOUSE_POS)
+        EASY_LEVEL.update(SCREEN)
+
+        MIDDLE_LEVEL = Button(image=None, pos=(683,360),
+                     text_input="MIDDLE", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        MIDDLE_LEVEL.changeColor(PLAY_MOUSE_POS)
+        MIDDLE_LEVEL.update(SCREEN)
+
+        DIFFICULT_LEVEL = Button(image=None, pos=(1116,360),
+                     text_input="DIFFICULT", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        DIFFICULT_LEVEL.changeColor(PLAY_MOUSE_POS)
+        DIFFICULT_LEVEL.update(SCREEN)
+
         
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -54,6 +69,60 @@ def chooselevel():
             if event.type==pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
+                if EASY_LEVEL.checkForInput(PLAY_MOUSE_POS):
+                    chooseAIplayer()
+                if MIDDLE_LEVEL.checkForInput(PLAY_MOUSE_POS):
+                    chooseAIplayer()
+                if DIFFICULT_LEVEL.checkForInput(PLAY_MOUSE_POS):
+                    chooseAIplayer()
+        pygame.display.update()
+
+def chooseAIplayer():
+    pygame.display.set_caption("chooseAIplayer")
+    
+    while True:
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+    
+        SCREEN.fill((70,130,180))# background color
+        
+        Main_TEXT = get_font(45).render("Choose the number of AIplayers", True, "white")
+        Main_RECT = Main_TEXT.get_rect(center=(683, 84))
+        SCREEN.blit(Main_TEXT, Main_RECT)
+    
+        PLAY_BACK = Button(image=None, pos=(683,660),
+                     text_input="BACK", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        Player1 = Button(image=None, pos=(250,360),
+                     text_input="Player1", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        Player1.changeColor(PLAY_MOUSE_POS)
+        Player1.update(SCREEN)
+
+        Player2 = Button(image=None, pos=(683,360),
+                     text_input="Player2", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        Player2.changeColor(PLAY_MOUSE_POS)
+        Player2.update(SCREEN)
+
+        Player3 = Button(image=None, pos=(1116,360),
+                     text_input="Player3", font=get_font(55), base_color="White", hovering_color="Green")#悬停的颜色
+        Player3.changeColor(PLAY_MOUSE_POS)
+        Player3.update(SCREEN)
+
+        
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    main_menu()
+                if Player1.checkForInput(PLAY_MOUSE_POS):
+                    pass
+                if Player2.checkForInput(PLAY_MOUSE_POS):
+                    pass
+                if Player3.checkForInput(PLAY_MOUSE_POS):
+                    pass
                 
         pygame.display.update()
 
@@ -86,12 +155,13 @@ def rules():
                 if RULES_BACK.checkForInput(RULES_MOUSE_POS):
                     main_menu()
                 if PLAY_BUTTON.checkForInput(RULES_MOUSE_POS):
-                    play()
+                    chooselevel()
                 
         pygame.display.update()   
 
 import pygame,sys
 from pygame.locals import *
+import pygame_menu
 # from button import Button
 
 pygame.init()
