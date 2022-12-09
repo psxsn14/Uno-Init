@@ -37,7 +37,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UnoInit.py" />
-    <Compile Include="welcome pages.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BaseClasses\" />
