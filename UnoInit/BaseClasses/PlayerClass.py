@@ -77,9 +77,10 @@ class Player:
 
         # Initiate special rule.
 
-        cardChoice = int(
-            input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
+        #cardChoice = int(
+            #input("\nSPECIAL RULE: Select a card (1-7) from your hand and keep it beneath the discard pile..."))
         # Add player card to the discard pile.
+
         discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
         self.plDeck.pop(cardChoice - 1)
@@ -118,7 +119,9 @@ class Player:
         # Initiate special rule.
         start = True
         while start:
-            for event in pygame.event.get():
+            counter = 1 
+            if counter <= 0:
+             for event in pygame.event.get():
                     counter = 1
                     if event.type == pygame.QUIT:
                         pygame.quit()
@@ -192,9 +195,9 @@ class Player:
                             pygame.display.update()
                             cardChoice = 7
                             counter = counter -1
-            if counter == 0:
-                pygame.display.update()
-                break
+            elif cardChoice != 0:
+                start = False
+                return cardChoice
                 
         #Check the click interface works 
         print('Card Choice:')
@@ -214,6 +217,7 @@ class Player:
 
                # inturn = True
         # Check the card is valid or not
+        pygame.event.clear()
         while True:
             # Ask player to for their choice.
             while True:
