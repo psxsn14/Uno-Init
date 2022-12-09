@@ -1,7 +1,7 @@
 ﻿
 import pygame,sys
 from pygame.locals import *
-import pygame_menu
+from BaseClasses.UnoClass import Uno
 
 
 class Button():
@@ -93,6 +93,7 @@ def chooselevel():
                 if InvincibleAI_LEVEL.checkForInput(PLAY_MOUSE_POS):
                     AIlevel="InvincibleAI"
                     chooseAIplayer()
+                    
         pygame.display.update()
 
 def chooseAIplayer():
@@ -141,6 +142,10 @@ def chooseAIplayer():
                     pass
                 if Player3.checkForInput(PLAY_MOUSE_POS):
                     AIplayers = 3
+
+                    newGame = Uno()
+
+                    newGame.startPreGame(newGame.createNewDeck(), SCREEN)
                     pass
 
                 
@@ -234,4 +239,5 @@ def main_menu():
                     pygame.quit()
                     sys.exit()
         pygame.display.update()
+
 main_menu()
