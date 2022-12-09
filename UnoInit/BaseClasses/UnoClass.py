@@ -24,7 +24,7 @@ class Uno:
         self.blueCards = []
         self.redCards = []
         self.blackCards = []
-        
+
 
         # Instance variables for game entities.
         self.AICards = []
@@ -110,6 +110,7 @@ class Uno:
         pygame.display.set_caption('Uno')
         start = True
         count = 21
+        # count = 7*globals.AIplayers
 
         if count > 0:
             for l in range(7):
