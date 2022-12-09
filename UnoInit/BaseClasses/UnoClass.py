@@ -43,14 +43,14 @@ class Uno:
 
 
         #Card variables (pygame)
-        self.image = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\card_back.png')
+        self.image = pygame.image.load('Cards New/card_back.png')
         self.image_small = pygame.transform.smoothscale(self.image,(100,150))
         self.image_small = pygame.transform.rotate(self.image_small,90)
         self.image_right = pygame.transform.rotate(self.image_small,180)
         self.image_top = pygame.transform.rotate(self.image_small,270)
-        self.player_cards = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
+        self.player_cards = pygame.image.load('Cards New/blank.png').convert()
         self.player_cards = pygame.transform.smoothscale(self.player_cards,(100,150)).convert()
-        self.card_played = pygame.image.load(r'C:\Users\Siddharth Nair\Desktop\MSc\PROGRAMMING\UNO Project\InitialUno\UnoInit\Cards New\blank.png').convert()
+        self.card_played = pygame.image.load('Cards New/blank.png').convert()
 
 
     # Create a new shuffled deck.
