@@ -86,9 +86,49 @@ class AIPlayer(Player):
 
                 # return drawPile, discardPile
         if ai_play is not None:
-            pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
-            screen.blit(pygame.transform.smoothscale(ai_play.cardimage, (100, 150)),
-                        (500, 280))
+           
+            screen.blit(pygame.transform.smoothscale(ai_play.cardimage, (100, 150)),(500, 280))
             pygame.display.update()
+
+            image_small = pygame.transform.smoothscale(pygame.image.load('Cards New/card_back.png'), (100, 150))
+            image_small = pygame.transform.rotate(image_small, 90)
+
+            image_right = pygame.transform.rotate(image_small, 180)
+            image_top = pygame.transform.rotate(image_small, 270)
+
+            #Refresh the screen by drawing over old cards
+            pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
+            
+        
+            count = len(self.plDeck) 
+            if count > 0:
+                for l in range(count):
+                    # Left side comp cards
+                    x = 100 + l * 60
+                    count -= 1
+                    screen.blit(image_small, (100, (x)))
+                    pygame.display.update()
+            
+          
+            count = len(self.plDeck) 
+            if count > 0:
+                for f in range(7):
+                    # Right side comp cards
+                    x = 100 + f * 60
+                    count -= 1
+                    screen.blit(image_right, (1066, (x)))
+                    pygame.display.update()
+               
+
+            count = len(self.plDeck) 
+            if count > 0:
+                for k in range(7):
+                    # Right side comp cards
+                    x = 423 + k * 50
+                    count -= 1
+                    screen.blit(image_top, (x, 60))
+                    pygame.display.update()
+     
+            
 
         return drawPile, discardPile

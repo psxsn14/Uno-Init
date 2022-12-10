@@ -128,23 +128,31 @@ class Uno:
 
         if count > 0:
             for l in range(7):
-                # Left side comp cards
-                x = 100 + l * 60
-                count -= 1
-                screen.blit(self.image_small, (100, (x)))
-                pygame.display.update()
-                time.sleep(0.1)
+                if AIPlayer == 1:
+                    count = count -7
+                    pass
+                else:
+                    #Left side comp cards
+                    x = 100 + l * 60
+                    count -= 1
+                    screen.blit(self.image_small, (100, (x)))
+                    pygame.display.update()
+                    time.sleep(0.1)
 
             for f in range(7):
-                # Right side comp cards
-                x = 100 + f * 60
-                count -= 1
-                screen.blit(self.image_right, (1066, (x)))
-                pygame.display.update()
-                time.sleep(0.1)
+                if AIPlayer == 1 or AIPlayer == 2:
+                    count = count -7
+                    pass
+                else:
+                    #Right side comp cards
+                    x = 100 + f * 60
+                    count -= 1
+                    screen.blit(self.image_right, (1066, (x)))
+                    pygame.display.update()
+                    time.sleep(0.1)
 
             for k in range(7):
-                # Right side comp cards
+                #Top side comp cards
                 x = 423 + k * 50
                 count -= 1
                 screen.blit(self.image_top, (x, 60))

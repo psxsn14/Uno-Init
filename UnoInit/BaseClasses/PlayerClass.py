@@ -259,6 +259,8 @@ class Player:
                         fifth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(700, 500))
                         sixth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(800, 500))
                         seventh_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(900, 500))
+                        Eight_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(950, 500))
+                        ninth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(1000, 500))
                         draw_pile_image = drawPile[0].cardimage
 
                         # Creating colour value for BLUE as part of refac.
@@ -385,6 +387,7 @@ class Player:
                                     playerChoice = 0
                                     screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(950, 500))
                                     pygame.display.update()
+                                    break
 
                                 elif first_card_rect.collidepoint(x, y):
                                     playerChoice = 1
@@ -459,6 +462,25 @@ class Player:
                                     playerChoice = 7
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (900, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+                                        counter1 = counter1 - 1
+                                
+                                #Extra cards
+                                elif Eight_card_rect.collidepoint(x, y):
+                                    playerChoice = 7
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (950, 500, 100, 150))
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
+                                                    (500, 280))
+                                        pygame.display.update()
+                                        counter1 = counter1 - 1
+
+                                elif ninth_card_rect.collidepoint(x, y):
+                                    playerChoice = 7
+                                    if self.check(drawPile, discardPile, playerChoice, newGame) != None:
+                                        pygame.draw.rect(screen, BLUE, (1050, 500, 100, 150))
                                         screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
                                         pygame.display.update()
