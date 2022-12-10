@@ -243,6 +243,7 @@ class Player:
         start = True
         cardChoice = 0
         counter = 1
+        difference = abs(7-len(self.plDeck))
         while start:
             if counter > 0:
                 for event in pygame.event.get():
@@ -331,12 +332,19 @@ class Player:
                             cardChoice = 7
                             counter = counter - 1
                             start = False
+                        
+                        for i in range(difference):
+                            pygame.draw.rect(screen,BLUE, (900-i*100, 500, 100, 150))
+                            pygame.display.update()
 
             elif cardChoice != 0:
                 start = False
                 return cardChoice
 
         print('wtf')
+
+        
+
 
         # Check the click interface works
 
@@ -359,6 +367,9 @@ class Player:
         # inturn = True
         # Check the card is valid or not
         pygame.event.clear()
+        self.image_small = pygame.transform.smoothscale(self.image, (100, 150))
+        draw_new_card_rect = self.image_small
+
         while True:
             # Ask player to for their choice.
             while True:
@@ -448,6 +459,12 @@ class Player:
                                                     (500, 280))
                                         pygame.display.update()
                                         counter1 = counter1 - 1
+
+
+                                elif draw_new_card_rect.collidepoint(x,y):
+                                    playerChoice = 0
+                                    screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
+                                                    (500, 280))
 
                             # self.check(drawPile, discardPile, playerChoice, newGame)
 
