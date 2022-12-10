@@ -494,8 +494,9 @@ class Player:
                     # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
                     
                     pygame.draw.rect(screen,BLUE, (300, 500, 750, 150))
-                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(900, 500))
-                    pygame.display.update()
+                    if playerChoice == 0:
+                        screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(900, 500))
+                        pygame.display.update()
 
                     
                     break
