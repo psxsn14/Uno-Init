@@ -137,11 +137,25 @@ def chooseAIplayer():
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
                 if Player1.checkForInput(PLAY_MOUSE_POS):
+                    AIplayers = 1
+        
+                    newGame = Uno()
+
+                    newGame.startPreGame(newGame.createNewDeck(), SCREEN)
                     pass
+
                 if Player2.checkForInput(PLAY_MOUSE_POS):
+                    AIplayers = 2
+
+                    newGame = Uno()
+
+                    newGame.startPreGame(newGame.createNewDeck(), SCREEN)
                     pass
+
+
                 if Player3.checkForInput(PLAY_MOUSE_POS):
                     AIplayers = 3
+
 
                     newGame = Uno()
 
