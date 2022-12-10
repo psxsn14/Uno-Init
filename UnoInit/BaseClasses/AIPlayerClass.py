@@ -1,7 +1,8 @@
-﻿
-from BaseClasses import AI_Strategy
+﻿from BaseClasses import AI_Strategy
 from BaseClasses.PlayerClass import Player
 from BaseClasses import globals
+import pygame
+
 
 class AIPlayer(Player):
     def __init__(self, playerNo, plDeck=[]):
@@ -13,6 +14,7 @@ class AIPlayer(Player):
     def playTurn(self, newGame, drawPile, discardPile, screen):
         # AI action
         # aicard = []
+        BLUE = 70, 130, 180
         ai = AI_Strategy.AI(self.plDeck, globals.currentGameCard, drawPile)
         ai_discard, _ = ai.change_card()
         # discard one
@@ -32,22 +34,22 @@ class AIPlayer(Player):
         if action == 'draw':
             self.plDeck.insert(0, drawPile[0])
             drawPile.pop(0)
-            return drawPile, discardPile
+            # return drawPile, discardPile
         elif action == 'play':
             if ai_play.cardType == "Normal":
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
-                return drawPile, discardPile
+                # return drawPile, discardPile
             elif ai_play.cardType == "Reverse":
                 globals.ascending = not globals.ascending
                 discardPile.insert(0, ai_play)
-                self.plDeck.pop(ai_play)
+                self.plDeck.remove(ai_play)
                 return drawPile, discardPile
             elif ai_play.cardType == "Skip":
                 discardPile.insert(0, ai_play)
-                self.plDeck.pop(ai_play)
+                self.plDeck.remove(ai_play)
                 globals.current = newGame.moveToNextPlayer(globals.current)
-                return drawPile, discardPile
+                # return drawPile, discardPile
             elif ai_play.cardType == "Draw Two":
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
@@ -59,14 +61,14 @@ class AIPlayer(Player):
                     drawPile.pop(drawPile.index(UnoCard))
                 # Skip the next person's round
                 globals.current = newGame.moveToNextPlayer(globals.current)
-                return drawPile, discardPile
+                # return drawPile, discardPile
         else:
             if ai_play.cardType == "ColorChange":
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
 
                 globals.currentGameColour = action
-                return drawPile, discardPile
+                # return drawPile, discardPile
             elif ai_play.cardType == "Draw Four":
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
@@ -81,20 +83,11 @@ class AIPlayer(Player):
                 # Skip the next person's round
                 globals.current = newGame.moveToNextPlayer(globals.current)
 
-                return drawPile, discardPile
+                # return drawPile, discardPile
+        if ai_play is not None:
+            pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
+            screen.blit(pygame.transform.smoothscale(ai_play.cardimage, (100, 150)),
+                        (500, 280))
+            pygame.display.update()
 
-        # return drawPile, discardPile
-        # print("###############################AI change card below")
-        # ai.change_card()
-        # print("###############################AI canplay below")
-        # print("###############################AI play action below")
-        # ai.play_action()
-        # 无牌可出，摸牌
-        # if command == "draw":
-        #     pass
-        # # 出一张牌
-        # if command == "play":
-        #     pass
-        #
-        # pass
-    # Insert AI Code.
+        return drawPile, discardPile

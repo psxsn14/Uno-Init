@@ -211,9 +211,14 @@ class Player:
 
         # Set up the cards - pygame.
         card_interface = []
+        print(len(self.plDeck))
         for j in range(len(self.plDeck)):
+            print(j)
             card_interface.append(pygame.transform.smoothscale(self.plDeck[j].cardimage, (100, 150)))
             screen.blit(pygame.transform.smoothscale(self.plDeck[j].cardimage, (100, 150)), (300 + j * 100, 500))
+            pygame.display.update()
+
+        print('cool')
 
             # pygame.transform.smoothscale(self.plDeck[1].cardimage,(100,150)),
             # pygame.transform.smoothscale(self.plDeck[2].cardimage,(100,150)),
@@ -330,6 +335,8 @@ class Player:
             elif cardChoice != 0:
                 start = False
                 return cardChoice
+
+        print('wtf')
 
         # Check the click interface works
 
