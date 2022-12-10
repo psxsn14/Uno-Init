@@ -252,20 +252,13 @@ class Player:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         x, y = event.pos
 
-                        first_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(300, 500))
-                        second_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(400, 500))
-                        third_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(500, 500))
-                        fourth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(600, 500))
-                        fifth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(700, 500))
-                        sixth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(800, 500))
-                        seventh_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(
-                            topleft=(900, 500))
+                        first_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(300, 500))
+                        second_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(400, 500))
+                        third_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(500, 500))
+                        fourth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(600, 500))
+                        fifth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(700, 500))
+                        sixth_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(800, 500))
+                        seventh_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(900, 500))
                         draw_pile_image = drawPile[0].cardimage
 
                         # Creating colour value for BLUE as part of refac.
@@ -370,8 +363,11 @@ class Player:
         # Check the card is valid or not
         pygame.event.clear()
         image_small = pygame.transform.smoothscale(pygame.image.load('Cards New/card_back.png'), (100, 150))
-        draw_new_card_rect = pygame.transform.smoothscale(image_small, (100, 150)).get_rect(
-                            topleft=(500, 380))
+        draw_new_card_rect = pygame.transform.smoothscale(image_small, (100, 150)).get_rect(topleft=(650, 280))
+
+        #first_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(300, 500))
+     
+     
 
         while True:
             # Ask player to for their choice.
@@ -385,7 +381,12 @@ class Player:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 x, y = event.pos
 
-                                if first_card_rect.collidepoint(x, y):
+                                if draw_new_card_rect.collidepoint(x, y):
+                                    playerChoice = 0
+                                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(950, 500))
+                                    pygame.display.update()
+
+                                elif first_card_rect.collidepoint(x, y):
                                     playerChoice = 1
 
                                     # self.check(drawPile, discardPile, playerChoice, newGame)
@@ -464,16 +465,14 @@ class Player:
                                         counter1 = counter1 - 1
 
 
-                                elif draw_new_card_rect.collidepoint(x,y):
-                                    playerChoice = 0
-                                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),
-                                                    (1000, 500))
+                            
                             # self.check(drawPile, discardPile, playerChoice, newGame)
 
                     # playerChoice = int(input(
                     # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
                     
-                    pygame.draw.rect(screen,BLUE, (300, 500, 800, 150))
+                    pygame.draw.rect(screen,BLUE, (300, 500, 750, 150))
+                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(900, 500))
                     pygame.display.update()
 
                     

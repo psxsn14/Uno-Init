@@ -67,11 +67,15 @@ class AIPlayer(Player):
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
                 globals.currentGameColour = action
+                globals.currentGameType = ai_play.cardType
+                globals.currentGameNumber = ai_play.cardNumber
                 # return drawPile, discardPile
             elif ai_play.cardType == "Draw Four":
                 discardPile.insert(0, ai_play)
                 self.plDeck.remove(ai_play)
                 globals.currentGameColour = action
+                globals.currentGameType = ai_play.cardType
+                globals.currentGameNumber = ai_play.cardNumber
                 nextPlayer = newGame.moveToNextPlayer(globals.current)
                 for UnoCard in drawPile[0:4]:
                     # print(nextPlayer)
