@@ -283,11 +283,14 @@ class Uno:
             print(
                 f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
 
-            if globals.currentGameCard.cardType != "ColorChange" or "Draw Four":
+            if globals.currentGameType != "ColorChange" and "Draw Four":
                 #     pass
                 globals.currentGameColour = self.discardPile[0].cardColour
                 globals.currentGameNumber = self.discardPile[0].cardNumber
                 globals.currentGameType = self.discardPile[0].cardType
+            # else:
+            #     globals.currentGameNumber = self.discardPile[0].cardNumber
+            #     globals.currentGameType = self.discardPile[0].cardType
             # else:
             #     globals.currentGameColour = globals.currentGameCard.cardColour
             #     globals.currentGameNumber = globals.currentGameCard.cardNumber

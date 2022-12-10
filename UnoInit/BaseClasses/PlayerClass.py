@@ -32,6 +32,8 @@ class Player:
             if self.plDeck[playerChoice - 1].cardColour == "Black":
                 # Wild
                 if self.plDeck[playerChoice - 1].cardType == "ColorChange":
+                    globals.currentGameType = self.plDeck[playerChoice - 1].cardType
+                    globals.currentGameNumber = self.plDeck[playerChoice - 1].cardNumber
                     discardPile.insert(0, self.plDeck[playerChoice - 1])
                     self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
                     # change the color
@@ -46,6 +48,8 @@ class Player:
 
                 # Wild Draw
                 if self.plDeck[playerChoice - 1].cardType == "Draw Four":
+                    globals.currentGameType = self.plDeck[playerChoice - 1].cardType
+                    globals.currentGameNumber = self.plDeck[playerChoice - 1].cardNumber
                     discardPile.insert(0, self.plDeck[playerChoice - 1])
                     self.plDeck.pop(self.plDeck.index(self.plDeck[playerChoice - 1]))
                     # change the color
@@ -327,12 +331,12 @@ class Player:
                             cardChoice = 7
                             counter = counter - 1
                             start = False
-                        
+
                         #for i in range(difference):
                             #pygame.draw.rect(screen,BLUE, (900-i*100, 500, 100, 150))
                             #pygame.display.update()
 
-                
+
 
             elif cardChoice != 0:
                 start = False
@@ -340,7 +344,7 @@ class Player:
 
         print('wtf')
 
-        
+
 
 
         # Check the click interface works
@@ -368,8 +372,8 @@ class Player:
         draw_new_card_rect = pygame.transform.smoothscale(image_small, (100, 150)).get_rect(topleft=(650, 280))
 
         #first_card_rect = pygame.transform.smoothscale(card_interface[j], (100, 150)).get_rect(topleft=(300, 500))
-     
-     
+
+
 
         while True:
             # Ask player to for their choice.
@@ -466,7 +470,7 @@ class Player:
                                                     (500, 280))
                                         pygame.display.update()
                                         counter1 = counter1 - 1
-                                
+
                                 #Extra cards
                                 elif Eight_card_rect.collidepoint(x, y):
                                     playerChoice = 7
@@ -487,18 +491,18 @@ class Player:
                                         counter1 = counter1 - 1
 
 
-                            
+
                             # self.check(drawPile, discardPile, playerChoice, newGame)
 
                     # playerChoice = int(input(
                     # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
-                    
+
                     pygame.draw.rect(screen,BLUE, (300, 500, 750, 150))
                     if playerChoice == 0:
                         screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),(900, 500))
                         pygame.display.update()
 
-                    
+
                     break
                 except:
                     print("Invalid choice, please enter a number")
