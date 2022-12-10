@@ -156,7 +156,7 @@ class Uno:
         while True:
             try:
                 #AICount = int(input("Enter number of AI opponents to play against: "))
-                
+
                 for i in range(0, globals.AIplayers):
                     self.playerList.append(copy.deepcopy(AIPlayer(i + 2)))
                 break
@@ -255,7 +255,8 @@ class Uno:
                 break
         # while len(self.drawPile) != 0:
 
-            self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self, self.drawPile, self.discardPile, screen)
+            self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self, self.drawPile,
+                                                                                        self.discardPile, screen)
 
             globals.current = self.moveToNextPlayer(globals.current)
             globals.currentGameCard = self.discardPile[0]

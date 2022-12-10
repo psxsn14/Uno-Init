@@ -357,7 +357,6 @@ class Player:
                 try:
                     counter1 = 1
                     while counter1 > 0:
-                        canPlay = False
                         for event in pygame.event.get():
                             if event.type == pygame.QUIT:
                                 pygame.quit()
@@ -367,11 +366,13 @@ class Player:
                                 if first_card_rect.collidepoint(x, y):
                                     playerChoice = 1
                                     # self.check(drawPile, discardPile, playerChoice, newGame)
+                                    # result = self.check(drawPile, discardPile, playerChoice, newGame)
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         counter1 = counter1 - 1
                                         pygame.draw.rect(screen, BLUE, (300, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[0].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
+                                        # screen.blit(discardPile[0], (500, 280))
                                         pygame.display.update()
 
                                 elif second_card_rect.collidepoint(x, y):
@@ -379,8 +380,9 @@ class Player:
                                     # self.check(drawPile, discardPile, playerChoice, newGame)
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (400, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[1].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
+                                        # screen.blit(discardPile[0], (500, 280))
                                         pygame.display.update()
                                         counter1 = counter1 - 1
 
@@ -388,8 +390,9 @@ class Player:
                                     playerChoice = 3
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (500, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[2].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
+                                        # screen.blit(discardPile[0], (500, 280))
                                         pygame.display.update()
 
                                         counter1 = counter1 - 1
@@ -398,7 +401,7 @@ class Player:
                                     playerChoice = 4
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (600, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[3].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
                                         pygame.display.update()
 
@@ -410,7 +413,7 @@ class Player:
                                     playerChoice = 5
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (700, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[4].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
                                         pygame.display.update()
 
@@ -423,7 +426,7 @@ class Player:
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
 
                                         pygame.draw.rect(screen, BLUE, (800, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[5].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
                                         pygame.display.update()
                                         counter1 = counter1 - 1
@@ -432,7 +435,7 @@ class Player:
                                     playerChoice = 7
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
                                         pygame.draw.rect(screen, BLUE, (900, 500, 100, 150))
-                                        screen.blit(pygame.transform.smoothscale(self.plDeck[6].cardimage, (100, 150)),
+                                        screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
                                                     (500, 280))
                                         pygame.display.update()
                                         counter1 = counter1 - 1
