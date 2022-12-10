@@ -1,7 +1,7 @@
-﻿
-import globals
+﻿import globals
 import random
 from collections import Counter
+
 
 ###################################################################################
 # Since there is not yet a UNO logic,
@@ -37,21 +37,26 @@ def play_a_card(the_card, hand_cards, discard_pile):
 def show_num(AI_card, draw_pile, discard_pile):
     print("手牌：", len(AI_card), "牌堆长度", len(draw_pile), "弃牌长度", len(discard_pile))
 
+
 def show_simple(listofcard):
     simple_list = []
-    if len(listofcard) == 0:
+    # if len(listofcard) == 0:
+    #     return simple_list
+    if listofcard is None:
         return simple_list
-
+    print('listofcard')
+    print(listofcard)
     for i in listofcard:
 
         if i.cardNumber != 'None':
-            simple_list.append(str(i.cardColour) +' '+ str(i.cardNumber))
+            simple_list.append(str(i.cardColour) + ' ' + str(i.cardNumber))
         else:
-            simple_list.append(str(i.cardColour) + ' '+ str(i.cardType))
+            simple_list.append(str(i.cardColour) + ' ' + str(i.cardType))
 
     # for i in range(0,len(simple_list)):
     #     print(str(i+1) + ' ' + simple_list[i])
     return simple_list
+
 
 ####################################################################################
 
@@ -75,11 +80,12 @@ class AI:
         self.the_card = None
 
         # show_card_list(self.hand_list)
+
     def get_class_name(self):
         return self.__class__.__name__  # get the class name
 
     # sort hand_list by card Value
-    def sort_card(self,listofcard):
+    def sort_card(self, listofcard):
         # print(self.hand_list)
 
         # show_card_list(self.hand_list)
@@ -99,7 +105,7 @@ class AI:
 
         print("before playing , the discarded card:", show_simple([discard_card]))
         self.action = 'draw'  # get a new card
-        print( self.get_class_name(), " needs to", self.action)
+        print(self.get_class_name(), " needs to", self.action)
 
         return discard_card, self.action
 
@@ -115,56 +121,61 @@ class AI:
         # print("_________________________")
         # print("The cards AI can play:")
         for i in ai_hand:
-            if i.cardNumber != 'None' : # Normal card, match colour or number
-                if i.cardColour == top_card.cardColour or i.cardNumber == top_card.cardNumber :
+            if i.cardNumber != 'None':  # Normal card, match colour or number
+                if i.cardColour == top_card.cardColour or i.cardNumber == top_card.cardNumber:
                     can_play_cards.append(i)
 
             else:  # Black card, or Function card, match colour or type
                 if i.cardColour == 'Black' or i.cardType == top_card.cardType or i.cardColour == top_card.cardColour:
                     can_play_cards.append(i)
 
-        show_simple(can_play_cards)
+        # show_simple(can_play_cards)
         return can_play_cards
 
-# What AI should do
+    # What AI should do
     def play_action(self):
 
-        if len(self.can_play(self.hand_list,self.top_card)) == 0:
+        if len(self.can_play(self.hand_list, self.top_card)) == 0:
             print("No card can play, draw a card")
 
             self.action = 'draw'
         else:
-            self.the_card = random.choice(self.can_play(self.hand_list,self.top_card))
+            self.the_card = random.choice(self.can_play(self.hand_list, self.top_card))
             self.action = 'play'
             # print("AI plays :",self.the_card)
 
             if self.the_card.cardColour == "Black":
-                self.action = "Red" # When AI use Wild card, it picks red
+                self.action = "Red"  # When AI use Wild card, it picks red
         print("_________________________")
-        print( self.__class__.__name__," decides: ", show_simple([self.the_card]),'  ',self.action)
+        print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
         return self.the_card, self.action  #
 
-    def human_can_play_list(self,human_hand, can_play_cards): # if AI plays one of the cards in human_hand, human can play
+    def human_can_play_list(self, human_hand,
+                            can_play_cards):  # if AI plays one of the cards in human_hand, human can play
         human_can_play = []
         for card in can_play_cards:
             if self.can_play(human_hand, card):
                 human_can_play.append(card)
         return human_can_play
-    def human_can_not_play_list(self,human_hand, can_play_cards): # if AI plays one of the cards in human_hand, human can not play
+
+    def human_can_not_play_list(self, human_hand,
+                                can_play_cards):  # if AI plays one of the cards in human_hand, human can not play
         human_can_not_play = []
         for card in can_play_cards:
             if not self.can_play(human_hand, card):
                 human_can_not_play.append(card)
         return human_can_not_play
 
-    def get_card_colour_of_list(self,listofcard):# get the colour of the cards in the list, and sort them by number of the card
+    def get_card_colour_of_list(self,
+                                listofcard):  # get the colour of the cards in the list, and sort them by number of the card
         colour_list = []
         for card in listofcard:
             if card.cardColour != 'Black':
                 colour_list.append(card.cardColour)
-        return [i[0]for i  in Counter(colour_list).most_common() ]
+        return [i[0] for i in Counter(colour_list).most_common()]
 
-    def color_ai_not_in_hu(self, aicard, human_card): # return the colour of the cards in AI's hand, but not in human's hand
+    def color_ai_not_in_hu(self, aicard,
+                           human_card):  # return the colour of the cards in AI's hand, but not in human's hand
         ai_color = self.get_card_colour_of_list(aicard)
         hu_color = self.get_card_colour_of_list(human_card)
         color_not_in_hu = []
@@ -172,8 +183,6 @@ class AI:
             if i.cardColour in [i for i in ai_color if i not in hu_color]:
                 color_not_in_hu.append(i)
         return color_not_in_hu
-
-
 
 
 class EasyAI(AI):
@@ -185,8 +194,6 @@ class EasyAI(AI):
         self.action = 'draw'
         print(self.get_class_name(), " needs to", self.action)
         return discard_card, self.action
-
-
 
 
 class MediumAI(AI):
@@ -206,7 +213,7 @@ class HardAI(AI):
         colour_list = []
         for i in x:
             colour_list.append(i.cardColour)
-        colour_list.remove('Black')             # remove black card
+        colour_list.remove('Black')  # remove black card
         # find the most frequent colour
         most_colour = max(set(colour_list), key=colour_list.count)
         # match x.cardColour with most_colour to a new list
@@ -216,6 +223,7 @@ class HardAI(AI):
         self.action = 'draw'
         print(self.get_class_name(), " needs to", self.action)
         return discard_card, self.action
+
 
 class InvincibleAI(HardAI):
     pass

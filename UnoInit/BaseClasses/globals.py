@@ -14,4 +14,4 @@ gameRound = 0
 #Pygame Choice variables.
 choosecolor = "None"
 AIlevel = "easy"
-AIplayers = 1
+AIplayers = 3
