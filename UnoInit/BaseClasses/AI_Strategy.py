@@ -1,8 +1,6 @@
-﻿# from UnoInit import *
-import random
+﻿
 import globals
 import random
-# from fun import *
 from collections import Counter
 
 ###################################################################################
@@ -189,10 +187,6 @@ class EasyAI(AI):
         return discard_card, self.action
 
 
-# easyai = EasyAI(aicard,top_card,[])
-# easyai.change_card()
-# easyai.can_play()
-# easyai.play_action()
 
 
 class MediumAI(AI):
@@ -204,7 +198,6 @@ class MediumAI(AI):
         self.action = 'draw'
         print(self.get_class_name(), " needs to", self.action)
         return discard_card, self.action
-
 
 
 class HardAI(AI):
