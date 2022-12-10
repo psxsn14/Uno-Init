@@ -41,25 +41,25 @@ class Button():
   
             
 def main_menu():
-    MBG= pygame.image.load("UnoInit/Buttons New/bluelight.png")
+    MBG= pygame.image.load("Buttons New/bluelight.png")
     MBGEimage=pygame.transform.scale(MBG,(100,100))
-    redbuttonBG= pygame.image.load("UnoInit/Buttons New/red.png")
+    redbuttonBG= pygame.image.load("Buttons New/red.png")
     buttonBGred=pygame.transform.scale(redbuttonBG,(50,50))
-    bluebuttonBG= pygame.image.load("UnoInit/Buttons New/blue.png")
+    bluebuttonBG= pygame.image.load("Buttons New/blue.png")
     buttonBGblue=pygame.transform.scale(bluebuttonBG,(50,50))
-    greenbuttonBG= pygame.image.load("UnoInit/Buttons New/green.png")
+    greenbuttonBG= pygame.image.load("Buttons New/green.png")
     buttonBGgreen=pygame.transform.scale(greenbuttonBG,(50,50))
-    yellowbuttonBG= pygame.image.load("UnoInit/Buttons New/yellow.png")
+    yellowbuttonBG= pygame.image.load("Buttons New/yellow.png")
     buttonBGyellow=pygame.transform.scale(yellowbuttonBG,(50,50))
 
 
-    redbuttonBG1= pygame.image.load("UnoInit/Buttons New/redlight.png")
+    redbuttonBG1= pygame.image.load("Buttons New/redlight.png")
     newbuttonBGred=pygame.transform.scale(redbuttonBG1,(150,150))
-    bluebuttonBG1= pygame.image.load("UnoInit/Buttons New/bluelight.png")
+    bluebuttonBG1= pygame.image.load("Buttons New/bluelight.png")
     newbuttonBGblue=pygame.transform.scale(bluebuttonBG1,(150,150))
-    yellowbuttonBG1= pygame.image.load("UnoInit/Buttons New/yellowlight.png")
+    yellowbuttonBG1= pygame.image.load("Buttons New/yellowlight.png")
     newbuttonBGyellow=pygame.transform.scale(yellowbuttonBG1,(150,150))
-    greenbuttonBG1= pygame.image.load("UnoInit/Buttons New/greenlight.png")
+    greenbuttonBG1= pygame.image.load("Buttons New/greenlight.png")
     newbuttonBGgreen=pygame.transform.scale(greenbuttonBG1,(150,150))
     
     clock = pygame.time.Clock()

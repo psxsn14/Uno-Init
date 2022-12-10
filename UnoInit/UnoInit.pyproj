@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a7024692-9602-4d2e-92b4-476b380d9d60</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>UnoInit.py</StartupFile>
+    <StartupFile>WelcomePage.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -36,12 +36,18 @@
     <Compile Include="BaseClasses\UnoClass.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="changecolor.py" />
+    <Compile Include="changedirection.py" />
+    <Compile Include="WelcomePage.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UnoInit.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BaseClasses\" />
     <Folder Include="BaseClasses\__pycache__\" />
     <Folder Include="Cards New\" />
+    <Folder Include="welcome page\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaseClasses\__pycache__\PlayerClass.cpython-311.pyc" />
@@ -104,6 +110,11 @@
     <Content Include="Cards New\yellowDrawTwo.png" />
     <Content Include="Cards New\yellowreverse.png" />
     <Content Include="Cards New\yellowskip.png" />
+    <Content Include="welcome page\BGmusic.mp3" />
+    <Content Include="welcome page\ending.png" />
+    <Content Include="welcome page\font1.ttf" />
+    <Content Include="welcome page\main menu-3.png" />
+    <Content Include="welcome page\rule.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
