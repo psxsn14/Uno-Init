@@ -333,9 +333,11 @@ class Player:
                             counter = counter - 1
                             start = False
                         
-                        for i in range(difference):
-                            pygame.draw.rect(screen,BLUE, (900-i*100, 500, 100, 150))
-                            pygame.display.update()
+                        #for i in range(difference):
+                            #pygame.draw.rect(screen,BLUE, (900-i*100, 500, 100, 150))
+                            #pygame.display.update()
+
+                
 
             elif cardChoice != 0:
                 start = False
@@ -367,8 +369,9 @@ class Player:
         # inturn = True
         # Check the card is valid or not
         pygame.event.clear()
-        self.image_small = pygame.transform.smoothscale(self.image, (100, 150))
-        draw_new_card_rect = self.image_small
+        image_small = pygame.transform.smoothscale(pygame.image.load('Cards New/card_back.png'), (100, 150))
+        draw_new_card_rect = pygame.transform.smoothscale(image_small, (100, 150)).get_rect(
+                            topleft=(500, 380))
 
         while True:
             # Ask player to for their choice.
@@ -463,13 +466,17 @@ class Player:
 
                                 elif draw_new_card_rect.collidepoint(x,y):
                                     playerChoice = 0
-                                    screen.blit(pygame.transform.smoothscale(discardPile[0].cardimage, (100, 150)),
-                                                    (500, 280))
-
+                                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)),
+                                                    (1000, 500))
                             # self.check(drawPile, discardPile, playerChoice, newGame)
 
                     # playerChoice = int(input(
                     # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
+                    
+                    pygame.draw.rect(screen,BLUE, (300, 500, 800, 150))
+                    pygame.display.update()
+
+                    
                     break
                 except:
                     print("Invalid choice, please enter a number")
