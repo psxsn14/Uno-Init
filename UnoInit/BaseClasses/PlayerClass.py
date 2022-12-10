@@ -160,38 +160,39 @@ class Player:
                         print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
                 globals.currentGameColour = newColour
 
+
             elif globals.currentGameType == 'Draw Four':
                 # official rules: put the card back into the deck and draw a new card
                 while globals.currentGameType == "Draw Four":
                     # Put the card back
-                    drawPile.append(globals.currentGameCard)
-                    discardPile.pop(0)
-                    # draw a new card
-                    globals.currentGameCard = drawPile[0]
-                    globals.currentGameColour = globals.currentGameCard.cardColour
-                    globals.currentGameNumber = globals.currentGameCard.cardNumber
-                    globals.currentGameType = globals.currentGameCard.cardType
-                    drawPile.pop(0)
-                    discardPile.append(globals.currentGameCard)
+                    # drawPile.append(globals.currentGameCard)
+                    # discardPile.pop(0)
+                    # # draw a new card
+                    # globals.currentGameCard = drawPile[0]
+                    # globals.currentGameColour = globals.currentGameCard.cardColour
+                    # globals.currentGameNumber = globals.currentGameCard.cardNumber
+                    # globals.currentGameType = globals.currentGameCard.cardType
+                    # drawPile.pop(0)
+                    # discardPile.append(globals.currentGameCard)
                     # return drawPile, discardPile
 
                 # popular rules: first player choose the color, next player draw 4 and skip
-                while True:
-                    newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
-                    if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
-                        break
-                    else:
-                        print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
-                globals.currentGameColour = newColour
-                # Next player draw four and skip
-                nextPlayer = newGame.moveToNextPlayer(globals.current)
-                for UnoCard in drawPile[0:4]:
-                    # print(nextPlayer)
-                    newGame.playerList[nextPlayer].plDeck.append(UnoCard)
-                    drawPile.pop(drawPile.index(UnoCard))
-                # Skip the next person's round
-                globals.current = newGame.moveToNextPlayer(globals.current)
-                return drawPile, discardPile
+                    while True:
+                        newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
+                        if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
+                            break
+                        else:
+                            print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
+                    globals.currentGameColour = newColour
+                    # Next player draw four and skip
+                    nextPlayer = newGame.moveToNextPlayer(globals.current)
+                    for UnoCard in drawPile[0:4]:
+                        # print(nextPlayer)
+                        newGame.playerList[nextPlayer].plDeck.append(UnoCard)
+                        drawPile.pop(drawPile.index(UnoCard))
+                    # Skip the next person's round
+                    globals.current = newGame.moveToNextPlayer(globals.current)
+                    return drawPile, discardPile
 
         # Select a card from your hand, and place it below the discard pile.
 
@@ -365,6 +366,7 @@ class Player:
 
                                 if first_card_rect.collidepoint(x, y):
                                     playerChoice = 1
+
                                     # self.check(drawPile, discardPile, playerChoice, newGame)
                                     # result = self.check(drawPile, discardPile, playerChoice, newGame)
                                     if self.check(drawPile, discardPile, playerChoice, newGame) != None:
@@ -447,6 +449,9 @@ class Player:
                     break
                 except:
                     print("Invalid choice, please enter a number")
+            break
+
+        return drawPile, discardPile
             # # If 0, draw a card and pass.
             # if playerChoice == 0:
             #     self.plDeck.insert(0, drawPile[0])

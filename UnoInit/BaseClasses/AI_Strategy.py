@@ -1,5 +1,6 @@
 ﻿# from UnoInit import *
 import random
+import globals
 
 
 #  AI的基本功能：根据规则，1-换牌 2-执行action
@@ -75,6 +76,8 @@ class AI:
 
     #  Before your turn starts, discard a card from your hand and get a new card
     def change_card(self):
+        for i in self.hand_list:
+            print(i)
         discard_card = self.hand_list[0]  # Card is thrown randomly, no strategy
         print("before playing , the discarded card:", discard_card)
         self.action = 'draw'  # get a new card
@@ -124,17 +127,18 @@ class AI:
             print("No card can play, draw a card")
             self.action = 'draw'
         else:
+            print(self.can_play_cards)
             if globals.AIlevel == "easy":
                 self.the_card = random.choice(self.can_play_cards)
             elif globals.AIlevel == "medium":
                 self.the_card = random.choice(self.can_play_cards)
             elif globals.AIlevel == "invincible":
                 self.the_card = random.choice(self.can_play_cards)
-            
+
             self.action = 'play'
             print("AI plays :", self.the_card)
 
-            if self.the_card.cardColour == "Black":
+            if self.the_card != None and self.the_card.cardColour == "Black":
                 self.action = "red"  # When AI use Wild card, it picks red
         print("AI decides: ", self.the_card, '  ', self.action)
         return self.the_card, self.action  #

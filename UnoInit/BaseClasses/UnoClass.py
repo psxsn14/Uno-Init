@@ -228,6 +228,7 @@ class Uno:
 
         self.topDiscardPileCard = self.drawPile[0]
         print(f"\nTop card of the draw pile forms the discard pile: {self.topDiscardPileCard}")
+        # if globals.currentGameType != 'Draw Four' or 'ChangeColor':
         globals.currentGameCard = self.drawPile[0]
         globals.currentGameColour = self.topDiscardPileCard.cardColour
         globals.currentGameNumber = self.topDiscardPileCard.cardNumber
@@ -260,14 +261,17 @@ class Uno:
 
             globals.current = self.moveToNextPlayer(globals.current)
             globals.currentGameCard = self.discardPile[0]
-            globals.currentGameNumber = self.discardPile[0].cardNumber
-            globals.currentGameType = self.discardPile[0].cardType
+
             if globals.currentGameType != "ColorChange" or "Draw Four":
-                globals.currentGameColour = self.discardPile[0].cardColour
+                # globals.currentGameColour = self.discardPile[0].cardColour
+                globals.currentGameNumber = self.discardPile[0].cardNumber
+                globals.currentGameType = self.discardPile[0].cardType
             # globals.currentGameType = self.discardPile[0].cardType
 
             globals.gameRound += 1
             print('Round ' + str(globals.gameRound))
+            print(
+                f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
 
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))

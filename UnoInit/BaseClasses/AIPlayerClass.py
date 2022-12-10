@@ -15,18 +15,17 @@ class AIPlayer(Player):
         # aicard = []
         ai = AI_Strategy.AI(self.plDeck, globals.currentGameCard, drawPile)
         ai_discard, _ = ai.change_card()
-        # ai.can_play()
-        ai_play, action = ai.play_action()
-        print("AI discard: " + str(ai_discard))
-        print("AI play: " + str(ai_play))
-        print("AI action: " + action)
-
         # discard one
         discardPile.append(ai_discard)
         self.plDeck.remove(ai_discard)
         # draw one
         self.plDeck.insert(0, drawPile[0])
         drawPile.pop(0)
+        # ai.can_play()
+        ai_play, action = ai.play_action()
+        print("AI discard: " + str(ai_discard))
+        print("AI play: " + str(ai_play))
+        print("AI action: " + action)
 
         # judge by action
         # draw means no card to play
