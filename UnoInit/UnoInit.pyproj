@@ -53,6 +53,7 @@
     <Content Include="BaseClasses\__pycache__\PlayerClass.cpython-311.pyc" />
     <Content Include="BaseClasses\__pycache__\UnoClass.cpython-311.pyc" />
     <Content Include="BaseClasses\__pycache__\__init__.cpython-311.pyc" />
+    <Content Include="blue_BG.jpg" />
     <Content Include="Cards New\.DS_Store" />
     <Content Include="Cards New\blackcolorchange.png" />
     <Content Include="Cards New\blackDrawFour.png" />
@@ -110,6 +111,8 @@
     <Content Include="Cards New\yellowDrawTwo.png" />
     <Content Include="Cards New\yellowreverse.png" />
     <Content Include="Cards New\yellowskip.png" />
+    <Content Include="README.md" />
+    <Content Include="UnoRules.png" />
     <Content Include="welcome page\BGmusic.mp3" />
     <Content Include="welcome page\ending.png" />
     <Content Include="welcome page\font1.ttf" />
