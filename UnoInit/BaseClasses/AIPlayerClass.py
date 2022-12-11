@@ -59,6 +59,40 @@ class AIPlayer(Player):
                     # print(nextPlayer)
                     newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                     drawPile.pop(drawPile.index(UnoCard))
+                #AI Player 1 draw 4
+                if nextPlayer == 1:
+                    pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
+                    count = len(self.plDeck) + 2
+                    if count > 0:
+                        for f in range(7):
+                        # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
+
+                if nextPlayer == 2:
+                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                    count = len(self.plDeck) + 2
+                    if count > 0:
+                        for f in range(7):
+                            # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
+                    
+
+                if nextPlayer == 3:
+                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                    count = len(self.plDeck) + 2
+                    if count > 0:
+                        for f in range(7):
+                        # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
                 # Skip the next person's round
                 globals.current = newGame.moveToNextPlayer(globals.current)
                 # return drawPile, discardPile
@@ -77,10 +111,49 @@ class AIPlayer(Player):
                 globals.currentGameType = ai_play.cardType
                 globals.currentGameNumber = ai_play.cardNumber
                 nextPlayer = newGame.moveToNextPlayer(globals.current)
+                
                 for UnoCard in drawPile[0:4]:
                     # print(nextPlayer)
                     newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                     drawPile.pop(drawPile.index(UnoCard))
+
+                
+                #AI Player 1 draw 4
+                if nextPlayer == 1:
+                    pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
+                    count = len(self.plDeck) + 4
+                    if count > 0:
+                        for f in range(7):
+                        # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
+
+                if nextPlayer == 2:
+                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                    count = len(self.plDeck) + 4
+                    if count > 0:
+                        for f in range(7):
+                            # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
+                    
+
+                if nextPlayer == 3:
+                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                    count = len(self.plDeck) + 4
+                    if count > 0:
+                        for f in range(7):
+                        # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
+
+
                 # Skip the next person's round
                 globals.current = newGame.moveToNextPlayer(globals.current)
 
@@ -108,6 +181,9 @@ class AIPlayer(Player):
                     screen.blit(image_small, (100, (x)))
                     pygame.display.update()
 
+            #to refresh other AI players, when this is feature is ready. 
+            #pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+
             count = len(self.plDeck)
             if count > 0:
                 for f in range(7):
@@ -117,6 +193,8 @@ class AIPlayer(Player):
                     screen.blit(image_right, (1066, (x)))
                     pygame.display.update()
 
+            #to refresh other AI players, when this is feature is ready.
+            #pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
             count = len(self.plDeck)
             if count > 0:
                 for k in range(7):
