@@ -38,7 +38,7 @@ def play():
                     main_menu()
                 
         pygame.display.update()
-
+# Code to write Button class referenced from https://github.com/baraltech/Menu-System-PyGame
 class Button():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
         self.image=image
