@@ -103,9 +103,12 @@ class AI:
         # choose a random card to discard from hand_list
         discard_card = random.choice(self.hand_list)
 
-        print("before playing , the discarded card:", show_simple([discard_card]))
+        # print("before playing , the discarded card:", show_simple([discard_card]))
         self.action = 'draw'  # get a new card
-        print(self.get_class_name(), " needs to", self.action)
+        print("AI hand card")
+        for i in self.hand_list:
+            print(i)
+        # print(self.get_class_name(), " needs to", self.action)
 
         return discard_card, self.action
 
@@ -134,6 +137,9 @@ class AI:
 
     # What AI should do
     def play_action(self):
+        print("AI hand card after switch")
+        for i in self.hand_list:
+            print(i)
 
         if len(self.can_play(self.hand_list, self.top_card)) == 0:
             print("No card can play, draw a card")
@@ -147,7 +153,7 @@ class AI:
             if self.the_card.cardColour == "Black":
                 self.action = "Red"  # When AI use Wild card, it picks red
         print("_________________________")
-        print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
+        # print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
         return self.the_card, self.action  #
 
     def human_can_play_list(self, human_hand,

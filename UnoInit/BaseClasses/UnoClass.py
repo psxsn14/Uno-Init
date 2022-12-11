@@ -126,9 +126,11 @@ class Uno:
         count = 21
         # count = 7*globals.AIplayers
 
+        print(globals.AIplayers)
+
         if count > 0:
             for l in range(7):
-                if AIPlayer == 1:
+                if globals.AIplayers == 1:
                     count = count -7
                     pass
                 else:
@@ -140,7 +142,7 @@ class Uno:
                     time.sleep(0.1)
 
             for f in range(7):
-                if AIPlayer == 1 or AIPlayer == 2:
+                if globals.AIplayers == 1 or globals.AIplayers == 2:
                     count = count -7
                     pass
                 else:
@@ -159,7 +161,7 @@ class Uno:
                 pygame.display.update()
                 time.sleep(0.1)
 
-            screen.blit(self.image_top, (650, 280))
+            screen.blit(self.image_top, (750, 280))
 
         else:
             start = False
@@ -240,7 +242,7 @@ class Uno:
         x_top = self.drawPile[0].cardimage
         global Top_card
         Top_card = pygame.transform.smoothscale(x_top, (100, 150))
-        screen.blit(Top_card, (500, 280))
+        screen.blit(Top_card, (400, 280))
         # screen.blit(self.image,(100,100))
         pygame.display.update()
 
@@ -273,18 +275,25 @@ class Uno:
             if exit_flag:
                 break
             # while len(self.drawPile) != 0:
-
+            print('Round ' + str(globals.gameRound))
+            print('Player' + str(globals.current + 1))
+            print(
+                f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
             self.drawPile, self.discardPile = self.playerList[globals.current].playTurn(self, self.drawPile,
                                                                                         self.discardPile, screen)
 
             globals.current = self.moveToNextPlayer(globals.current)
             globals.currentGameCard = self.discardPile[0]
-            print(globals.currentGameCard)
-            print(
-                f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
 
-            if self.discardPile[0].cardType != "ColorChange" and "Draw Four":
-                #     pass
+            # print(globals.currentGameCard)
+            # print(
+            #     f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
+
+            if self.discardPile[0].cardType == "ColorChange":
+                pass
+            elif self.discardPile[0].cardType == "Draw Four":
+                pass
+            else:
                 globals.currentGameColour = self.discardPile[0].cardColour
                 globals.currentGameNumber = self.discardPile[0].cardNumber
                 globals.currentGameType = self.discardPile[0].cardType
@@ -301,8 +310,9 @@ class Uno:
             # globals.currentGameType = globals.currentGameCard.cardType
 
             globals.gameRound += 1
-            print('Round ' + str(globals.gameRound))
-            print(globals.currentGameCard)
+            # print('Round ' + str(globals.gameRound))
+            # print('Player' + str(globals.current+1))
+            # print(globals.currentGameCard)
             print(
                 f"\nCurrent game card: {globals.currentGameColour}, {globals.currentGameNumber}, {globals.currentGameType}")
             time.sleep(3)
