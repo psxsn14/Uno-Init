@@ -7,7 +7,6 @@ from collections import Counter
 
 
 
-
 def show_card_list(listofcard):
     [print(i) for i in listofcard]
 
@@ -60,9 +59,9 @@ class AI:
         # choose a random card to discard from hand_list
         discard_card = random.choice(self.hand_list)
 
-        print("before playing , the discarded card:", show_simple([discard_card]))
+        # print("before playing , the discarded card:", show_simple([discard_card]))
         self.action = 'draw'  # get a new card
-        print( self.get_class_name(), " needs to", self.action)
+        # print( self.get_class_name(), " needs to", self.action)
 
         return discard_card, self.action
 
@@ -79,7 +78,7 @@ class AI:
                 if i.cardColour == 'Black' or i.cardType == top_card.cardType or i.cardColour == top_card.cardColour:
                     can_play_cards.append(i)
 
-        show_simple(can_play_cards)
+        # show_simple(can_play_cards)
         return can_play_cards
 
 # What AI should do
@@ -97,8 +96,8 @@ class AI:
             if self.the_card.cardColour == "Black":
                 all_colour = ['Red', 'Blue', 'Green', 'Yellow']
                 self.action = random.choice(all_colour)
-        print("_________________________")
-        print( self.__class__.__name__," decides: ", show_simple([self.the_card]),'  ',self.action)
+        # print("_________________________")
+        # print( self.__class__.__name__," decides: ", show_simple([self.the_card]),'  ',self.action)
         return self.the_card, self.action  #
 
     def human_can_play_list(self,human_hand, can_play_cards): # if AI plays one of the cards in human_hand, human can play
@@ -136,7 +135,7 @@ class AI:
 class EasyAI(AI):
     def change_card(self):  # easy AI, always discard the biggest card
         x = self.sort_card(self.hand_list)
-        show_simple(x)
+        # show_simple(x)
         discard_card = self.hand_list[-1]
         print("before playing , the discarded card:", discard_card)
         self.action = 'draw'
