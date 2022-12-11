@@ -13,5 +13,8 @@ Qingfei Hu
 How to use:
 
 Either clone "main" repository and run "welcome page.py".
+
+OR
+
 Use the Visual Studio solution provided and run "welcome page.py".
 
