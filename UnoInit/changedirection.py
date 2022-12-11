@@ -50,10 +50,11 @@ def main_menu():
     yellowbuttonBG= pygame.image.load("UnoInit/Cards New/yellowReverse.png")
     buttonBGyellow=pygame.transform.scale(yellowbuttonBG,(150,250))
     reversign=pygame.image.load("UnoInit/Buttons New/reverse.png")
-    graph=pygame.transform.scale(reversign,(150,250))
+    graph=pygame.transform.scale(reversign,(300,250))
     graph0=pygame.image.load("UnoInit/Buttons New/reverse1.png")
-    graph1=pygame.transform.scale(graph0,(150,250))
-    graph3=pygame.transform.scale(reversign,(150,250))
+    graph1=pygame.transform.scale(graph0,(300,250))
+    graph3=pygame.transform.scale(reversign,(300,250))
+    
     
 
     while True:
