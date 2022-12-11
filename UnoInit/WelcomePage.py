@@ -41,7 +41,8 @@ def chooselevel():
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
     
-        SCREEN.fill((70,130,180))# background color
+        bgImage = pygame.image.load('blue_BG.jpg')
+        SCREEN.blit(bgImage, (0,0))
         
         Main_TEXT = get_font(45).render("Choose the level of games", True, "white")
         Main_RECT = Main_TEXT.get_rect(center=(683, 84))
@@ -102,7 +103,8 @@ def chooseAIplayer():
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
     
-        SCREEN.fill((70,130,180))# background color
+        bgImage = pygame.image.load('blue_BG.jpg')
+        SCREEN.blit(bgImage, (0,0))
         
         Main_TEXT = get_font(45).render("Choose the number of AIplayers", True, "white")
         Main_RECT = Main_TEXT.get_rect(center=(683, 84))
@@ -172,15 +174,18 @@ def rules():
     while True:
         RULES_MOUSE_POS = pygame.mouse.get_pos()
     
-        SCREEN.fill((70,130,180))# background color
-        SCREEN.blit(Ruleimage,(0,0))
+        bgImage = pygame.image.load('blue_BG.jpg')
+        SCREEN.blit(bgImage, (0,0))
+        rulesImage = pygame.image.load('UnoRules.png')
+        rulesRect = rulesImage.get_rect(center = (1366/2, 768/2))
+        SCREEN.blit(rulesImage,rulesRect)
         
         # RULES_TEXT = get_font(45).render("This is the Rules screen", True, "white")
         # RULES_RECT = RULES_TEXT.get_rect(center=(640, 260))
         # SCREEN.blit(RULES_TEXT, RULES_RECT)
     
-        RULES_BACK = Button(image=None, pos=(850,710),text_input="BACK", font=get_font(45), base_color="White", hovering_color="Green")#悬停的颜色        
-        PLAY_BUTTON=Button(image=None, pos=(450,710),text_input="PLAY",font=get_font(45), base_color="White", hovering_color="Green")
+        RULES_BACK = Button(image=None, pos=(1200,700),text_input="BACK", font=get_font(45), base_color="White", hovering_color="Green")#悬停的颜色        
+        #PLAY_BUTTON=Button(image=None, pos=(450,710),text_input="PLAY",font=get_font(45), base_color="White", hovering_color="Green")
         
         for button in [PLAY_BUTTON,RULES_BACK]:
             button.changeColor(RULES_MOUSE_POS)
@@ -193,8 +198,8 @@ def rules():
             if event.type==pygame.MOUSEBUTTONDOWN:
                 if RULES_BACK.checkForInput(RULES_MOUSE_POS):
                     main_menu()
-                if PLAY_BUTTON.checkForInput(RULES_MOUSE_POS):
-                    chooselevel()
+                #if PLAY_BUTTON.checkForInput(RULES_MOUSE_POS):
+                    #chooselevel()
                 
         pygame.display.update()   
 
@@ -222,7 +227,11 @@ def main_menu():
     pygame.display.set_caption("Menu")
 
     while True:
-        SCREEN.fill((70,130,180))#BG color
+        #SCREEN.fill((70,130,180))#BG color
+        
+        bgImage = pygame.image.load('blue_BG.jpg')
+        SCREEN.blit(bgImage, (0,0))
+
         SCREEN.blit(Cardimage,(330,30))#pho
     
         MENU_MOUSE_POS = pygame.mouse.get_pos()

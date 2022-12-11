@@ -91,6 +91,7 @@ class AIPlayer(Player):
                         # Right side comp cards
                             x = 100 + f * 60
                             count -= 1
+                            #Unfixed.
                             screen.blit(image_right, (1066, (x)))
                             pygame.display.update()
                 # Skip the next person's round

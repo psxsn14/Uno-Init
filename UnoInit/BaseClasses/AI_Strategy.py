@@ -1,5 +1,5 @@
 ﻿
-import globals
+#import globals
 
 import random
 

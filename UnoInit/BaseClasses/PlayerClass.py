@@ -342,10 +342,7 @@ class Player:
                 start = False
                 return cardChoice
 
-        print('wtf')
-
-
-
+        #print('wtf')
 
         # Check the click interface works
 
@@ -637,5 +634,33 @@ class Player:
             playerTemp.append(i)
 
         return repr(f"Name: {type(self)} | Deck: {playerTemp}")
+
+        #Helper function to display current turn. Pygame.
+    def displayCurrentTurnIcon(screen, playerNo):
+        CurrentTurnFont = pygame.font.Font("welcome page/font1.ttf", 45)
+        Main_TEXT = CurrentTurnFont.render("Current Turn", True, "white")
+
+        #if player no:
+        #Render certain position
+
+        if(playerNo == 0):
+            Main_RECT = Main_TEXT.get_rect(topleft=(625, 670))
+            screen.blit(Main_TEXT, Main_RECT)
+            pygame.display.update()
+    
+        elif(playerNo == 1):
+            Main_RECT = Main_TEXT.get_rect(topleft=(1000, 400))
+            screen.blit(Main_TEXT, Main_RECT)
+            pygame.display.update()
+
+        elif(playerNo == 2):
+            Main_RECT = Main_TEXT.get_rect(topleft=(200, 400))
+            screen.blit(Main_TEXT, Main_RECT)
+            pygame.display.update()
+
+        elif(playerNo == 3):
+            Main_RECT = Main_TEXT.get_rect(topleft=(670, 625))
+            screen.blit(Main_TEXT, Main_RECT)
+            pygame.display.update()
 
 

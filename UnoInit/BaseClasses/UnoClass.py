@@ -119,12 +119,16 @@ class Uno:
         # Interface set up
         BLUE = 70, 130, 180
         screen.fill(BLUE)
+        #bgImage = pygame.image.load('blue_BG.jpg')
+        #screen.blit(bgImage, (0,0))
         fps = 60
         fpsClock = pygame.time.Clock()
         pygame.display.set_caption('Uno')
         start = True
         count = 21
         # count = 7*globals.AIplayers
+
+
 
         if count > 0:
             for l in range(7):
