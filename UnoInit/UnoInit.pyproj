@@ -111,6 +111,7 @@
     <Content Include="Cards New\yellowDrawTwo.png" />
     <Content Include="Cards New\yellowreverse.png" />
     <Content Include="Cards New\yellowskip.png" />
+    <Content Include="README.md" />
     <Content Include="UnoRules.png" />
     <Content Include="welcome page\BGmusic.mp3" />
     <Content Include="welcome page\ending.png" />

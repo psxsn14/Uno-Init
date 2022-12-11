@@ -345,8 +345,8 @@ class Player:
         #print('wtf')
 
         # Check the click interface works
-
-        discardPile.append(self.plDeck[cardChoice - 1])
+        if(cardChoice > 1):
+            discardPile.append(self.plDeck[cardChoice - 1])
         # Remove card from player's deck.
         self.plDeck.pop(cardChoice - 1)
 
