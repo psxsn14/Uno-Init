@@ -239,7 +239,7 @@ class AIPlayer(Player):
             rect = pygame.Rect(rectCoord)
             pygame.draw.rect(screen, BLUE, rect)
             # pygame.draw
-            pygame.display.update()
+            pygame.display.update()x
             time.sleep(3)
 
             self.draw_top(screen, image_top)
