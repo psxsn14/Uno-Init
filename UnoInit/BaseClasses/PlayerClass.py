@@ -12,19 +12,6 @@ class Player:
         self.playerNo = playerNo
         self.plDeck = plDeck
 
-    def ColorChange(self, card, ):
-        globals.currentGameType = draw_card.cardType
-        globals.currentGameNumber = draw_card.cardNumber
-        discardPile.insert(0, draw_card)
-        # change the color
-        while True:
-            newColour = input("\nPlease select a new color(Green, Blue, Yellow or Red): ")
-            if newColour == 'Green' or 'Blue' or 'Yellow' or 'Red':
-                break
-            else:
-                print("Please enter 'Green', 'Blue', 'Yellow' or 'Red'")
-        globals.currentGameColour = newColour
-
     # @staticmethod
     def check(self, drawPile, discardPile, playerChoice, newGame):
         # If 0, draw a card and pass.
@@ -244,6 +231,12 @@ class Player:
 
         # Take top card from draw pile.
         print(f"\nPlayer {self.playerNo} takes the top card from the draw pile to their hand...")
+        if globals.gameRound!=0:
+            rectCoord = [200, 500, 1300, 170]
+            rect = pygame.Rect(rectCoord)
+            pygame.draw.rect(screen, BLUE, rect)
+            # pygame.draw
+            pygame.display.update()
 
         # Set up the cards - pygame.
         card_interface = []
@@ -542,10 +535,10 @@ class Player:
                 # playerChoice = int(input(
                 # "Press [1-n] and select a valid card to play or press 0 to draw a card from the draw pile and pass: "))
 
-                pygame.draw.rect(screen, BLUE, (300, 500, 750, 150))
-                if playerChoice == 0:
-                    screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)), (900, 500))
-                    pygame.display.update()
+                # pygame.draw.rect(screen, BLUE, (300, 500, 750, 150))
+                # if playerChoice == 0:
+                #     screen.blit(pygame.transform.smoothscale(drawPile[0].cardimage, (100, 150)), (900, 500))
+                #     pygame.display.update()
 
                 break
             # except:

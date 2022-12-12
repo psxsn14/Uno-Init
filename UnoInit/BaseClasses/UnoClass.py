@@ -237,7 +237,6 @@ class Uno:
         return globals.winnerScore
 
     def startGame(self, screen):
-
         # Pygame Top Card.
         x_top = self.drawPile[0].cardimage
         global Top_card
@@ -274,6 +273,40 @@ class Uno:
                     break
             if exit_flag:
                 break
+
+            # change color label
+            rectCoord = [0, 0, 1300, 50]
+            BLUE = 70, 130, 180
+            RED = 255, 0, 0
+            rect = pygame.Rect(rectCoord)
+            pygame.draw.rect(screen, BLUE, rect)
+            font1 = pygame.font.SysFont('arial', 20)
+            text = font1.render('Game Color: ' + globals.currentGameColour, True, (255, 255, 255))
+            screen.blit(text, (600, 30))
+            pygame.display.update()
+            coord1 = [650, 700]
+            coord2 = [50, 350]
+            coord3 = [550, 30]
+            coord4 = [1400, 350]
+            if globals.AIplayers == 1:
+                if globals.current==0:
+                    pygame.draw.circle(screen, BLUE, coord3, 10)
+                    pygame.draw.circle(screen, RED, coord1, 10)
+                    pygame.display.update()
+                else:
+                    pygame.draw.circle(screen, BLUE, coord1, 10)
+                    pygame.draw.circle(screen, RED, coord3, 10)
+                    pygame.display.update()
+            # if globals.AIplayers==2:
+            #     if globals.current==0:
+
+                    # pygame.draw.circle(screen, RED, coord1, 10)
+            # pygame.draw.circle(screen, RED, coord1, 10)
+            # pygame.draw.circle(screen, RED, coord2, 10)
+            # pygame.draw.circle(screen, RED, coord3, 10)
+            # pygame.draw.circle(screen, RED, coord4, 10)
+            pygame.display.update()
+
             # while len(self.drawPile) != 0:
             print('Round ' + str(globals.gameRound))
             print('Player' + str(globals.current + 1))
@@ -297,17 +330,24 @@ class Uno:
                 globals.currentGameColour = self.discardPile[0].cardColour
                 globals.currentGameNumber = self.discardPile[0].cardNumber
                 globals.currentGameType = self.discardPile[0].cardType
-            # else:
-            #     globals.currentGameNumber = self.discardPile[0].cardNumber
-            #     globals.currentGameType = self.discardPile[0].cardType
-            # else:
-            #     globals.currentGameColour = globals.currentGameCard.cardColour
-            #     globals.currentGameNumber = globals.currentGameCard.cardNumber
-            #     globals.currentGameType = globals.currentGameCard.cardType
-            # globals.currentGameType = self.discardPile[0].cardType
-            # globals.currentGameColour = globals.currentGameCard.cardColour
-            # globals.currentGameNumber = globals.currentGameCard.cardNumber
-            # globals.currentGameType = globals.currentGameCard.cardType
+
+            # change color label
+            pygame.draw.rect(screen, BLUE, rect)
+            font1 = pygame.font.SysFont('arial', 20)
+            text = font1.render('Game Color: ' + globals.currentGameColour, True, (255, 255, 255))
+            screen.blit(text, (600, 30))
+            pygame.display.update()
+
+            if globals.AIplayers == 1:
+                if globals.current==0:
+                    pygame.draw.circle(screen, BLUE, coord3, 10)
+                    pygame.draw.circle(screen, RED, coord1, 10)
+                    pygame.display.update()
+                else:
+                    pygame.draw.circle(screen, BLUE, coord1, 10)
+                    pygame.draw.circle(screen, RED, coord3, 10)
+                    pygame.display.update()
+
 
             globals.gameRound += 1
             # print('Round ' + str(globals.gameRound))

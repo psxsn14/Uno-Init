@@ -100,16 +100,16 @@ class AIPlayer(Player):
                     newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                     drawPile.pop(drawPile.index(UnoCard))
                 # AI Player 1 draw 4
-                if globals.AIplayers == 1:
-                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
-                    count = len(self.plDeck) + 2
-                    if count > 0:
-                        for f in range(7):
-                            # Right side comp cards
-                            x = 100 + f * 60
-                            count -= 1
-                            screen.blit(image_top, (1066, (x)))
-                            pygame.display.update()
+                # if globals.AIplayers == 1:
+                #     pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                #     count = len(self.plDeck) + 2
+                #     if count > 0:
+                #         for f in range(7):
+                #             # Right side comp cards
+                #             x = 100 + f * 60
+                #             count -= 1
+                #             screen.blit(image_top, (1066, (x)))
+                #             pygame.display.update()
 
                 # if nextPlayer == 1:
                 #     pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
@@ -168,38 +168,38 @@ class AIPlayer(Player):
                     drawPile.pop(drawPile.index(UnoCard))
 
                 # AI Player 1 draw 4
-                if globals.current == 1:
-                    pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
-                    count = len(self.plDeck) + 4
-                    if count > 0:
-                        for f in range(7):
-                            # Right side comp cards
-                            x = 100 + f * 60
-                            count -= 1
-                            screen.blit(image_right, (1066, (x)))
-                            pygame.display.update()
-
-                if globals.current == 2:
-                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
-                    count = len(self.plDeck) + 4
-                    if count > 0:
-                        for f in range(7):
-                            # Right side comp cards
-                            x = 100 + f * 60
-                            count -= 1
-                            screen.blit(image_right, (1066, (x)))
-                            pygame.display.update()
-
-                if globals.current == 3:
-                    pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
-                    count = len(self.plDeck) + 4
-                    if count > 0:
-                        for f in range(7):
-                            # Right side comp cards
-                            x = 100 + f * 60
-                            count -= 1
-                            screen.blit(image_right, (1066, (x)))
-                            pygame.display.update()
+                # if globals.current == 1:
+                #     pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
+                #     count = len(self.plDeck) + 4
+                #     if count > 0:
+                #         for f in range(7):
+                #             # Right side comp cards
+                #             x = 100 + f * 60
+                #             count -= 1
+                #             screen.blit(image_right, (1066, (x)))
+                #             pygame.display.update()
+                #
+                # if globals.current == 2:
+                #     pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                #     count = len(self.plDeck) + 4
+                #     if count > 0:
+                #         for f in range(7):
+                #             # Right side comp cards
+                #             x = 100 + f * 60
+                #             count -= 1
+                #             screen.blit(image_right, (1066, (x)))
+                #             pygame.display.update()
+                #
+                # if globals.current == 3:
+                #     pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
+                #     count = len(self.plDeck) + 4
+                #     if count > 0:
+                #         for f in range(7):
+                #             # Right side comp cards
+                #             x = 100 + f * 60
+                #             count -= 1
+                #             screen.blit(image_right, (1066, (x)))
+                #             pygame.display.update()
 
                 # Skip the next person's round
                 globals.current = newGame.moveToNextPlayer(globals.current)
