@@ -331,24 +331,6 @@ class Uno:
                 globals.currentGameNumber = self.discardPile[0].cardNumber
                 globals.currentGameType = self.discardPile[0].cardType
 
-            # change color label
-            pygame.draw.rect(screen, BLUE, rect)
-            font1 = pygame.font.SysFont('arial', 20)
-            text = font1.render('Game Color: ' + globals.currentGameColour, True, (255, 255, 255))
-            screen.blit(text, (600, 30))
-            pygame.display.update()
-
-            if globals.AIplayers == 1:
-                if globals.current==0:
-                    pygame.draw.circle(screen, BLUE, coord3, 10)
-                    pygame.draw.circle(screen, RED, coord1, 10)
-                    pygame.display.update()
-                else:
-                    pygame.draw.circle(screen, BLUE, coord1, 10)
-                    pygame.draw.circle(screen, RED, coord3, 10)
-                    pygame.display.update()
-
-
             globals.gameRound += 1
             # print('Round ' + str(globals.gameRound))
             # print('Player' + str(globals.current+1))
@@ -360,6 +342,8 @@ class Uno:
         print("Game Over!")
         print("The Winner is Player" + str(self.winnerPlayer()))
         print("Score is " + str(self.winnerScore()))
+
+
 
 
 # Card class.

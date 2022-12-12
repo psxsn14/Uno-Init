@@ -1,5 +1,5 @@
 
-import globals
+# import globals
 
 import random
 
@@ -13,8 +13,8 @@ def show_card_list(listofcard):
 
 def show_simple(listofcard):
     simple_list = []
-    if len(listofcard) == 0:
-        return simple_list
+    if listofcard == [None]:
+        return 'None'
 
     for i in listofcard:
 
@@ -170,7 +170,7 @@ class EasyAI(AI):
                     self.action = random.choice(human_card_colour)
                 else:
                     self.action = random.choice(['Red', 'Blue', 'Green', 'Yellow'])
-
+        # print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
         return self.the_card, self.action
 
 
@@ -196,7 +196,8 @@ class HardAI(AI):
         colour_list = []
         for i in x:
             colour_list.append(i.cardColour)
-        colour_list.remove('Black')             # remove black card
+        if 'Black' in colour_list: # remove black card
+            colour_list.remove('Black')
         # find the most frequent colour
         most_colour = max(set(colour_list), key=colour_list.count)
         # match x.cardColour with most_colour to a new list
@@ -238,7 +239,7 @@ class HardAI(AI):
                   self.action = random.choice(color_not_in_hu)
               else:
                   self.action = random.choice(all_colour)
-
+        print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
         return self.the_card, self.action
 
 
@@ -247,6 +248,18 @@ class HardAI(AI):
 
 
 class InvincibleAI(HardAI):
+    def change_card(self):  # invincible AI, selects the card can be followed by human, discard the smallest card
+
+        y = self.human_can_play_list(self.human_hand, self.can_play(self.hand_list, self.top_card))
+        if len(y) != 0:
+            discard_card = y[0]
+        else:
+            discard_card = self.hand_list[0]
+        print("before playing , the discarded card:", discard_card)
+        self.action = 'draw'
+        print(self.get_class_name(), " needs to", self.action)
+        return discard_card, self.action
+
     def play_action(self):
         action_list = []  # In this list, the cards are sorted, in the front of the list, the cards can not be followed by human
         if len(self.can_play(self.hand_list, self.top_card)) == 0:
@@ -282,9 +295,8 @@ class InvincibleAI(HardAI):
                         self.action = random.choice(color_not_in_hu)
                     else:
                         self.action = random.choice(all_colour)
-
+        # print(self.__class__.__name__, " decides: ", show_simple([self.the_card]), '  ', self.action)
         return self.the_card, self.action
-
 
 
 

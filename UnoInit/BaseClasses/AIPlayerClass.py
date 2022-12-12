@@ -99,17 +99,24 @@ class AIPlayer(Player):
                     # print(nextPlayer)
                     newGame.playerList[nextPlayer].plDeck.append(UnoCard)
                     drawPile.pop(drawPile.index(UnoCard))
-                # AI Player 1 draw 4
-                # if globals.AIplayers == 1:
-                #     pygame.draw.rect(screen, BLUE, (1066, 100, 150, 900))
-                #     count = len(self.plDeck) + 2
-                #     if count > 0:
-                #         for f in range(7):
-                #             # Right side comp cards
-                #             x = 100 + f * 60
-                #             count -= 1
-                #             screen.blit(image_top, (1066, (x)))
-                #             pygame.display.update()
+                
+                image_small = pygame.transform.smoothscale(pygame.image.load('Cards New/card_back.png'), (100, 150))
+                image_small = pygame.transform.rotate(image_small, 90)
+
+                image_right = pygame.transform.rotate(image_small, 180)
+                image_top = pygame.transform.rotate(image_small, 270)
+                
+                #AI Player 1 draw 4
+                if nextPlayer == 1:
+                    pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
+                    count = len(self.plDeck) + 2
+                    if count > 0:
+                        for f in range(7):
+                        # Right side comp cards
+                            x = 100 + f * 60
+                            count -= 1
+                            screen.blit(image_right, (1066, (x)))
+                            pygame.display.update()
 
                 # if nextPlayer == 1:
                 #     pygame.draw.rect(screen, BLUE, (100, 100, 150, 900))
