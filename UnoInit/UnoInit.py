@@ -36,13 +36,3 @@ while start:
 
 
 pygame.quit()
-newGame = Uno()
-
-newGame.startPreGame(newGame.createNewDeck())
-
-newGame.startGame()
-newGame = Uno()
-
-newGame.startPreGame(newGame.createNewDeck())
-
-newGame.startGame()

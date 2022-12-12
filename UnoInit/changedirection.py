@@ -6,7 +6,7 @@ pygame.display.set_caption("Ending")
 
 def get_font(size): 
     return pygame.font.Font("welcome page/font1.ttf", size) 
-
+# Code to write Button class referenced from https://github.com/baraltech/Menu-System-PyGame
 class Button():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
         self.image=image
