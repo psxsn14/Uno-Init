@@ -173,16 +173,17 @@ def rules():
     while True:
         RULES_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill((70, 130, 180))  # background color
-        SCREEN.blit(Ruleimage, (0, 0))
+        ruleImage = pygame.image.load("UnoRules.png")
+        ruleRect = ruleImage.get_rect(center = (1366/2,768/2))
+        SCREEN.blit(ruleImage,ruleRect)
 
         # RULES_TEXT = get_font(45).render("This is the Rules screen", True, "white")
         # RULES_RECT = RULES_TEXT.get_rect(center=(640, 260))
         # SCREEN.blit(RULES_TEXT, RULES_RECT)
 
-        RULES_BACK = Button(image=None, pos=(850, 710), text_input="BACK", font=get_font(45), base_color="White",
+        RULES_BACK = Button(image=None, pos=(1200, 700), text_input="BACK", font=get_font(45), base_color="White",
                             hovering_color="Green")  # 悬停的颜色
-        PLAY_BUTTON = Button(image=None, pos=(450, 710), text_input="PLAY", font=get_font(45), base_color="White",
+        PLAY_BUTTON = Button(image=None, pos=(200, 700), text_input="PLAY", font=get_font(45), base_color="White",
                              hovering_color="Green")
 
         for button in [PLAY_BUTTON, RULES_BACK]:
