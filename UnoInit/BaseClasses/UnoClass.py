@@ -292,17 +292,6 @@ class Uno:
                 globals.currentGameColour = self.discardPile[0].cardColour
                 globals.currentGameNumber = self.discardPile[0].cardNumber
                 globals.currentGameType = self.discardPile[0].cardType
-            # else:
-            #     globals.currentGameNumber = self.discardPile[0].cardNumber
-            #     globals.currentGameType = self.discardPile[0].cardType
-            # else:
-            #     globals.currentGameColour = globals.currentGameCard.cardColour
-            #     globals.currentGameNumber = globals.currentGameCard.cardNumber
-            #     globals.currentGameType = globals.currentGameCard.cardType
-            # globals.currentGameType = self.discardPile[0].cardType
-            # globals.currentGameColour = globals.currentGameCard.cardColour
-            # globals.currentGameNumber = globals.currentGameCard.cardNumber
-            # globals.currentGameType = globals.currentGameCard.cardType
 
             globals.gameRound += 1
             print('Round ' + str(globals.gameRound))
@@ -315,7 +304,7 @@ class Uno:
         print("The Winner is Player" + str(self.winnerPlayer()))
         print("Score is " + str(self.winnerScore()))
 
-        
+
 
 
 # Card class.
